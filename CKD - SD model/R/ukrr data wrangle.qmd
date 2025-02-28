@@ -1,0 +1,454 @@
+---
+title: "UKRR data wrangling"
+author: "Sally Thompson"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    embed-resources: true
+editor: visual
+
+execute:
+  echo: false
+  output: true
+  warning: false
+---
+
+```{r setup}
+
+library(here)
+
+source("functions helpers lookups.R")
+
+options(scipen = 999)
+```
+
+## Intro
+
+Code to extract quarterly counts and new cases per quarter to KRT services, from UKRR data extract.
+
+Steps
+
+-   Read in UKRR incidence and prevalence extracts
+-   Create list of start and end dates for quarters, from Jan 2022
+-   Prevalence - filter those who died before Jan 2022
+-   For both files:
+    -   For each quarter, count how many were receiving KRT on first day of quarter.
+
+    -   Count those who started after quarter-start but before quarter-end - by region and referral
+
+```{r read-data}
+
+raw_incident <- read_csv(here("data", "incident_demog.csv")) |> 
+  mutate(date_death = parse_date(dodeath, "%d%b%Y"),
+         date_start = parse_date(datestart, "%d%b%Y")) |> 
+  select(study_id, flag, date_death, date_start, region, referral) 
+
+
+raw_prev <- read_csv(here("data", "prev09_demog.csv")) |>
+  mutate(date_death = parse_date(dodeath, "%d%b%Y"),
+         date_start = parse_date(datestart, "%d%b%Y")) |> 
+  select(study_id, flag, date_death, date_start, region)
+```
+
+## UKRR vs NHS regions
+
+Check whether the regions/region names match.
+
+```{r}
+
+ukrr_regions <- raw_incident |> 
+  distinct(region) |> 
+  arrange(region)
+```
+
+UKRR has separate regions for North East and "Yorkshire and Humber", whereas NHS combines these to form "North East and Yorkshire".
+
+```{r}
+
+raw_incident <- raw_incident |> 
+  mutate(region = case_when(region %in% c("North East", "Yorkshire & Humber") ~ "North East and Yorkshire",
+                             TRUE ~ region))
+
+raw_prev <- raw_prev |> 
+  mutate(region = case_when(region %in% c("North East", "Yorkshire & Humber") ~ "North East and Yorkshire",
+                             TRUE ~ region))
+```
+
+## Flow counts (incidence)
+
+Take incidence data, floor the start date to start of quarter then count.
+
+Incidence up to 2022-Q4 (i.e. new cases up to end of 2022).
+
+```{r quart-incidence}
+
+# some NA for referral type - assign to Early
+# update 17 Feb - due to tiny numbers, have removed the 'late to KRT' route in the SD model. --> remove referral type from grouping
+incid_quart <- raw_incident |> 
+  mutate(new_quart = floor_date(date_start, unit = "quarter"),
+         referral = replace_na(referral, "Early")) |> 
+ # filter(new_quart >= "2021-01-01") |> 
+  group_by(region) |> 
+  count(new_quart) |> 
+  ungroup()
+
+incid_eng <- incid_quart |> 
+  group_by(new_quart) |> 
+  summarise(n = sum(n)) |> 
+  ungroup() |> 
+  mutate(region = "England")
+
+incid_quart <- bind_rows(incid_quart, incid_eng)
+
+incid_qrt_total <- incid_quart |> 
+  group_by(region, new_quart) |> 
+  summarise(n = sum(n))
+
+mort_quart <- raw_incident |> 
+  mutate(mort_quarter = floor_date(date_death, unit = "quarter")) |> 
+#  filter(mort_quarter >= "2021-01-01") |> 
+  group_by(region) |> 
+  count(mort_quarter) |> 
+ungroup()
+
+mort_eng <- mort_quart |> 
+  group_by(mort_quarter) |> 
+  summarise(n = sum(n)) |> 
+  ungroup() |> 
+  mutate(region = "England")
+
+mort_quart <- bind_rows(mort_quart, mort_eng)
+```
+
+For validation: repeat but annually, and compare with UKRR published data.
+
+```{r incid-annual}
+
+# some NA for referral type - assign to Early
+incid_year <- raw_incident |> 
+  mutate(new_cases_yr_start = floor_date(date_start, unit = "year"),
+         referral = replace_na(referral, "Early")) |> 
+  filter(new_cases_yr_start >= "2015-01-01") |> 
+  group_by(region, referral) |> 
+  count(new_cases_yr_start)
+
+incid_yr_eng <- incid_year |> 
+  group_by(new_cases_yr_start, referral) |> 
+  summarise(new_cases = sum(n))
+
+mort_year <- raw_incident |> 
+  mutate(mort_yr_start = floor_date(date_death, unit = "year")) |> 
+  filter(mort_yr_start >= "2016-01-01") |> 
+  group_by(region) |> 
+  count(mort_yr_start)
+```
+
+## Prevalence
+
+Use function to count those who are prevalent on first day of quarter. Need to run twice, one on prevalent data and again on incident data.
+
+Prevalence to end of 2022-Q3 (up to end September).
+
+Need to add end-date, which is either date of death or date after the end of the data extract (which runs to 31 December 2022).
+
+Function that calculates count occupied throughout whole time period reports the start date of the time period (so July 2021 is occupied July to September). Stella starts October 2021 at time 0.75, so July-Oct 21 will be given stella time of 0.75.
+
+```{r prev-counts}
+
+# start with prevalance data
+krt_prev_prev <- raw_prev |> 
+  mutate(date_end = case_when(is.na(date_death) ~ ymd(20230101),
+                              TRUE ~ date_death)) |> 
+  occupancy_count(
+                  ymd(20180101), ymd(20230101),
+                  "quarter",
+                  date_start, date_end,
+                  region)
+
+krt_incid_prev <- raw_incident |> 
+  mutate(date_end = case_when(is.na(date_death) ~ ymd(20230101),
+                              TRUE ~ date_death)) |> 
+  occupancy_count(
+                  ymd(20180101), ymd(20230101),
+                  "quarter",
+                  date_start, date_end,
+                  region)
+
+krt_prev <- bind_rows(krt_prev_prev, krt_incid_prev) |> 
+  group_by(date, region) |> 
+  summarise(count = sum(resident)) |> 
+  ungroup()
+
+krt_prev_eng <- krt_prev |> 
+  group_by(date) |> 
+  summarise(count = sum(count)) |> 
+  mutate(region = "England")
+
+krt_prev <- bind_rows(krt_prev, krt_prev_eng) |> 
+  filter(year(date) > 2020) |> 
+  mutate(quart_start = quarter(date)/4 - 0.25,
+         year_quart = year(date) + quart_start,
+         stella_time = year_quart - 2020.75) |> 
+  filter(stella_time <= 2)
+  
+```
+
+### Alternative prevalence - census
+
+Rather than count numbers who were receiving for total time period, follow UKRR and CVD Prevent reporting of count on a census day. Take first day of each quarter as count day, apply to start value for that time period.
+
+Calibrating in a different SD model, starting at 2018 for 5 years (to end at start of 2023).
+
+```{r prev-census}
+
+
+krt_census_prev <- raw_prev |> 
+  mutate(date_end = case_when(is.na(date_death) ~ ymd(20230101),
+                              TRUE ~ date_death)) |> 
+  census_count(ymd(20180101), ymd(20230101),
+                  "quarter",
+                  date_start, date_end,
+                  region)
+
+krt_census_incid <- raw_incident |> 
+  mutate(date_end = case_when(is.na(date_death) ~ ymd(20230101),
+                              TRUE ~ date_death)) |> 
+  census_count(ymd(20180101), ymd(20230101),
+                  "quarter",
+                  date_start, date_end,
+                  region)
+
+krt_census <- bind_rows(krt_census_prev, krt_census_incid) |> 
+  group_by(date, region) |> 
+  summarise(count = sum(prev)) |> 
+  ungroup()
+
+krt_prev_census_eng <- krt_census |> 
+  group_by(date) |> 
+  summarise(count = sum(count)) |> 
+  mutate(region = "England")
+
+krt_census <- bind_rows(krt_census, krt_prev_census_eng)
+ 
+  
+```
+
+Validation: repeat above, but annual and compare with UKRR published. Update: UKRR reports prevalence as a census count on 31st December, not as people who have been on KRT for the duration of the year. Adjust to run daily, then filter for 31/12 of each year.
+
+```{r prev-annual}
+
+# library(juncture)
+# 
+# krt_prev_census <- juncture(
+#   raw_prev,
+#   identifier = "study_id",
+#   time_in = "date_start",
+#   time_out = "date_death",
+#   group_var = "region",
+#   time_unit = "1 day",
+#   results = "group"
+# ) |> 
+#   mutate(month_day = paste(month(base_date), day(base_date), sep = "-")) |> 
+#   filter(month_day == "12-31")
+# 
+# krt_incid_census <- juncture(
+#   raw_incident,
+#   identifier = "study_id",
+#   time_in = "date_start",
+#   time_out = "date_death",
+#   group_var = "region",
+#   time_unit = "1 day",
+#   results = "group"
+# ) |> 
+#   mutate(month_day = paste(month(base_date), day(base_date), sep = "-")) |> 
+#   filter(month_day == "12-31")
+# 
+# krt_census <- bind_rows(krt_prev_census, krt_incid_census) |> 
+#   group_by(region, base_date) |> 
+#   summarise(prev = sum(N))
+# 
+# krt_census_eng <- krt_census |> 
+#   group_by(base_date) |> 
+#   summarise(prev = sum(prev)) |> 
+#   mutate(region = "England")
+# 
+# krt_census <- bind_rows(krt_census, krt_census_eng)
+# 
+# # start with prevalance data
+# krt_prev_prev_yr <- raw_prev |> 
+#   mutate(date_end = case_when(is.na(date_death) ~ ymd(20230101),
+#                               TRUE ~ date_death)) |> 
+#   occupancy_count(
+#                   ymd(20150101), ymd(20250101),
+#                   "year",
+#                   date_start, date_end)
+# 
+# 
+#   
+# krt_incid_prev_yr <-  raw_incident |> 
+#   mutate(date_end = case_when(is.na(date_death) ~ ymd(20230101),
+#                               TRUE ~ date_death)) |> 
+#   occupancy_count(
+#                   ymd(20150101), ymd(20250101),
+#                   "year",
+#                   date_start, date_end)
+# 
+# krt_prev_yr <- bind_rows(krt_prev_prev_yr, krt_incid_prev_yr) |> 
+#   group_by(date) |> 
+#   summarise(count = sum(resident)) |> 
+#   ungroup()
+# 
+# krt_prev_eng_yr <- krt_prev_yr |> 
+#   group_by(date) |> 
+#   summarise(count = sum(count)) |> 
+#   mutate(region = "England")
+# 
+# krt_prev_yr <- bind_rows(krt_prev_yr, krt_prev_eng_yr)
+```
+
+## Prep for Stella
+
+Take all flows and prevalence, convert to Stella var names and make wide.
+
+```{r}
+
+stella_prev <- krt_prev |> 
+  filter(stella_time >= 0.75) |> 
+  mutate(stella_var = paste0("UKRR KRT[", region, "]")) |> 
+  select(stella_time, stella_var, count)
+
+stella_incid <- incid_quart |> 
+  mutate(quart_start = quarter(new_quart)/4 - 0.25,
+         year_quart = year(new_quart) + quart_start,
+         stella_time = year_quart - 2021) |> 
+    filter(stella_time >= 0.75) |> 
+  mutate(stella_var = paste0("UKRR KRT incid[", region, "]")) |>
+  select(stella_time, stella_var, count = n)
+  
+stella_mort <- mort_quart |> 
+  mutate(quart_start = quarter(mort_quarter)/4 - 0.25,
+         year_quart = year(mort_quarter) + quart_start,
+         stella_time = year_quart - 2021) |> 
+    filter(stella_time >= 0.75) |> 
+  mutate(stella_var = paste0("UKRR KRT mort[", region, "]")) |> 
+  select(stella_time, stella_var, count = n)
+
+stella_x_vars <- bind_rows(stella_prev, stella_incid, stella_mort) |>
+  select(-count) |> 
+  mutate(stella_var = paste0(stella_var, ":x"),
+         time = stella_time)|> 
+  pivot_wider(names_from = time, values_from = stella_time)
+  
+
+stella_ukrr <- bind_rows(stella_prev, stella_incid, stella_mort) |> 
+  mutate(stella_var = paste0(stella_var, ":y")) |> 
+  pivot_wider(names_from = stella_time, values_from = count) |>
+  bind_rows(stella_x_vars) |> 
+  arrange(stella_var)
+
+wb <- createWorkbook()  
+
+addWorksheet(wb, "time vars ukrr")
+writeData(wb, "time vars ukrr", stella_ukrr)
+
+saveWorkbook(wb, "ukrr array data.xlsx", overwrite = TRUE)
+```
+
+Alternative model prep for stella
+
+```{r}
+
+stella_prev_c <- krt_census |> 
+  mutate(quart_start = quarter(date)/4 - 0.25,
+         stella_time = year(date) + quart_start) |> 
+    filter(stella_time >= 2018 & stella_time < 2023) |> 
+  mutate(stella_var = paste0("UKRR KRT[", region, "]")) |> 
+  select(stella_time, stella_var, count)
+
+stella_incid_c <- incid_quart |> 
+  mutate(quart_start = quarter(new_quart)/4 - 0.25,
+         stella_time = year(new_quart) + quart_start) |> 
+    filter(stella_time >= 2018) |> 
+  mutate(stella_var = paste0("UKRR KRT incid[", region, "]")) |>
+  select(stella_time, stella_var, count = n)
+  
+stella_mort_c <- mort_quart |> 
+  mutate(quart_start = quarter(mort_quarter)/4 - 0.25,
+         stella_time = year(mort_quarter) + quart_start) |> 
+    filter(stella_time >= 2018) |> 
+  mutate(stella_var = paste0("UKRR KRT mort[", region, "]")) |> 
+  select(stella_time, stella_var, count = n)
+
+stella_x_vars <- bind_rows(stella_prev_c, stella_incid_c, stella_mort_c) |>
+  select(-count) |> 
+  mutate(stella_var = paste0(stella_var, ":x"),
+         time = stella_time)|> 
+  pivot_wider(names_from = time, values_from = stella_time)
+  
+
+stella_ukrr_c <- bind_rows(stella_prev_c, stella_incid_c, stella_mort_c) |>
+ mutate(stella_var = paste0(stella_var, ":y")) |>
+  pivot_wider(names_from = stella_time, values_from = count) |>
+ bind_rows(stella_x_vars) |>
+  arrange(stella_var)
+
+stella_ckd_xvars <- bind_rows(stella_prev_c, stella_incid_c, stella_mort_c) |>
+  select(-count) |> 
+ mutate(stella_var = paste0(stella_var, ":x"),
+        time = stella_time - 2021,
+        stella_time = time) |> 
+  filter(stella_time >= 0.75) |> 
+  pivot_wider(names_from = time, values_from = stella_time)
+
+stella_ukrr_for_ckd <- stella_ukrr_c |> 
+  mutate(stella_time = stella_time - 2021) |>
+  filter(stella_time >= 0.75) |> 
+  pivot_wider(names_from = stella_time, values_from = count) |>
+ bind_rows(stella_ckd_xvars) |>
+  arrange(stella_var)
+
+wb <- createWorkbook()  
+
+addWorksheet(wb, "census ukrr")
+writeData(wb, "census ukrr", stella_ukrr_c)
+
+addWorksheet(wb, "for ckd sd")
+writeData(wb, "for ckd sd", stella_ukrr_for_ckd)
+
+saveWorkbook(wb, "ukrr census.xlsx", overwrite = TRUE)
+```
+
+Check stock and flow counts for validity.
+
+```{r}
+
+val_stock <- stella_prev |>
+  mutate(region = str_extract(stella_var, "(?<=\\[).*?(?=\\])")) |> 
+  rename(stock_start = count) |> 
+    select(-stella_var)
+
+val_flow_in <- stella_incid |>
+  mutate(region = str_extract(stella_var, "(?<=\\[).*?(?=\\])")) |>    rename(flow_in = count) |> 
+    select(-stella_var)
+
+val_flow_out <- stella_mort |>
+  mutate(region = str_extract(stella_var, "(?<=\\[).*?(?=\\])")) |>  
+  rename(flow_out = count) |> 
+    select(-stella_var)
+
+val_check <- val_stock |> 
+  full_join(val_flow_in, by = join_by(stella_time, region)) |> 
+  full_join(val_flow_out, by = join_by(stella_time, region)) |> 
+  arrange(region, stella_time) |>
+  mutate(stock_end = stock_start + flow_in - flow_out) |> 
+  relocate(stock_start, .before = flow_in)
+
+
+wb <- createWorkbook()  
+
+addWorksheet(wb, "stock flows")
+writeData(wb, "stock flows", val_check)
+
+saveWorkbook(wb, "ukrr valid check.xlsx", overwrite = TRUE)
+```

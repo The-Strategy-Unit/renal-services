@@ -1,12 +1,13 @@
 # Renal Services repo
 
-##Background
-The Midlands Renal Operational Delivery Network (MRODN) identified that centres in the region required advanced methods of estimating renal replacement treatment needs in the future given a range of factors that could influence the demand of these services. There are options available to manage demand and capacity, but these require investment, and careful balancing of risk and reward. Therefore, a model would facilitate better informed decisions about the future, facilitating "left shift" and ensuring optimised future capacity and good patient outcomes. 
+## Background 
 
-A model has been developed that aims to support planning and decision making for provision of KRT care services. There are two modelling approaches, discrete-event (DES) and system dynamics (SD) to ensure the future kidney care system is represented effectively.  
+The Midlands Renal Operational Delivery Network (MRODN) identified that centres in the region required advanced methods of estimating renal replacement treatment needs in the future given a range of factors that could influence the demand of these services. There are options available to manage demand and capacity, but these require investment, and careful balancing of risk and reward. Therefore, a model would facilitate better informed decisions about the future, facilitating "left shift" and ensuring optimised future capacity and good patient outcomes.
 
-A System Dynamics represents the demand for kidney care by simulating the population at risk and disease progression of CKD over time 
+A model has been developed that aims to support planning and decision making for provision of KRT care services. There are two modelling approaches, discrete-event (DES) and system dynamics (SD) to ensure the future kidney care system is represented effectively. It was subsequently decided to expand the model to include other NHS regions in England.
 
-A Discrete Event Simulation (DES) model represents the provision of care services including the flow of patients through dialysis, kidney transplantation, the impacts of variability in demand and process times and different treatment options
+-   A System Dynamics represents the demand for kidney care by simulating the population at risk and disease progression of CKD over time. The model can be viewed on the [isee exchange](https://exchange.iseesystems.com/public/strategy-unit/chronic-kidney-disease-progression/index.html).
 
-This repo contains the files used to create both models.
+-   A Discrete Event Simulation (DES) model represents the provision of care services including the flow of patients through dialysis, kidney transplantation, the impacts of variability in demand and process times and different treatment options
+
+This repo contains the files used to create and/or populate both models. Whilst the aspiration is for these models to be built using open-source software, this iteration of the project uses proprietary software (but some of the code is written using an open XML protocol and can thus be shared and used).
