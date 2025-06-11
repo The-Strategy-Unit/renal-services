@@ -29,17 +29,17 @@ Documenting the steps taken to wrangle multiple data sources used in the CKD dis
 
 ## Summary of Steps required
 
-1.  Download population estimates and future projections from ONS/Nomisweb, by age and gender. Get England, and NHS regions.
+1.  Download population estimates and future projections from ONS/Nomisweb, by age and gender. Get England, and ~~Midlands~~ NHS regions. (Aggregate to age bands - which? for aged model)
 
-2.  Download CVD Prevent data - for each region.
+2.  Download CVD Prevent data - for each region - of prevalance and uncoded.
 
-3.  Apply Inside CKD to proportion split between S3 and S4-5, and calculate total prev and therefore undiagnosed from Inside CKD calculations. These are ASSUMPTIONS TO BE MADE CLEAR IN VALIDATION.
+3.  Apply Inside CKD to proportion split between S3 and S4-5 for each of diagnosed and undiagnosed (uncoded). These are ASSUMPTIONS TO BE MADE CLEAR IN VALIDATION.
 
 ## The Process
 
 ### Population Data
 
-Need population data for England, and NHS regions. Only includes 18 and over.
+Need population data for England, and NHS regions. Only includes 18 and over (MAKE NOTE OF THIS SIMPLIFICATION).
 
 ```{r populations-import}
 
@@ -152,18 +152,42 @@ ckd_sys_time <- map_df(avail_periods$time_period_id, ckd_ind_sys_fn) |>
          time_period_name = str_remove(time_period_name, "To "),
          date = as.yearmon(paste(year, time_period_name), "%Y %B"),
         stella_time = as.numeric(yearqtr(date) - 2020.75) #time starts at 0, Q4 of 2021
-  )
+  ) |> 
+  mutate(diag_status = "diag_s35")
 
-ckd_counts <- ckd_sys_time |> 
+ckd_uncod_time <- map_df(avail_periods$time_period_id, ckd_und_sys_fn) |> 
+  clean_names() |> 
+  mutate(year = parse_number(time_period_name),
+         time_period_name = str_remove_all(time_period_name, "[:digit:]"),
+         time_period_name = str_remove(time_period_name, "To "),
+         date = as.yearmon(paste(year, time_period_name), "%Y %B"),
+         stella_time = as.numeric(yearqtr(date) - 2020.75) #time starts at 0, Q4 of 2021
+  ) |> 
+  mutate(diag_status = "undiag_s35")
+
+ckd_risk_time <- map_df(avail_periods$time_period_id, ckd_risk_sys_fn) |> 
+  clean_names() |> 
+  mutate(year = parse_number(time_period_name),
+         time_period_name = str_remove_all(time_period_name, "[:digit:]"),
+         time_period_name = str_remove(time_period_name, "To "),
+         date = as.yearmon(paste(year, time_period_name), "%Y %B"),
+         stella_time = as.numeric(yearqtr(date) - 2020.75) #time starts at 0, Q4 of 2021
+  ) |> 
+  mutate(diag_status = "undiag_s35")
+
+ckd_counts <- bind_rows(ckd_sys_time, ckd_uncod_time, ckd_risk_time) |> 
   rename(region = area_name,
          # sex = category_attribute,
          # age_band = metric_category_name,
-         diag_s35 = numerator) |> 
-  select(region, diag_s35, year, date, stella_time)
+         count = numerator) |> 
+  select(region, diag_status, count, year, date, stella_time) |> 
+  group_by(region, diag_status, , year, date, stella_time) |> 
+  summarise(count = sum(count)) |> 
+  ungroup()
 
 ckd_counts_eng <- ckd_counts |> 
-  group_by(year, date, stella_time) |> 
-  summarise(diag_s35 = sum(diag_s35)) |> 
+  group_by(year, date, diag_status, stella_time) |> 
+  summarise(count = sum(count)) |> 
   mutate(region = "England") |> 
   ungroup()
 
@@ -210,42 +234,36 @@ Note that diagnosed stage 4/5 includes those on KRT, so the model needs to remov
 ```{r derive-prev}
 
 # read in splits by stages and diagnosis states
-insideckd_loc <- "CKD - SD model/data/insideckd splits.xlsx"
+insideckd_loc <- "data/insideckd splits.xlsx"
 
 insideckd_splits <- read_xlsx(insideckd_loc)
 
-s3_pc <- insideckd_splits |> 
+s3_diag_pc <- insideckd_splits |> 
   filter(proportion == "diag S3 as pc S3-5") |> 
   pull(value)
 
-s3_5_d <- insideckd_splits |> 
-  filter(proportion == "S3-5 pc diagnosed") |> 
+s3_undiag_pc <- insideckd_splits |> 
+  filter(proportion == "undiag S3 as pc undiag") |> 
   pull(value)
 
-s3_d <- insideckd_splits |> 
-  filter(proportion == "S3 diag") |> 
-  pull(value)
-
-s45_d <- insideckd_splits |> 
-  filter(proportion == "S4-5 diag") |> 
-  pull(value)
 
 
 # apply to CVDP counts
 prev_counts <- ckd_counts |> 
-  mutate(diag_s3 = diag_s35 * s3_pc,
-         diag_s45 = diag_s35 - diag_s3,
-         prev_s35 = diag_s35 / s3_5_d,
-         prev_s3 = diag_s3 / s3_d,
-         prev_s45 = diag_s45 / s45_d,
-         undiag_s35 = prev_s35 - diag_s3,
-         undiag_s3 = prev_s3 - diag_s3,
-         undiag_s45 = prev_s45 - diag_s45) |> 
+  pivot_wider(names_from = diag_status, values_from = count) |> 
   
-  relocate(diag_s35, .before = diag_s3) |> 
+  mutate(diag_s3 = diag_s35 * s3_diag_pc,
+         diag_s45 = diag_s35 - diag_s3,
+        
+         undiag_s3 = undiag_s35 * s3_undiag_pc,
+         undiag_s45 = undiag_s35 - undiag_s3,
+         
+         prev_s3 = diag_s3 + undiag_s3,
+         prev_s45 = diag_s45 + undiag_s45,
+         prev_s35 = prev_s3 + prev_s45) |> 
   
   pivot_longer(
-    cols = diag_s35:undiag_s45,
+    cols = diag_s35:prev_s35,
     names_to = c("status", "stage"),
     names_sep = "_",
     values_to = "count"
@@ -282,6 +300,28 @@ prev_stella <- prev_st |>
 
 ```
 
+Calculate pop variance for weightings used in calibration.
+
+```{r}
+
+counts_var_wt <- prev_counts |> 
+  filter(status != "total") |> 
+  group_by(region, status, stage) |> 
+  summarise(pop_var = 1/(var(count) *((n()-1)/n()))) |> 
+  mutate(var_name = case_when(
+    status == "diag" & stage == "S3" ~ "wt CKD3",
+    status == "diag" & stage == "S4-5" ~ "wt CKD 4-5",
+    status == "diag" & stage == "S3-5" ~ "wt diag S3-5",
+    status == "und" & stage == "S3" ~ "wt und S3",
+    status == "und" & stage == "S4-5" ~ "wt und S4-5",
+    status == "und" & stage == "S3-5" ~ "wt und S3-5",
+  )) |> 
+  ungroup() |> 
+  select(region, var_name, pop_var) |> 
+  pivot_wider(names_from = region, values_from = pop_var) |> 
+  relocate(England, .after = var_name)
+```
+
 #### Prep for Model Input
 
 Export workbook
@@ -299,5 +339,43 @@ writeData(wb, "pops", pop_stella)
 addWorksheet(wb, "cvd mortality")
 writeData(wb, "cvd mortality", stella_mort)
 
-saveWorkbook(wb, "ckd counts for stella array.xlsx", overwrite = TRUE)
+addWorksheet(wb, "calib weights")
+writeData(wb, "calib weights", counts_var_wt)
+
+saveWorkbook(wb, "ckd counts for stella array may 28 uncoded risk.xlsx", overwrite = TRUE)
+```
+
+Extra validation
+
+Extra figures for comparison of cross-validation models - what constitutes 'undiagnosed'?
+
+```{r}
+
+
+ckd_eng_all <- ckd_counts |> 
+  select(-stella_time) |> 
+  filter(region == "England") |> 
+  pivot_wider(names_from = diag_status, values_from = count)
+
+ckd_uncoded <- ckd_uncod_time |>  
+  rename(region = area_name,
+         # sex = category_attribute,
+         # age_band = metric_category_name,
+         count = numerator) |> 
+  select(region, count, year, date) |> 
+  group_by(year, date) |> 
+  summarise(uncoded_s35 = sum(count)) |> 
+  mutate(region = "England")
+
+cvdp_eng <- left_join(ckd_eng_all, ckd_uncoded)
+
+
+wb <- createWorkbook()  
+
+addWorksheet(wb, "cvdp indicators eng")
+writeData(wb, "cvdp indicators eng", cvdp_eng)
+
+
+saveWorkbook(wb, "cvdp_indicators.xlsx", overwrite = TRUE)
+
 ```
