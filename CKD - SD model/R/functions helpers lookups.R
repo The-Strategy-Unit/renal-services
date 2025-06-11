@@ -27,6 +27,21 @@ ckd_ind_sys_fn <- function(time) {
     select(time_period_name, area_name, numerator, denominator, indicator_name)
 }
 
+# CKD uncoded prev indicator 13
+ckd_und_sys_fn <- function(time) {
+  result <- cvd_indicator_raw_data(indicator_id = 13, time_period_id = time, system_level_id = 6) |> 
+    clean_names() |> 
+    filter(category_attribute == "Persons", metric_category_name == "Persons", metric_category_type_name == "Sex") |>
+    select(time_period_name, area_name, numerator, denominator, indicator_name)
+}
+
+# CKD uncoded prev indicator 13
+ckd_risk_sys_fn <- function(time) {
+  result <- cvd_indicator_raw_data(indicator_id = 15, time_period_id = time, system_level_id = 6) |> 
+    clean_names() |> 
+    filter(category_attribute == "Persons", metric_category_name == "Persons", metric_category_type_name == "Sex") |>
+    select(time_period_name, area_name, numerator, denominator, indicator_name)
+}
 
 # function to pull all-cause CVD mortality metric id 970 
 ckd_mort_fn <- function(area) {
