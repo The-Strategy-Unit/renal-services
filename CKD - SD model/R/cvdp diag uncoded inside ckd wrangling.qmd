@@ -29,9 +29,9 @@ Documenting the steps taken to wrangle multiple data sources used in the CKD dis
 
 ## Summary of Steps required
 
-1.  Download population estimates and future projections from ONS/Nomisweb, by age and gender. Get England, and ~~Midlands~~ NHS regions. (Aggregate to age bands - which? for aged model)
+1.  Download population estimates and future projections from ONS/Nomisweb, by age and gender. Get England, and ~~Midlands~~ NHS regions. (Aggregate to age bands - which? for aged model). ONS update estimates every summer (around July).
 
-2.  Download CVD Prevent data - for each region - of prevalance and uncoded.
+2.  Download CVD Prevent data - for each region - of prevalance (coed), uncoded and high-risk.
 
 3.  Apply Inside CKD to proportion split between S3 and S4-5 for each of diagnosed and undiagnosed (uncoded). These are ASSUMPTIONS TO BE MADE CLEAR IN VALIDATION.
 
@@ -77,6 +77,7 @@ pop_est <- bind_rows(pop_est, pop_est_eng)
 
 
 # projections
+# update query years as new projections are released
 query <- "https://www.nomisweb.co.uk/api/v01/dataset/NM_2006_1.data.csv?geography=2013265926,2013265924,2013265927,2013265921,2013265922,2013265928,2013265929,2013265925,2013265923&projected_year=2024...2043&gender=0&c_age=119,120,6...18,210&measures=20100&select=geography_name,geography_code,projected_year_name,gender_name,c_age_name,obs_value"
 
 pop_proj <- read.csv(query) |>
@@ -225,7 +226,7 @@ stella_mort <- cvd_mort |>
 
 ### Derive Total Prevalence & Undiagnosed
 
-Using the baseline data from Inside CKD, split the diagnosed into stage 3 or stages 4/5. Then calculate total prevalence and counts of undiagnosed.
+Using the baseline data from Inside CKD, split the diagnosed & undiagnosed into stage 3 or stages 4/5.
 
 #### Apply Inside CKD splits by stage/diagnosis state
 
