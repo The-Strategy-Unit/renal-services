@@ -2,11 +2,19 @@
 <xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
 	<header>
 		<smile version="1.0" namespace="std, isee" uses_arrays="1"/>
-		<name>CKD 250717 LAUNCH DAY LIVE VERSION</name>
+		<name>CKD 250731 updated LIVE model</name>
 		<uuid>eed773d1-f4f7-4725-8d05-452b96d4f2dc</uuid>
 		<vendor>isee systems, inc.</vendor>
-		<product version="3.8.1" isee:build_number="3632" isee:saved_by_v1="true" lang="en">Stella Architect</product>
+		<product version="4.0" isee:build_number="3710" isee:saved_by_v1="true" lang="en">Stella Architect</product>
 	</header>
+	<ai_information>
+		<status verified="false" trusted="true" tampered="false" uses="false" analyzed="true" log_truncated="true" timestamp="1753965795" algorithm="ed25519" keyurl="https://iseesystems.com/keys/stella01.txt" want_var_info="true" want_var_status="false" want_log="false" sampling="1" signature="HfnVsO8FHVEktKK+EfNbsbloBbkEy5fzz6Lbc1+IAnaTgQwlKOwl9Qa3iCaIIZEt5Ce6dtqgEdBO9+tHtnfaAw=="/>
+		<settings>
+			<isee:setting key="seldon/backgroundKnowledge" value=""/>
+			<isee:setting key="seldon/problemStatement" value="
+"/>
+		</settings>
+	</ai_information>
 	<sim_specs isee:sim_duration="5" isee:run_prefix="Run" isee:simulation_delay="0.350877" isee:play_start="4" isee:restore_on_start="false" method="Euler" time_units="Years" isee:instantaneous_flows="false" isee:ignore_module_errors="false" isee:strict_units="true" isee:loop_scores="true" isee:loop_exhaustive_allowed="1000">
 		<start>0.75</start>
 		<stop>15</stop>
@@ -68,10 +76,10 @@
 			<isee:payoff name="initial calib" action="min"/>
 		</isee:optimizer_specs>
 		<isee:optimizer_specs name="stages calibration" method="Powell" use_additional_starts_file="false" additional_starts="0" report_interval="1" confidence_range="-95" maxiter="300000">
-			<isee:parameter name='"und_r_3_to_4-5"[*]' max="500000"/>
+			<isee:parameter name='"calib_und_r_3_to_4-5"[*]' max="500000"/>
 			<isee:parameter name="r3_diag[*]" max="500000"/>
 			<isee:parameter name='"r4-5_diag"[*]' max="500000"/>
-			<isee:parameter name='"r3_to_4-5"[*]' max="500000"/>
+			<isee:parameter name='"calib_r3_to_4-5"[*]' max="500000"/>
 			<isee:parameter name="S3_mort_factor[*]" min="0" max="50"/>
 			<isee:parameter name='"S4-5_mort_factor"[*]' min="0" max="50"/>
 			<isee:payoff name="stages transition calibration" action="min"/>
@@ -92,7 +100,6 @@
 			<isee:payoff_element name="derived_diag_rate[*]" weight="1" compare_name="diagnosis_rate_p_h_th[*]" compare_run="-2" tolerance="0" type="ls"/>
 			<isee:payoff_element name="model_undiag[*]" weight='"wt_und_S3-5"[*]' compare_name='"CVDP_und_S3-5"[*]' compare_run="-2" tolerance="0" type="ls"/>
 			<isee:payoff_element name="model_diag[*]" weight='"wt_diag_S3-5"[*]' compare_name='"CVDP_diag_S3-5"[*]' compare_run="-2" tolerance="0" type="ls"/>
-			<isee:payoff_weights>5.02491498665089e-10,2.74947173667415e-8,2.87268355552118e-8,2.7667840189606e-9,8.13558035667362e-9,4.40785081359025e-8,9.82398578586214e-8,7.05992156468916e-8,0.0000011918991649357,0.0000650851614304563,0.0000681853026378432,0.00000656037411367987,0.0000192903172195644,0.000104371498305353,0.000232621520656516,0.000167176108654579,5.96235731479678e-11,2.2261761969064e-9,2.49596344403031e-9,1.18627601069206e-9,2.61508873717927e-9,1.3580277380068e-8,2.44309931531262e-9,6.46286317961452e-9,4.92187141852399e-9,1.83778974364734e-7,2.06059248530306e-7,9.79214712237286e-8,2.15894193367773e-7,0.00000112103357756918,2.01680786672687e-7,5.33516379751555e-7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4.82475126151533e-10,2.639841235262e-8,2.75829010006024e-8,2.65655189197174e-9,7.81144786311638e-9,4.23211974795348e-8,9.43233185131307e-8,6.77846535303752e-8,4.83862811536483e-11,1.80661729257149e-9,2.02556691049812e-9,9.62693418131122e-10,2.12224181414193e-9,1.10207883957698e-8,1.98265190842529e-9,5.24481595989676e-9</isee:payoff_weights>
 		</isee:payoff_specs>
 	</isee:payoff_specs_list>
 	<model_units>
@@ -202,7 +209,7 @@
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>(und_S3 - (und_3_mort + S3_diag) * Yr) * (&quot;und_r_3_to_4-5&quot; - und_dm_progress_reduction_p_h_th)/100000</eqn>
+				<eqn>(und_S3 - (und_3_mort + S3_diag) * Yr) *&quot;r_und_3_to_4-5&quot;/100000</eqn>
 				<format precision="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -229,7 +236,7 @@
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>(CKD_3 - diag_3_mort*Yr) * (&quot;r3_to_4-5&quot; - diag_dm_progress_reduction_p_h_th)/100000</eqn>
+				<eqn>(CKD_3 - diag_3_mort*Yr) * &quot;r_3_to_4-5&quot;/100000</eqn>
 				<format precision="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -238,7 +245,7 @@
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>und_S3 * (r_S3_mort - und_dm_mort_reduction_p_h_th)/100000</eqn>
+				<eqn>und_S3 * r_und_S3_mort/100000</eqn>
 				<format precision="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -247,7 +254,7 @@
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;und_S4-5&quot; * (&quot;r_S4-5_mort&quot; - und_dm_mort_reduction_p_h_th)/100000</eqn>
+				<eqn>&quot;und_S4-5&quot; * &quot;r_und_S4-5_mort&quot;/100000</eqn>
 				<format precision="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -256,7 +263,7 @@
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>CKD_3 * (r_S3_mort - diag_dm_mort_reduction_p_h_th)/100000</eqn>
+				<eqn>CKD_3 * r_S3_mort/100000</eqn>
 				<format precision="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -265,7 +272,7 @@
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;CKD_4-5_not_KRT&quot; * (&quot;r_S4-5_mort&quot; - diag_dm_mort_reduction_p_h_th)/100000</eqn>
+				<eqn>&quot;CKD_4-5_not_KRT&quot; *&quot;r_S4-5_mort&quot;/100000</eqn>
 				<format precision="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -499,7 +506,7 @@
 				<eqn>TIME</eqn>
 				<units>People</units>
 			</aux>
-			<aux name="und r 3 to 4-5">
+			<aux name="calib und r 3 to 4-5">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
@@ -530,7 +537,7 @@
 				<range min="0" max="5000"/>
 				<units>Per Year</units>
 			</aux>
-			<aux name="r3 to 4-5">
+			<aux name="calib r3 to 4-5">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
@@ -561,7 +568,7 @@
 				<range min="0" max="1000"/>
 				<units>Per Year</units>
 			</aux>
-			<aux name="r4-5 to KRT">
+			<aux name="calib r4-5 to KRT">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
@@ -678,10 +685,9 @@
 				<eqn>newly_diagnosed_pa/model_undiag * 100000</eqn>
 				<units>Per Year</units>
 			</aux>
-			<group name="Known parameters" run="false">
-				<entity name="approx_KRT_incid_rate_p_h_th"/>
-				<entity name="CVD_all_cause_mortality_p_h_th"/>
+			<group name="helpers" run="false">
 				<entity name="lead_time"/>
+				<entity name="st_time"/>
 				<entity name="Year"/>
 				<entity name="Yr_offset"/>
 			</group>
@@ -730,6 +736,7 @@
 				<entity name='"CVDP_total_prev_S3-5"'/>
 				<entity name='"CVDP_und_S3-5"'/>
 				<entity name='"CVDP_und_S4-5"'/>
+				<entity name="CVD_all_cause_mortality_p_h_th"/>
 				<entity name="CVDP_diag_S3"/>
 				<entity name="CVDP_prev_rate"/>
 				<entity name="CVDP_und_S3"/>
@@ -760,14 +767,14 @@
 				<eqn>ons_pop * incidence_rate_p_h_th / 100000</eqn>
 				<units>People/Years</units>
 			</aux>
-			<aux name="r S3 mort">
+			<aux name="calib r S3 mort">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
 				<eqn>CVD_all_cause_mortality_p_h_th * S3_mort_factor</eqn>
 				<units>Per Year</units>
 			</aux>
-			<aux name="r S4-5 mort">
+			<aux name="calib r S4-5 mort">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
@@ -990,7 +997,7 @@ ELSE 0</eqn>
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>(&quot;CKD_4-5_not_KRT&quot;- &quot;diag_4-5_mort&quot;*Yr)  * (&quot;r4-5_to_KRT&quot; - diag_dm_progress_reduction_p_h_th)/100000</eqn>
+				<eqn>(&quot;CKD_4-5_not_KRT&quot;- &quot;diag_4-5_mort&quot;*Yr)  * &quot;r_4-5_to_KRT&quot;/100000</eqn>
 				<format precision="1" scale_by="1"/>
 				<non_negative/>
 				<units>People/Years</units>
@@ -1020,7 +1027,7 @@ ELSE 0</eqn>
 			<aux name="disease management impact">
 				<eqn>IF TIME &gt;lead_time
 THEN
-(disease_management_reach - &quot;init_%_diag_meds&quot;)/100 * 
+disease_management_reach/100 * 
 disease_management_adherence/100
 ELSE 0</eqn>
 				<units>dmnl</units>
@@ -1042,7 +1049,7 @@ ELSE 0</eqn>
 			<aux name="und disease management impact">
 				<eqn>IF TIME &gt;lead_time
 THEN
-(und_disease_management_reach - &quot;init_%_undiag_meds&quot;)/100 * 
+und_disease_management_reach/100 * 
 und_disease_management_adherence/100
 ELSE 0</eqn>
 				<units>dmnl</units>
@@ -1234,10 +1241,6 @@ ELSE 0</eqn>
 				</element>
 				<units>dmnl</units>
 			</aux>
-			<aux name="approx KRT incid rate p h th">
-				<eqn>12</eqn>
-				<units>Per Year</units>
-			</aux>
 			<aux name="KRT incid whole pop">
 				<dimensions>
 					<dim name="region"/>
@@ -1273,21 +1276,21 @@ ELSE 0</eqn>
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;und_r_3_to_4-5&quot;-und_dm_progress_reduction_p_h_th</eqn>
+				<eqn>&quot;calib_und_r_3_to_4-5&quot;-und_dm_progress_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj und rS4-5 mort">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;r_S4-5_mort&quot;-und_dm_mort_reduction_p_h_th</eqn>
+				<eqn>&quot;calib_r_S4-5_mort&quot;-und_dm_mort_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj und rS3 mort">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>r_S3_mort-und_dm_mort_reduction_p_h_th</eqn>
+				<eqn>calib_r_S3_mort-und_dm_mort_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj r3 diag">
@@ -1308,28 +1311,28 @@ ELSE 0</eqn>
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;r3_to_4-5&quot;-diag_dm_progress_reduction_p_h_th</eqn>
+				<eqn>&quot;calib_r3_to_4-5&quot;-diag_dm_progress_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj r4-5 to KRT">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;r4-5_to_KRT&quot;-diag_dm_progress_reduction_p_h_th</eqn>
+				<eqn>&quot;calib_r4-5_to_KRT&quot;-diag_dm_progress_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj rS3 mort">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>r_S3_mort-diag_dm_mort_reduction_p_h_th</eqn>
+				<eqn>calib_r_S3_mort-diag_dm_mort_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj rS4-5 mort">
 				<dimensions>
 					<dim name="region"/>
 				</dimensions>
-				<eqn>&quot;r_S4-5_mort&quot;-diag_dm_mort_reduction_p_h_th</eqn>
+				<eqn>&quot;calib_r_S4-5_mort&quot;-diag_dm_mort_reduction_p_h_th</eqn>
 				<units>Per Year</units>
 			</aux>
 			<aux name="adj rKRT mort">
@@ -2820,6 +2823,187 @@ THEN 0
 				<eqn>QALY_CKD_cumul - &quot;QALY_CKD_cumul:_baseline&quot;</eqn>
 				<units>People</units>
 			</aux>
+			<aux name="r und S3 mort">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_und_S3_mort_0%&quot; - und_dm_mort_reduction_p_h_th
+ELSE 
+&quot;r_und_S3_mort_0%&quot; - init_und_mort_rate_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r und S4-5 mort">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_und_S4-5_mort_0%&quot; - und_dm_mort_reduction_p_h_th
+ELSE 
+&quot;r_und_S4-5_mort_0%&quot; - init_und_mort_rate_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r und 3 to 4-5">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_und_3_to_4-5_0%&quot; - und_dm_progress_reduction_p_h_th
+ELSE
+&quot;r_und_3_to_4-5_0%&quot; - init_und_progress_rate_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r 3 to 4-5">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_diag_3_to_4-5_0%&quot; - diag_dm_progress_reduction_p_h_th
+ELSE
+&quot;r_diag_3_to_4-5_0%&quot; - init_diag_progress_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r 4-5 to KRT">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_diag_4-5_to_KRT_0%&quot; -diag_dm_progress_reduction_p_h_th
+ELSE
+&quot;r_diag_4-5_to_KRT_0%&quot; - init_diag_progress_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r S3 mort">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_diag_S3_mort_0%&quot; - diag_dm_mort_reduction_p_h_th
+ELSE
+&quot;r_diag_S3_mort_0%&quot; - init_diag_mort_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r S4-5 mort">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>IF TIME &gt;lead_time
+THEN
+&quot;r_diag_S4-5_mort_0%&quot; - diag_dm_mort_reduction_p_h_th
+ELSE
+&quot;r_diag_S4-5_mort_0%&quot; - init_diag_mort_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r und S3 mort 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>calib_r_S3_mort + init_und_mort_rate_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<group name="initialising interventions" run="false">
+				<entity name='"init_%_diag_adher"'/>
+				<entity name='"init_%_undiag_adher"'/>
+				<entity name="init_diag_impact"/>
+				<entity name="init_diag_mort_reduction"/>
+				<entity name="init_diag_progress_reduction"/>
+				<entity name="init_und_impact"/>
+				<entity name="init_und_mort_rate_reduction"/>
+				<entity name="init_und_progress_rate_reduction"/>
+			</group>
+			<aux name="init % undiag adher">
+				<eqn>60</eqn>
+				<units>dmnl</units>
+			</aux>
+			<aux name="init und impact">
+				<eqn>&quot;init_%_undiag_meds&quot;/100 * &quot;init_%_undiag_adher&quot;/100</eqn>
+				<units>dmnl</units>
+			</aux>
+			<aux name="init und mort rate reduction">
+				<eqn>sglt2_mort_reduct_p_h_th * init_und_impact</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="init und progress rate reduction">
+				<eqn>sglt2_progress_reduct_p_h_th * init_und_impact</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="init % diag adher">
+				<eqn>60</eqn>
+				<units>dmnl</units>
+			</aux>
+			<aux name="init diag impact">
+				<eqn>&quot;init_%_diag_meds&quot;/100 * &quot;init_%_diag_adher&quot;/100</eqn>
+				<units>dmnl</units>
+			</aux>
+			<aux name="init diag mort reduction">
+				<eqn>init_diag_impact *sglt2_mort_reduct_p_h_th</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="init diag progress reduction">
+				<eqn>init_diag_impact * sglt2_progress_reduct_p_h_th</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r und S4-5 mort 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>init_und_mort_rate_reduction + &quot;calib_r_S4-5_mort&quot;</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r diag S3 mort 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>calib_r_S3_mort + init_diag_mort_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r diag S4-5 mort 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>&quot;calib_r_S4-5_mort&quot; + init_diag_mort_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r und 3 to 4-5 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>&quot;calib_und_r_3_to_4-5&quot; + init_und_progress_rate_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r diag 3 to 4-5 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>&quot;calib_r3_to_4-5&quot; + init_diag_progress_reduction</eqn>
+				<units>Per Year</units>
+			</aux>
+			<aux name="r diag 4-5 to KRT 0%">
+				<dimensions>
+					<dim name="region"/>
+				</dimensions>
+				<eqn>init_diag_progress_reduction + &quot;calib_r4-5_to_KRT&quot;</eqn>
+				<units>Per Year</units>
+			</aux>
+			<group name="calibration weightings" run="false">
+				<entity name='"wt_CKD_4-5"'/>
+				<entity name='"wt_diag_S3-5"'/>
+				<entity name='"wt_und_S3-5"'/>
+				<entity name='"wt_und_S4-5"'/>
+				<entity name="diag_mort_wt"/>
+				<entity name="diag_rate_wt"/>
+				<entity name="UKRR_incid_wt"/>
+				<entity name="UKRR_KRT_wt"/>
+				<entity name="UKRR_mort_wt"/>
+				<entity name="wt_CKD3"/>
+				<entity name="wt_und_S3"/>
+			</group>
 		</variables>
 		<views>
 			<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
@@ -2869,7 +3053,7 @@ THEN 0
 				<isee:iframe color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt" border_width="thin" border_style="solid"/>
 				<isee:financial_table color="black" background="#E0E0E0" text_align="right" font_family="Segoe UI" font_size="12pt" hide_border="false" auto_fit="true" first_column_width="250" other_column_width="100" header_font_style="normal" header_font_weight="bold" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Segoe UI" header_font_size="14pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
 			</style>
-			<view isee:show_pages="false" background="white" page_width="1090" page_height="761" isee:page_cols="4" isee:page_rows="5" isee:scroll_x="1889" isee:scroll_y="400" isee:popup_graphs_are_comparative="true" isee:enable_non_negative_highlights="false" type="stock_flow">
+			<view isee:show_pages="false" background="white" page_width="1090" page_height="761" isee:page_cols="4" isee:page_rows="5" isee:scroll_x="196.25" zoom="80" isee:popup_graphs_are_comparative="true" isee:enable_non_negative_highlights="false" type="stock_flow">
 				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
 					<stock color="black" background="white" font_family="Segoe UI" label_side="top">
 						<shape type="rectangle" width="55" height="45"/>
@@ -3044,20 +3228,20 @@ THEN 0
 					<from>CKD_3</from>
 					<to>&quot;S3_to_4-5&quot;</to>
 				</connector>
-				<aux background="#55C382" label_side="top" x="1034.25" y="971.25" name="und r 3 to 4-5"/>
-				<aux background="#55C382" label_side="bottom" x="995.75" y="1147.5" name="r3 to 4-5"/>
-				<aux background="#A3A8AC" label_side="bottom" x="1309.25" y="1082.75" width="44.25" height="44.25" name="r4-5 to KRT"/>
-				<connector uid="58" angle="217.54">
-					<from>&quot;r3_to_4-5&quot;</from>
-					<to>&quot;S3_to_4-5&quot;</to>
+				<aux background="#55C382" label_angle="226.073" x="1084.75" y="995" name="calib und r 3 to 4-5"/>
+				<aux background="#55C382" label_side="bottom" x="1078.25" y="1121" name="calib r3 to 4-5"/>
+				<aux background="#A3A8AC" label_side="bottom" x="1408.25" y="1073.21" width="44.25" height="44.25" name="calib r4-5 to KRT"/>
+				<connector uid="58" angle="182.733">
+					<from>&quot;calib_r3_to_4-5&quot;</from>
+					<to>&quot;r_diag_3_to_4-5_0%&quot;</to>
 				</connector>
-				<connector uid="60" angle="167.995">
-					<from>&quot;und_r_3_to_4-5&quot;</from>
-					<to>&quot;und_T3_to_4-5&quot;</to>
+				<connector uid="60" angle="141.34">
+					<from>&quot;calib_und_r_3_to_4-5&quot;</from>
+					<to>&quot;r_und_3_to_4-5_0%&quot;</to>
 				</connector>
 				<aux x="1673.5" y="859" name="model mort"/>
-				<aux background="#55C382" label_side="left" x="778.75" y="994" name="r3 diag"/>
-				<aux background="#55C382" label_side="left" x="1102.75" y="989.25" name="r4-5 diag"/>
+				<aux background="#55C382" label_side="left" x="746.5" y="1077.34" name="r3 diag"/>
+				<aux background="#55C382" label_side="left" x="1245" y="1059.34" name="r4-5 diag"/>
 				<aux x="1557" y="614.5" name="newly diagnosed pa"/>
 				<aux x="1621" y="531.584" name="derived diag rate"/>
 				<connector uid="97" angle="313.671">
@@ -3068,7 +3252,7 @@ THEN 0
 					<from>newly_diagnosed_pa</from>
 					<to>derived_diag_rate</to>
 				</connector>
-				<group locked="false" x="1441" y="25.25" width="429" height="70.167" name="Known parameters"/>
+				<group locked="false" color="#686F73" font_color="#686F73" x="1441" y="25.25" width="429" height="70.167" name="helpers"/>
 				<aux x="1040.5" y="506.084" name="pc diagnosed"/>
 				<connector uid="117" angle="315.385">
 					<from>undiagnosed</from>
@@ -3090,14 +3274,14 @@ THEN 0
 					<from>&quot;und_S4-5&quot;</from>
 					<to>&quot;und_4-5_mort&quot;</to>
 				</connector>
-				<aux background="#EC6555" label_side="bottom" x="1813.5" y="43.4167" name="CVD all cause\nmortality p h th"/>
+				<aux background="#EC6555" label_side="bottom" x="1495" y="345.5" name="CVD all cause\nmortality p h th"/>
 				<connector uid="150" angle="359.406">
 					<from>
 						<alias uid="148"/>
 					</from>
 					<to>all_diag_mort</to>
 				</connector>
-				<group locked="false" x="1435" y="131.417" width="434" height="277" name="Calibration data">
+				<group locked="true" x="1435" y="131.417" width="434" height="277" name="Calibration data">
 					<item uid="261"/>
 				</group>
 				<aux x="198.143" y="191.786" name="calib total prev"/>
@@ -3121,13 +3305,9 @@ THEN 0
 					<from>diag_3_mort</from>
 					<to>&quot;S3_to_4-5&quot;</to>
 				</connector>
-				<aux background="white" x="715.25" y="1300.5" name="r S3 mort"/>
-				<aux background="white" x="1203.25" y="1341.5" name="r S4-5 mort"/>
+				<aux background="white" x="725.25" y="1469.5" name="calib r S3 mort"/>
+				<aux background="white" x="1238.25" y="1435.5" name="calib r S4-5 mort"/>
 				<aux background="white" x="1364.25" y="1335.5" name="r KRT mort"/>
-				<connector uid="175" angle="200.333">
-					<from>&quot;r_S4-5_mort&quot;</from>
-					<to>&quot;diag_4-5_mort&quot;</to>
-				</connector>
 				<connector uid="176" angle="40.601">
 					<from>r_KRT_mort</from>
 					<to>diag_KRT_mort</to>
@@ -3142,11 +3322,11 @@ THEN 0
 					<to>total_prev_pc</to>
 				</connector>
 				<aux background="#A3A8AC" x="1827" y="235.084" name="UKRR KRT"/>
-				<connector uid="190" angle="265.586">
+				<connector uid="190" angle="354.981">
 					<from>r3_diag</from>
 					<to>S3_diag</to>
 				</connector>
-				<connector uid="191" angle="253.245">
+				<connector uid="191" angle="126.351">
 					<from>&quot;r4-5_diag&quot;</from>
 					<to>&quot;S4-5_diag&quot;</to>
 				</connector>
@@ -3221,9 +3401,9 @@ THEN 0
 					<from>&quot;diag_4-5_mort&quot;</from>
 					<to>&quot;S4-5_to_KRT&quot;</to>
 				</connector>
-				<connector uid="59" angle="211.503">
-					<from>&quot;r4-5_to_KRT&quot;</from>
-					<to>&quot;S4-5_to_KRT&quot;</to>
+				<connector uid="59" angle="178.343">
+					<from>&quot;calib_r4-5_to_KRT&quot;</from>
+					<to>&quot;r_diag_4-5_to_KRT_0%&quot;</to>
 				</connector>
 				<connector uid="56" angle="336.32">
 					<from>&quot;CKD_4-5_not_KRT&quot;</from>
@@ -3240,12 +3420,12 @@ THEN 0
 					<to>model_diag_mortality</to>
 				</connector>
 				<aux background="#F9BF07" label_side="bottom" x="71" y="937" width="42" height="42" name="diagnosis increase pc"/>
-				<aux background="white" x="235.5" y="1333.5" width="16" height="16" name="disease management impact"/>
-				<connector uid="230" angle="46.5227">
+				<aux background="white" x="221.75" y="1312" width="16" height="16" name="disease management impact"/>
+				<connector uid="230" angle="55.3147">
 					<from>disease_management_adherence</from>
 					<to>disease_management_impact</to>
 				</connector>
-				<connector uid="231" angle="4.4015">
+				<connector uid="231" angle="10.1934">
 					<from>disease_management_reach</from>
 					<to>disease_management_impact</to>
 				</connector>
@@ -3307,11 +3487,11 @@ THEN 0
 					</from>
 					<to>CVDP_prev_rate</to>
 				</connector>
-				<aux background="white" x="347" y="1213.33" name="diag dm mort\nreduction p h th"/>
+				<aux background="white" x="347" y="1211.5" name="diag dm mort\nreduction p h th"/>
 				<aux background="white" x="343" y="1314" name="diag dm progress\nreduction p h th"/>
 				<aux background="white" x="325" y="1054" name="und dm mort reduction p h th"/>
 				<aux background="white" x="343" y="1135.25" name="und dm progress\nreduction p h th"/>
-				<aux background="#686F73" x="455.5" y="1296" name="sglt2 progress reduct p h th"/>
+				<aux background="#686F73" x="477.5" y="1288.5" name="sglt2 progress reduct p h th"/>
 				<aux background="#686F73" x="477.5" y="1006.5" name="sglt2 mort reduct p h th"/>
 				<connector uid="270" angle="58.8769">
 					<from>und_disease_management_impact</from>
@@ -3321,57 +3501,57 @@ THEN 0
 					<from>und_disease_management_impact</from>
 					<to>und_dm_progress_reduction_p_h_th</to>
 				</connector>
-				<connector uid="272" angle="71.7031">
+				<connector uid="272" angle="63.4051">
 					<from>disease_management_impact</from>
 					<to>diag_dm_mort_reduction_p_h_th</to>
 				</connector>
-				<connector uid="273" angle="33.9113">
+				<connector uid="273" angle="21.4942">
 					<from>disease_management_impact</from>
 					<to>diag_dm_progress_reduction_p_h_th</to>
 				</connector>
-				<connector uid="278" angle="219.279">
+				<connector uid="278" angle="194.916">
 					<from>
 						<alias uid="279"/>
 					</from>
-					<to>&quot;und_T3_to_4-5&quot;</to>
+					<to>&quot;r_und_3_to_4-5&quot;</to>
 				</connector>
-				<connector uid="280" angle="180.003">
+				<connector uid="280" angle="172.057">
 					<from>
 						<alias uid="281"/>
 					</from>
-					<to>und_3_mort</to>
+					<to>r_und_S3_mort</to>
 				</connector>
-				<connector uid="282" angle="5.19443">
+				<connector uid="282" angle="28.2174">
 					<from>
 						<alias uid="281"/>
 					</from>
-					<to>&quot;und_4-5_mort&quot;</to>
+					<to>&quot;r_und_S4-5_mort&quot;</to>
 				</connector>
-				<connector uid="283" angle="180.399">
+				<connector uid="283" angle="164.762">
 					<from>
 						<alias uid="264"/>
 					</from>
-					<to>diag_3_mort</to>
+					<to>r_S3_mort</to>
 				</connector>
-				<connector uid="284" angle="359.778">
+				<connector uid="284" angle="12.2222">
 					<from>
 						<alias uid="264"/>
 					</from>
-					<to>&quot;diag_4-5_mort&quot;</to>
+					<to>&quot;r_S4-5_mort&quot;</to>
 				</connector>
-				<connector uid="285" angle="62.3279">
+				<connector uid="285" angle="36.4201">
 					<from>
 						<alias uid="267"/>
 					</from>
-					<to>&quot;S3_to_4-5&quot;</to>
+					<to>&quot;r_3_to_4-5&quot;</to>
 				</connector>
-				<connector uid="286" angle="80.5377">
+				<connector uid="286" angle="49.5474">
 					<from>
 						<alias uid="268"/>
 					</from>
-					<to>&quot;S4-5_to_KRT&quot;</to>
+					<to>&quot;r_4-5_to_KRT&quot;</to>
 				</connector>
-				<aux x="1619" y="55.3335" name="lead time"/>
+				<aux x="1663" y="55.3335" name="lead time"/>
 				<connector uid="287" angle="135.464">
 					<from>
 						<alias uid="288"/>
@@ -3384,7 +3564,7 @@ THEN 0
 					</from>
 					<to>und_disease_management_impact</to>
 				</connector>
-				<connector uid="290" angle="95.7207">
+				<connector uid="290" angle="107.758">
 					<from>
 						<alias uid="291"/>
 					</from>
@@ -3401,46 +3581,42 @@ THEN 0
 					</from>
 					<to>diagnosis_improvement_pc</to>
 				</connector>
-				<connector uid="294" angle="171.395">
+				<connector uid="294" angle="160.832">
 					<from>
 						<alias uid="295"/>
 					</from>
 					<to>S3_diag</to>
 				</connector>
-				<connector uid="296" angle="13.8002">
+				<connector uid="296" angle="25.1604">
 					<from>
 						<alias uid="295"/>
 					</from>
 					<to>&quot;S4-5_diag&quot;</to>
 				</connector>
-				<connector uid="174" angle="12.2907">
-					<from>r_S3_mort</from>
-					<to>diag_3_mort</to>
-				</connector>
-				<aux background="#55C382" x="644.25" y="1296.5" name="S3 mort factor"/>
+				<aux background="#55C382" x="654.25" y="1465.5" name="S3 mort factor"/>
 				<connector uid="299" angle="22.1094">
 					<from>S3_mort_factor</from>
-					<to>r_S3_mort</to>
+					<to>calib_r_S3_mort</to>
 				</connector>
 				<connector uid="300" angle="102.995">
 					<from>
 						<alias uid="301"/>
 					</from>
-					<to>r_S3_mort</to>
+					<to>calib_r_S3_mort</to>
 				</connector>
-				<aux background="#55C382" x="1210.75" y="1410.5" name="S4-5 mort factor"/>
-				<connector uid="303" angle="75.556">
+				<aux background="#55C382" x="1300.25" y="1498.5" name="S4-5 mort factor"/>
+				<connector uid="303" angle="113.894">
 					<from>&quot;S4-5_mort_factor&quot;</from>
-					<to>&quot;r_S4-5_mort&quot;</to>
+					<to>&quot;calib_r_S4-5_mort&quot;</to>
 				</connector>
-				<connector uid="304" angle="140.711">
+				<connector uid="304" angle="203.132">
 					<from>
 						<alias uid="302"/>
 					</from>
-					<to>&quot;r_S4-5_mort&quot;</to>
+					<to>&quot;calib_r_S4-5_mort&quot;</to>
 				</connector>
 				<aux background="#A3A8AC" x="1373.25" y="1401.5" width="40" height="40" name="KRT mort factor"/>
-				<connector uid="305" angle="56.6894">
+				<connector uid="305" angle="55.6523">
 					<from>
 						<alias uid="302"/>
 					</from>
@@ -3450,7 +3626,6 @@ THEN 0
 					<from>KRT_mort_factor</from>
 					<to>r_KRT_mort</to>
 				</connector>
-				<aux x="1709" y="55.3335" name="approx KRT incid rate p h th"/>
 				<aux x="1673.5" y="598.5" name="KRT incid whole pop"/>
 				<connector uid="313" angle="127.249">
 					<from>KRT_incid</from>
@@ -3625,7 +3800,7 @@ THEN 0
 					<from>meds_progress_reduction_p_h_th</from>
 					<to>diag_dm_progress_reduction_p_h_th</to>
 				</connector>
-				<connector uid="361" angle="78.0761">
+				<connector uid="361" angle="92.6966">
 					<from>sglt2_progress_reduct_p_h_th</from>
 					<to>meds_progress_reduction_p_h_th</to>
 				</connector>
@@ -3645,21 +3820,9 @@ THEN 0
 					<from>sglt2_mort_reduct_p_h_th</from>
 					<to>meds_mort_reduction_p_h_th</to>
 				</connector>
-				<connector uid="367" angle="256.687">
+				<connector uid="367" angle="256.254">
 					<from>meds_mort_reduction_p_h_th</from>
 					<to>diag_dm_mort_reduction_p_h_th</to>
-				</connector>
-				<connector uid="370" angle="343.301">
-					<from>
-						<alias uid="368"/>
-					</from>
-					<to>und_3_mort</to>
-				</connector>
-				<connector uid="372" angle="335.225">
-					<from>
-						<alias uid="373"/>
-					</from>
-					<to>&quot;und_4-5_mort&quot;</to>
 				</connector>
 				<connector uid="374" angle="172.308">
 					<from>
@@ -3811,7 +3974,7 @@ THEN 0
 					<from>UKRR_KRT</from>
 					<to>&quot;CVD_diag_S4-5_exc_KRT&quot;</to>
 				</connector>
-				<aux x="1914" y="34.3335" name="st time"/>
+				<aux x="1598" y="55.3335" name="st time"/>
 				<aux background="#A3A8AC" x="1477" y="158" name="CVDP und S3-5"/>
 				<aux background="#A3A8AC" x="1552" y="158" name="CVDP und S3"/>
 				<aux background="#A3A8AC" x="1627" y="158" name="CVDP und S4-5"/>
@@ -3836,9 +3999,9 @@ THEN 0
 				</connector>
 				<aux x="1470" y="52.3335" name="Year"/>
 				<isee:selector x="1630" y="1443.5" width="193.6" height="30" select_placeholder="false" dimension="region"/>
-				<text_box uid="425" x="1329.5" y="1047.25" width="216.25" height="29.25">fixed to fit with UKRR 2022 incidence</text_box>
+				<text_box appearance="transparent" uid="425" x="1468.25" y="1063.82" width="124.25" height="44.43">fixed to fit with UKRR 2022 incidence</text_box>
 				<aux background="#F9BF07" x="2763.25" y="1118.58" name="cost KRT pp pa"/>
-				<group locked="false" x="1968.25" y="1087" width="874.5" height="1251.75" name="ave costs">
+				<group locked="true" x="1968.25" y="1087" width="874.5" height="1251.75" name="ave costs">
 					<item uid="427"/>
 					<item uid="430"/>
 					<item uid="431"/>
@@ -3942,7 +4105,7 @@ THEN 0
 					<from>init_num_diag_meds</from>
 					<to>num_diag_on_meds</to>
 				</connector>
-				<isee:selector x="3050" y="2028" width="300" height="30" select_placeholder="false" dimension="region"/>
+				<isee:selector x="2861.25" y="1455.5" width="300" height="30" select_placeholder="false" dimension="region"/>
 				<aux x="2605.25" y="1529.5" name="total costs"/>
 				<aux label_side="right" x="2620" y="1337.5" name="init cost meds pp pa"/>
 				<connector uid="459" angle="155.376">
@@ -3994,8 +4157,6 @@ THEN 0
 				<group locked="true" color="#00557F" font_color="#00557F" x="8" y="705.75" width="535" height="751.5" name="Interventions">
 					<item uid="288"/>
 					<item uid="291"/>
-					<item uid="477"/>
-					<item uid="479"/>
 				</group>
 				<aux x="2305" y="1422.5" name="pc diag on meds"/>
 				<connector uid="467" angle="197.607">
@@ -4015,19 +4176,7 @@ THEN 0
 					<from>total_undiag</from>
 					<to>pc_undiag_on_meds</to>
 				</connector>
-				<connector uid="478" angle="306.327">
-					<from>
-						<alias uid="477"/>
-					</from>
-					<to>und_disease_management_impact</to>
-				</connector>
-				<connector uid="480" angle="298.74">
-					<from>
-						<alias uid="479"/>
-					</from>
-					<to>disease_management_impact</to>
-				</connector>
-				<stacked_container uid="481" x="393.188" y="1514.75" width="1154.5" height="650">
+				<stacked_container uid="481" x="1115" y="1628.75" width="1154.5" height="650" minimized="true">
 					<table orientation="horizontal" isee:start_time="1" interval="1" report_balances="beginning" report_flows="instantaneous" width="1154.5" height="650" comparative="true" isee:export_name="krt incidence by scenarios" isee:mark_for_export="true" title="krt incidence by scenarios">
 						<item type="time"/>
 						<item>
@@ -4045,38 +4194,7 @@ THEN 0
 					<from>&quot;cost_meds:_baseline&quot;</from>
 					<to>meds_intervention_cost_diff_from_baseline</to>
 				</connector>
-				<stacked_container uid="489" x="3233" y="11.917" width="350" height="374">
-					<table interval="0.25" report_balances="beginning" report_flows="instantaneous" width="350" height="374">
-						<item type="time"/>
-						<item>
-							<entity name="Year"/>
-						</item>
-						<item>
-							<entity name="Yr_offset"/>
-						</item>
-					</table>
-				</stacked_container>
-				<aux x="1535.5" y="55.3335" name="Yr offset"/>
-				<stacked_container uid="490" x="2626" y="558.917" width="769" height="471">
-					<table interval="0.25" report_balances="beginning" report_flows="instantaneous" width="769" height="471">
-						<item type="time"/>
-						<item>
-							<entity name="Year"/>
-						</item>
-						<item>
-							<entity name='"S4-5_to_KRT"[Midlands]'/>
-						</item>
-						<item>
-							<entity name="UKRR_KRT_incid[?]"/>
-						</item>
-						<item>
-							<entity name="UKRR_KRT[?]"/>
-						</item>
-						<item>
-							<entity name="KRT[?]"/>
-						</item>
-					</table>
-				</stacked_container>
+				<aux x="1530.38" y="55.3335" name="Yr offset"/>
 				<aux x="2026.67" y="1730.83" name="costs pc stage 3 pp pa"/>
 				<aux x="2450.33" y="1725" name="costs pc stage 4-5 pp pa"/>
 				<aux x="2157.67" y="1783.33" name="cost pc stage 3 diag"/>
@@ -4142,22 +4260,6 @@ THEN 0
 					<from>&quot;costs_pc_stage_4-5_pp_pa&quot;</from>
 					<to>&quot;cost_pc_s4-5_undiag&quot;</to>
 				</connector>
-				<stacked_container uid="509" x="3679.67" y="1389.75">
-					<graph width="350" height="250" type="area" isee:sum_stacked_legend="true" isee:stacked_show_hover_values="true" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#686F73" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="cost_primary_care_diag[?]"/>
-						</plot>
-						<plot color="#5881C1" isee:keep_zero_visible="true" pen_width="1" index="1" show_y_axis="true">
-							<entity name="cost_primary_care_undiag[?]"/>
-						</plot>
-						<plot color="#EC6555" isee:keep_zero_visible="true" pen_width="1" index="2" show_y_axis="true">
-							<entity name="cost_total_KRT[?]"/>
-						</plot>
-						<plot color="#F9BF07" isee:keep_zero_visible="true" pen_width="1" index="3" show_y_axis="true">
-							<entity name="cost_meds[?]"/>
-						</plot>
-					</graph>
-				</stacked_container>
 				<aux x="2650.5" y="1706.08" name="cost primary care"/>
 				<aux x="2064" y="1961" name="Stage 3"/>
 				<aux x="2304" y="1956" name="Stage 4-5"/>
@@ -4280,19 +4382,6 @@ THEN 0
 					<from>cost_meds</from>
 					<to>&quot;cost_meds:_baseline&quot;</to>
 				</connector>
-				<stacked_container uid="575" x="2849.5" y="1600.25" width="558" height="383">
-					<graph width="558" height="383" type="time_series" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#686F73" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="mortality_difference_from_baseline[?]"/>
-						</plot>
-						<plot color="#2C2825" isee:keep_zero_visible="true" pen_width="1" index="1" show_y_axis="true">
-							<entity name="prevalence_diff_from_baseline[?]"/>
-						</plot>
-						<plot color="#7F00FF" pen_style="dot_dashed" isee:keep_zero_visible="true" pen_width="1" index="2" show_y_axis="true">
-							<entity name="QALY_cumul_diff_from_baseline[?]"/>
-						</plot>
-					</graph>
-				</stacked_container>
 				<aux x="2508" y="1563" name="total costs: baseline"/>
 				<aux x="2623.25" y="1589.58" name="costs diff from baseline"/>
 				<connector uid="576" angle="169.552">
@@ -4325,26 +4414,6 @@ THEN 0
 					<from>&quot;QALY_cumul:_baseline&quot;</from>
 					<to>QALY_cumul_diff_from_baseline</to>
 				</connector>
-				<stacked_container uid="583" x="1772" y="2423">
-					<graph width="350" height="250" type="time_series" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#5881C1" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="QALY_cumul[?]"/>
-						</plot>
-						<plot color="#EC6555" isee:keep_zero_visible="true" pen_width="1" index="1" show_y_axis="true">
-							<entity name='"QALY_cumul:_baseline"[?]'/>
-						</plot>
-					</graph>
-				</stacked_container>
-				<stacked_container uid="584" x="2394" y="2505">
-					<graph width="350" height="250" type="time_series" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#EC6555" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="QALY_CKD_cumul[?]"/>
-						</plot>
-						<plot color="#F9BF07" isee:keep_zero_visible="true" pen_width="1" index="1" show_y_axis="true">
-							<entity name='"QALY_CKD_cumul:_baseline"[?]'/>
-						</plot>
-					</graph>
-				</stacked_container>
 				<aux x="1628" y="930.417" name="mort cumul"/>
 				<connector uid="585" angle="223.025">
 					<from>model_mort</from>
@@ -4358,16 +4427,6 @@ THEN 0
 					<from>mort_cumul</from>
 					<to>mortality_difference_from_baseline</to>
 				</connector>
-				<stacked_container uid="588" x="1753.25" y="1201.5">
-					<graph width="350" height="250" type="time_series" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#5881C1" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="undiag_model_mort[?]"/>
-						</plot>
-						<plot color="#EC6555" isee:keep_zero_visible="true" pen_width="1" index="1" show_y_axis="true">
-							<entity name="diag_mort[?]"/>
-						</plot>
-					</graph>
-				</stacked_container>
 				<connector uid="589" angle="338.749">
 					<from>cost_meds_pp_pa</from>
 					<to>init_cost_meds_pp_pa</to>
@@ -4431,29 +4490,7 @@ THEN 0
 					<from>meds_intervention_cost_diff_from_baseline</from>
 					<to>percent_change_meds</to>
 				</connector>
-				<stacked_container uid="603" x="2890" y="2090" width="538" height="443">
-					<graph width="538" height="443" type="time_series" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#5881C1" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="QALY_KRT[?]"/>
-						</plot>
-						<plot color="#EC6555" isee:keep_zero_visible="true" pen_width="1" index="1" show_y_axis="true">
-							<entity name="QALY_KRT[?]"/>
-						</plot>
-						<plot color="#F9BF07" isee:keep_zero_visible="true" pen_width="1" index="2" show_y_axis="true">
-							<entity name='"QALY_S4-5"[?]'/>
-						</plot>
-						<plot color="#686F73" isee:keep_zero_visible="true" pen_width="1" index="3" show_y_axis="true">
-							<entity name='"QALY_S4-5"[?]'/>
-						</plot>
-						<plot color="#2C2825" isee:keep_zero_visible="true" pen_width="1" index="4" show_y_axis="true">
-							<entity name="QALY_S3[?]"/>
-						</plot>
-						<plot color="#7F00FF" pen_style="dot_dashed" isee:keep_zero_visible="true" pen_width="1" index="5" show_y_axis="true">
-							<entity name="QALY_S3[?]"/>
-						</plot>
-					</graph>
-				</stacked_container>
-				<stacked_container uid="604" x="1979.84" y="2694" width="851.33" height="524">
+				<stacked_container uid="604" x="2864.09" y="1526.33" width="851.33" height="524">
 					<table width="851.33" height="524">
 						<item type="time"/>
 						<item>
@@ -4499,13 +4536,353 @@ THEN 0
 					<from>&quot;QALY_CKD_cumul:_baseline&quot;</from>
 					<to>QALY_CKD_diff_from_baseline</to>
 				</connector>
-				<stacked_container uid="609" x="2792" y="2525">
-					<graph width="350" height="250" type="time_series" show_grid="false" isee:tick_type="none" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" isee:show_pie_borders="true" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" isee:fill_intensity="0.1" isee:allow_zero_axis="true" left_axis_multi_scale="false" left_axis_auto_scale="true" left_include_units="true" right_axis_multi_scale="false" right_axis_auto_scale="true" right_include_units="true">
-						<plot color="#5881C1" isee:keep_zero_visible="true" pen_width="1" index="0" show_y_axis="true">
-							<entity name="QALY_CKD_diff_from_baseline[?]"/>
-						</plot>
-					</graph>
+				<stacked_container uid="611" x="628.5" y="1730" width="1143" height="526.25">
+					<table width="1143" height="526.25">
+						<item type="time"/>
+						<item>
+							<entity name="CKD_3[England]"/>
+						</item>
+						<item>
+							<entity name='"CKD_4-5_not_KRT"[England]'/>
+						</item>
+						<item>
+							<entity name="KRT[England]"/>
+						</item>
+						<item>
+							<entity name="und_S3[England]"/>
+						</item>
+						<item>
+							<entity name='"und_S4-5"[England]'/>
+						</item>
+						<item>
+							<entity name="diag_3_mort[England]"/>
+						</item>
+						<item>
+							<entity name='"diag_4-5_mort"[England]'/>
+						</item>
+						<item>
+							<entity name="diag_KRT_mort[England]"/>
+						</item>
+						<item>
+							<entity name="S3_diag[England]"/>
+						</item>
+						<item>
+							<entity name='"S3_to_4-5"[England]'/>
+						</item>
+						<item>
+							<entity name='"S4-5_diag"[England]'/>
+						</item>
+						<item>
+							<entity name='"S4-5_to_KRT"[England]'/>
+						</item>
+						<item>
+							<entity name="und_3_mort[England]"/>
+						</item>
+						<item>
+							<entity name='"und_4-5_mort"[England]'/>
+						</item>
+						<item>
+							<entity name="und_new_cases[England]"/>
+						</item>
+						<item>
+							<entity name='"und_T3_to_4-5"[England]'/>
+						</item>
+						<item>
+							<entity name="diagnosis_improvement_pc"/>
+						</item>
+					</table>
 				</stacked_container>
+				<aux background="#AA007F" x="860.25" y="724" name="r und S3 mort"/>
+				<aux background="#AA007F" x="1066.75" y="699" name="r und S4-5 mort"/>
+				<aux background="#AA007F" label_side="right" x="1004" y="847" name="r und 3 to 4-5"/>
+				<aux background="#AA007F" x="1033.5" y="1260.5" name="r 3 to 4-5"/>
+				<aux background="#AA007F" x="1354.25" y="1270.5" name="r 4-5 to KRT"/>
+				<aux background="#AA007F" x="873.75" y="1394.42" name="r S3 mort"/>
+				<aux background="#AA007F" x="1084.75" y="1392.5" name="r S4-5 mort"/>
+				<aux x="816.5" y="641.5" name="r und S3 mort 0%"/>
+				<group locked="true" color="#AA007F" font_color="#AA007F" x="10.5" y="1513" width="530" height="360" name="initialising interventions">
+					<item uid="613"/>
+					<item uid="614"/>
+					<item uid="619"/>
+					<item uid="622"/>
+				</group>
+				<aux x="317" y="1542" name="init % undiag adher"/>
+				<aux x="260.5" y="1607" name="init und impact"/>
+				<aux x="118" y="1597" name="init und mort rate reduction"/>
+				<connector uid="615" angle="309.289">
+					<from>
+						<alias uid="614"/>
+					</from>
+					<to>init_und_impact</to>
+				</connector>
+				<connector uid="616" angle="213.871">
+					<from>&quot;init_%_undiag_adher&quot;</from>
+					<to>init_und_impact</to>
+				</connector>
+				<connector uid="617" angle="156.808">
+					<from>init_und_impact</from>
+					<to>init_und_mort_rate_reduction</to>
+				</connector>
+				<connector uid="618" angle="87.4552">
+					<from>
+						<alias uid="613"/>
+					</from>
+					<to>init_und_mort_rate_reduction</to>
+				</connector>
+				<aux x="432" y="1602" name="init und progress rate reduction"/>
+				<connector uid="620" angle="62.4472">
+					<from>
+						<alias uid="619"/>
+					</from>
+					<to>init_und_progress_rate_reduction</to>
+				</connector>
+				<connector uid="621" angle="19.1955">
+					<from>init_und_impact</from>
+					<to>init_und_progress_rate_reduction</to>
+				</connector>
+				<aux x="329" y="1819" name="init % diag adher"/>
+				<aux x="260.5" y="1775" name="init diag impact"/>
+				<connector uid="623" angle="74.3819">
+					<from>
+						<alias uid="622"/>
+					</from>
+					<to>init_diag_impact</to>
+				</connector>
+				<connector uid="624" angle="98.3511">
+					<from>&quot;init_%_diag_adher&quot;</from>
+					<to>init_diag_impact</to>
+				</connector>
+				<aux x="100" y="1757" name="init diag mort reduction"/>
+				<aux x="423" y="1753" name="init diag progress reduction"/>
+				<connector uid="625" angle="138.366">
+					<from>init_diag_impact</from>
+					<to>init_diag_mort_reduction</to>
+				</connector>
+				<connector uid="626" angle="47.3533">
+					<from>init_diag_impact</from>
+					<to>init_diag_progress_reduction</to>
+				</connector>
+				<connector uid="627" angle="236.31">
+					<from>
+						<alias uid="613"/>
+					</from>
+					<to>init_diag_mort_reduction</to>
+				</connector>
+				<connector uid="628" angle="295.201">
+					<from>
+						<alias uid="619"/>
+					</from>
+					<to>init_diag_progress_reduction</to>
+				</connector>
+				<connector uid="629" angle="6.09832">
+					<from>
+						<alias uid="368"/>
+					</from>
+					<to>&quot;r_und_S3_mort_0%&quot;</to>
+				</connector>
+				<connector uid="630" angle="167.276">
+					<from>
+						<alias uid="631"/>
+					</from>
+					<to>&quot;r_und_S3_mort_0%&quot;</to>
+				</connector>
+				<connector uid="632" angle="326.889">
+					<from>&quot;r_und_S3_mort_0%&quot;</from>
+					<to>r_und_S3_mort</to>
+				</connector>
+				<aux x="1099.75" y="633" name="r und S4-5 mort 0%"/>
+				<connector uid="633" angle="16.9732">
+					<from>
+						<alias uid="631"/>
+					</from>
+					<to>&quot;r_und_S4-5_mort_0%&quot;</to>
+				</connector>
+				<connector uid="634" angle="171.128">
+					<from>
+						<alias uid="373"/>
+					</from>
+					<to>&quot;r_und_S4-5_mort_0%&quot;</to>
+				</connector>
+				<connector uid="635" angle="330.981">
+					<from>&quot;r_und_S4-5_mort&quot;</from>
+					<to>&quot;und_4-5_mort&quot;</to>
+				</connector>
+				<connector uid="636" angle="202.479">
+					<from>r_und_S3_mort</from>
+					<to>und_3_mort</to>
+				</connector>
+				<connector uid="637" angle="229.677">
+					<from>&quot;r_und_S4-5_mort_0%&quot;</from>
+					<to>&quot;r_und_S4-5_mort&quot;</to>
+				</connector>
+				<aux x="816.5" y="1462" name="r diag S3 mort 0%"/>
+				<aux x="1115.5" y="1465.5" name="r diag S4-5 mort 0%"/>
+				<connector uid="638" angle="30.0184">
+					<from>calib_r_S3_mort</from>
+					<to>&quot;r_diag_S3_mort_0%&quot;</to>
+				</connector>
+				<connector uid="639" angle="168.514">
+					<from>&quot;calib_r_S4-5_mort&quot;</from>
+					<to>&quot;r_diag_S4-5_mort_0%&quot;</to>
+				</connector>
+				<connector uid="640" angle="159.624">
+					<from>
+						<alias uid="641"/>
+					</from>
+					<to>&quot;r_diag_S3_mort_0%&quot;</to>
+				</connector>
+				<connector uid="642" angle="25.5466">
+					<from>
+						<alias uid="641"/>
+					</from>
+					<to>&quot;r_diag_S4-5_mort_0%&quot;</to>
+				</connector>
+				<connector uid="643" angle="32.736">
+					<from>&quot;r_diag_S3_mort_0%&quot;</from>
+					<to>r_S3_mort</to>
+				</connector>
+				<connector uid="644" angle="86.4048">
+					<from>r_S3_mort</from>
+					<to>diag_3_mort</to>
+				</connector>
+				<connector uid="645" angle="146.384">
+					<from>&quot;r_diag_S4-5_mort_0%&quot;</from>
+					<to>&quot;r_S4-5_mort&quot;</to>
+				</connector>
+				<connector uid="646" angle="67.2176">
+					<from>&quot;r_S4-5_mort&quot;</from>
+					<to>&quot;diag_4-5_mort&quot;</to>
+				</connector>
+				<aux label_side="bottom" x="995.75" y="963" name="r und 3 to 4-5 0%"/>
+				<connector uid="648" angle="257.094">
+					<from>
+						<alias uid="647"/>
+					</from>
+					<to>&quot;r_und_3_to_4-5_0%&quot;</to>
+				</connector>
+				<connector uid="649" angle="61.1158">
+					<from>&quot;r_und_3_to_4-5_0%&quot;</from>
+					<to>&quot;r_und_3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="650" angle="274.935">
+					<from>&quot;r_und_3_to_4-5&quot;</from>
+					<to>&quot;und_T3_to_4-5&quot;</to>
+				</connector>
+				<aux x="1033.5" y="1162.5" name="r diag 3 to 4-5 0%"/>
+				<aux label_side="top" x="1336.25" y="1117.25" name="r diag 4-5 to KRT 0%"/>
+				<connector uid="652" angle="20.8157">
+					<from>
+						<alias uid="651"/>
+					</from>
+					<to>&quot;r_diag_3_to_4-5_0%&quot;</to>
+				</connector>
+				<connector uid="653" angle="288.37">
+					<from>&quot;r_diag_3_to_4-5_0%&quot;</from>
+					<to>&quot;r_3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="654" angle="127.278">
+					<from>&quot;r_3_to_4-5&quot;</from>
+					<to>&quot;S3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="655" angle="32.6192">
+					<from>
+						<alias uid="656"/>
+					</from>
+					<to>&quot;r_diag_4-5_to_KRT_0%&quot;</to>
+				</connector>
+				<connector uid="657" angle="310.135">
+					<from>&quot;r_diag_4-5_to_KRT_0%&quot;</from>
+					<to>&quot;r_4-5_to_KRT&quot;</to>
+				</connector>
+				<connector uid="658" angle="120.639">
+					<from>&quot;r_4-5_to_KRT&quot;</from>
+					<to>&quot;S4-5_to_KRT&quot;</to>
+				</connector>
+				<connector uid="660" angle="201.801">
+					<from>
+						<alias uid="631"/>
+					</from>
+					<to>r_und_S3_mort</to>
+				</connector>
+				<connector uid="661" angle="191.689">
+					<from>
+						<alias uid="662"/>
+					</from>
+					<to>r_und_S3_mort</to>
+				</connector>
+				<connector uid="663" angle="356.82">
+					<from>
+						<alias uid="631"/>
+					</from>
+					<to>&quot;r_und_S4-5_mort&quot;</to>
+				</connector>
+				<connector uid="664" angle="1.59114">
+					<from>
+						<alias uid="662"/>
+					</from>
+					<to>&quot;r_und_S4-5_mort&quot;</to>
+				</connector>
+				<connector uid="665" angle="255.964">
+					<from>
+						<alias uid="662"/>
+					</from>
+					<to>&quot;r_und_3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="666" angle="82.057">
+					<from>
+						<alias uid="647"/>
+					</from>
+					<to>&quot;r_und_3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="668" angle="61.5044">
+					<from>
+						<alias uid="667"/>
+					</from>
+					<to>&quot;r_3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="669" angle="148.671">
+					<from>
+						<alias uid="667"/>
+					</from>
+					<to>r_S3_mort</to>
+				</connector>
+				<connector uid="670" angle="345.964">
+					<from>
+						<alias uid="667"/>
+					</from>
+					<to>&quot;r_S4-5_mort&quot;</to>
+				</connector>
+				<connector uid="671" angle="135.855">
+					<from>
+						<alias uid="641"/>
+					</from>
+					<to>r_S3_mort</to>
+				</connector>
+				<connector uid="672" angle="49.6859">
+					<from>
+						<alias uid="641"/>
+					</from>
+					<to>&quot;r_S4-5_mort&quot;</to>
+				</connector>
+				<connector uid="673" angle="346.512">
+					<from>
+						<alias uid="651"/>
+					</from>
+					<to>&quot;r_3_to_4-5&quot;</to>
+				</connector>
+				<connector uid="674" angle="15.3946">
+					<from>
+						<alias uid="675"/>
+					</from>
+					<to>&quot;r_4-5_to_KRT&quot;</to>
+				</connector>
+				<connector uid="676" angle="347.661">
+					<from>
+						<alias uid="656"/>
+					</from>
+					<to>&quot;r_4-5_to_KRT&quot;</to>
+				</connector>
+				<group locked="true" color="#686F73" font_color="#686F73" x="1963" y="22" width="383" height="240" name="calibration weightings"/>
 				<alias background="#686F73" font_style="italic" uid="148" x="843" y="240.917" width="18" height="18">
 					<of>CVD_all_cause_mortality_p_h_th</of>
 				</alias>
@@ -4521,19 +4898,19 @@ THEN 0
 				<alias font_style="italic" uid="261" x="1605" y="332.024" width="18" height="18">
 					<of>ons_pop</of>
 				</alias>
-				<alias background="#F9BF07" font_style="italic" uid="264" x="953.75" y="1347.42" width="18" height="18">
+				<alias background="#F9BF07" font_style="italic" uid="264" x="968.75" y="1367.42" width="18" height="18">
 					<of>diag_dm_mort_reduction_p_h_th</of>
 				</alias>
 				<alias background="#F9BF07" font_style="italic" uid="267" x="961.438" y="1264.5" width="18" height="18">
 					<of>diag_dm_progress_reduction_p_h_th</of>
 				</alias>
-				<alias background="#F9BF07" font_style="italic" uid="268" x="1303.25" y="1261.5" width="18" height="18">
+				<alias background="#F9BF07" font_style="italic" uid="268" x="1273.25" y="1272.5" width="18" height="18">
 					<of>diag_dm_progress_reduction_p_h_th</of>
 				</alias>
-				<alias background="#F9BF07" font_style="italic" uid="281" x="952.25" y="745.5" width="18" height="18">
+				<alias background="#F9BF07" font_style="italic" uid="281" x="950.75" y="680.5" width="18" height="18">
 					<of>und_dm_mort_reduction_p_h_th</of>
 				</alias>
-				<alias background="#F9BF07" font_style="italic" label_side="top" uid="279" x="1004.75" y="826" width="18" height="18">
+				<alias background="#F9BF07" font_style="italic" label_side="top" uid="279" x="1023.75" y="800" width="18" height="18">
 					<of>und_dm_progress_reduction_p_h_th</of>
 				</alias>
 				<alias color="black" background="white" font_style="italic" uid="288" x="316" y="932" width="18" height="18">
@@ -4544,21 +4921,21 @@ THEN 0
 					<shape type="circle" radius="18"/>
 					<of>lead_time</of>
 				</alias>
-				<alias color="black" background="#F9BF07" font_style="italic" uid="295" x="969.25" y="1024.5" width="26" height="26">
+				<alias color="black" background="#F9BF07" font_style="italic" uid="295" x="964.75" y="1056.75" width="26" height="26">
 					<shape type="circle" radius="18"/>
 					<of>diagnosis_improvement_pc</of>
 				</alias>
-				<alias background="#686F73" font_style="italic" uid="301" x="688.25" y="1350.5" width="18" height="18">
+				<alias background="#686F73" font_style="italic" uid="301" x="698.25" y="1519.5" width="18" height="18">
 					<of>CVD_all_cause_mortality_p_h_th</of>
 				</alias>
-				<alias background="#686F73" font_style="italic" uid="302" x="1291.25" y="1367.5" width="18" height="18">
+				<alias background="#686F73" font_style="italic" uid="302" x="1303.25" y="1358.5" width="18" height="18">
 					<of>CVD_all_cause_mortality_p_h_th</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="315" x="1996" y="559.417" width="18" height="18">
 					<of>und_dm_progress_reduction_p_h_th</of>
 				</alias>
 				<alias background="#55C382" font_style="italic" uid="317" x="1996" y="627.917" width="18" height="18">
-					<of>&quot;und_r_3_to_4-5&quot;</of>
+					<of>&quot;calib_und_r_3_to_4-5&quot;</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="319" x="2443.5" y="590.167" width="18" height="18">
 					<of>und_dm_mort_reduction_p_h_th</of>
@@ -4576,19 +4953,19 @@ THEN 0
 					<of>diag_dm_progress_reduction_p_h_th</of>
 				</alias>
 				<alias background="#55C382" font_style="italic" uid="326" x="2346" y="704.917" width="18" height="18">
-					<of>&quot;r3_to_4-5&quot;</of>
+					<of>&quot;calib_r3_to_4-5&quot;</of>
 				</alias>
 				<alias background="#55C382" font_style="italic" uid="327" x="2342" y="795.917" width="18" height="18">
-					<of>&quot;r4-5_to_KRT&quot;</of>
+					<of>&quot;calib_r4-5_to_KRT&quot;</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="328" x="2398" y="893.917" width="18" height="18">
 					<of>diag_dm_mort_reduction_p_h_th</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="329" x="2334" y="871.917" width="18" height="18">
-					<of>r_S3_mort</of>
+					<of>calib_r_S3_mort</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="330" x="2339" y="932.917" width="18" height="18">
-					<of>&quot;r_S4-5_mort&quot;</of>
+					<of>&quot;calib_r_S4-5_mort&quot;</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="331" x="2346" y="978.917" width="18" height="18">
 					<of>r_KRT_mort</of>
@@ -4599,17 +4976,17 @@ THEN 0
 				<alias font_style="italic" uid="355" x="2276.5" y="777.917" width="18" height="18">
 					<of>ons_pop</of>
 				</alias>
-				<alias background="white" font_style="italic" uid="368" x="718.25" y="740.5" width="18" height="18">
-					<of>r_S3_mort</of>
+				<alias background="white" font_style="italic" uid="368" x="745.5" y="587.5" width="18" height="18">
+					<of>calib_r_S3_mort</of>
 				</alias>
-				<alias background="white" font_style="italic" uid="373" x="1075.75" y="702.5" width="18" height="18">
-					<of>&quot;r_S4-5_mort&quot;</of>
+				<alias background="white" font_style="italic" uid="373" x="1183" y="587.5" width="18" height="18">
+					<of>&quot;calib_r_S4-5_mort&quot;</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="379" x="2395" y="546.917" width="18" height="18">
-					<of>&quot;r_S4-5_mort&quot;</of>
+					<of>&quot;calib_r_S4-5_mort&quot;</of>
 				</alias>
 				<alias background="white" font_style="italic" uid="380" x="2401" y="630.917" width="18" height="18">
-					<of>r_S3_mort</of>
+					<of>calib_r_S3_mort</of>
 				</alias>
 				<alias font_style="italic" uid="393" x="2662" y="766.917" width="18" height="18">
 					<of>ons_pop</of>
@@ -4628,12 +5005,6 @@ THEN 0
 				</alias>
 				<alias font_style="italic" uid="440" x="2437" y="1299.5" width="18" height="18">
 					<of>lead_time</of>
-				</alias>
-				<alias font_style="italic" label_side="top" uid="477" x="188" y="1013" width="18" height="18">
-					<of>&quot;init_%_undiag_meds&quot;</of>
-				</alias>
-				<alias font_style="italic" uid="479" x="215" y="1257" width="18" height="18">
-					<of>&quot;init_%_diag_meds&quot;</of>
 				</alias>
 				<alias background="#F9BF07" font_style="italic" uid="487" x="2662.25" y="1360.5" width="18" height="18">
 					<of>cost_primary_interventions_targeted</of>
@@ -4659,8 +5030,48 @@ THEN 0
 				<alias font_style="italic" uid="555" x="1994" y="2224" width="18" height="18">
 					<of>model_prev</of>
 				</alias>
+				<alias background="#686F73" font_style="italic" uid="613" x="171" y="1664.5" width="18" height="18">
+					<of>sglt2_mort_reduct_p_h_th</of>
+				</alias>
+				<alias font_style="italic" uid="614" x="206" y="1533" width="18" height="18">
+					<of>&quot;init_%_undiag_meds&quot;</of>
+				</alias>
+				<alias background="#686F73" font_style="italic" uid="619" x="334" y="1664.5" width="18" height="18">
+					<of>sglt2_progress_reduct_p_h_th</of>
+				</alias>
+				<alias font_style="italic" uid="622" x="193" y="1810" width="18" height="18">
+					<of>&quot;init_%_diag_meds&quot;</of>
+				</alias>
+				<alias font_style="italic" uid="631" x="934" y="620" width="18" height="18">
+					<of>init_und_mort_rate_reduction</of>
+				</alias>
+				<alias color="black" background="white" font_style="italic" uid="641" x="968" y="1452" width="18" height="18">
+					<shape type="circle" radius="18"/>
+					<of>init_diag_mort_reduction</of>
+				</alias>
+				<alias color="black" background="white" font_style="italic" uid="647" x="1047" y="914" width="18" height="18">
+					<shape type="circle" radius="18"/>
+					<of>init_und_progress_rate_reduction</of>
+				</alias>
+				<alias color="black" background="white" font_style="italic" uid="651" x="904" y="1119" width="18" height="18">
+					<shape type="circle" radius="18"/>
+					<of>init_diag_progress_reduction</of>
+				</alias>
+				<alias color="black" background="white" font_style="italic" uid="656" x="1224" y="1108" width="18" height="18">
+					<shape type="circle" radius="18"/>
+					<of>init_diag_progress_reduction</of>
+				</alias>
+				<alias font_style="italic" uid="662" x="955" y="728" width="18" height="18">
+					<of>lead_time</of>
+				</alias>
+				<alias font_style="italic" uid="667" x="1029" y="1322" width="18" height="18">
+					<of>lead_time</of>
+				</alias>
+				<alias font_style="italic" uid="675" x="1229.25" y="1349.42" width="18" height="18">
+					<of>lead_time</of>
+				</alias>
 			</view>
-			<view isee:template_view="template:3" isee:name="Intro" background="white" page_width="1066" page_height="600" zoom="125" home_view="true" type="interface">
+			<view isee:template_view="template:3" isee:name="Intro" background="white" page_width="1066" page_height="600" zoom="165" home_view="true" type="interface">
 				<style>
 					<isee:stacked_container item_spacing="0" corner_radius="4" selected_item_color="black" selected_item_background="white" item_background="#DDDDDD" transparent_bg="false"/>
 				</style>
@@ -4737,7 +5148,7 @@ Click outside the pop-up to return to the main screen.</text>
 				</graphics_frame>
 				<text_box x="690.055" y="260.828" width="127.586" height="77.0111">Video walk-through (click the open square to open in a new window)</text_box>
 			</view>
-			<view isee:template_view="template:2" isee:name="Calibration" background="white" page_width="1066" page_height="600" zoom="165" type="interface">
+			<view isee:template_view="template:2" isee:name="Calibration" background="white" page_width="1066" page_height="600" zoom="125" type="interface">
 				<style>
 					<isee:stacked_container item_spacing="0" corner_radius="4" selected_item_color="black" selected_item_background="white" item_background="#DDDDDD" transparent_bg="false"/>
 				</style>
@@ -5192,7 +5603,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 					</graph>
 				</stacked_container>
 				<isee:annotation popup_background_color="#686F73" popup_font_color="#F9BF07" popup_font_size="22pt" launcher_label="" show_by_default="true" hide_launcher="true" launch_on_hover="false" x="619.2" y="117.347">
-					<popup x="222.872" y="69.506" width="826.273" height="491.688">
+					<popup x="225.272" y="70.306" width="829.264" height="485.475">
 						<text>
 
 
@@ -5206,7 +5617,7 @@ Click to hide this message
 </text>
 					</popup>
 				</isee:annotation>
-				<stacked_container x="230.204" y="324.224" width="319" height="185.05" z_index="5" isee:appearance="dropdown">
+				<stacked_container x="230.204" y="324.224" width="319" height="185.05" z_index="5" isee:appearance="dropdown" visible_index="1">
 					<group_input width="319" height="185.05" isee:show_title="false" title="Annual treatment costs per person">
 						<numeric_input title="Primary Care costs stage 3">
 							<format precision="1" scale_by="1" prefix="£"/>
@@ -5310,7 +5721,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://doi.org/10.1016/j.eclinm.2024.102614&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5881c1;&quot;&gt;Inside CKD&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5881c1;&quot;&gt;Office for National Statistics&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text_box>
 			</view>
-			<view isee:template_view="template:2" isee:name="Parameters" background="white" page_width="1066" page_height="600" zoom="125" type="interface">
+			<view isee:template_view="template:2" isee:name="Parameters" background="white" page_width="1066" page_height="600" zoom="165" type="interface">
 				<style>
 					<isee:stacked_container item_spacing="0" corner_radius="4" selected_item_color="black" selected_item_background="white" item_background="#DDDDDD" transparent_bg="false"/>
 				</style>
@@ -5639,26 +6050,26 @@ li.checked::marker { content: &quot;\2612&quot;; }
 							<model name="Top-Level"/>
 							<isee:visible_list>
 								<entity name="incidence_rate_p_h_th"/>
-								<entity name="diag_3_mort"/>
-								<entity name='"S3_to_4-5"'/>
-								<entity name="new_diagnoses"/>
-								<entity name="diagnosis_rate_p_h_th"/>
-								<entity name="all_diag_mort"/>
-								<entity name="diagnosed"/>
-								<entity name='"S4-5_to_KRT"'/>
-								<entity name="KRT"/>
-								<entity name="all_undiag_mort"/>
 								<item uid="13"/>
-								<item uid="148"/>
+								<entity name="KRT"/>
+								<entity name='"S3_to_4-5"'/>
+								<entity name="diagnosed"/>
 								<entity name='"diag_4-5_mort"'/>
-								<item uid="247"/>
+								<entity name='"S4-5_to_KRT"'/>
+								<entity name="all_diag_mort"/>
+								<entity name='"CKD_4-5_not_KRT"'/>
+								<entity name="diag_3_mort"/>
+								<entity name="new_diagnoses"/>
 								<entity name="exp_incidence"/>
+								<entity name="all_undiag_mort"/>
 								<entity name="diag_KRT_mort"/>
 								<entity name="undiagnosed"/>
+								<item uid="148"/>
 								<entity name="ons_pop"/>
 								<item uid="248"/>
-								<entity name='"CKD_4-5_not_KRT"'/>
+								<item uid="247"/>
 								<entity name="CKD_3"/>
+								<entity name="diagnosis_rate_p_h_th"/>
 							</isee:visible_list>
 							<isee:highlight_list/>
 						</isee:model_view>
@@ -5713,56 +6124,56 @@ The data sources for the known values are the Health Survey for England 2016 and
 								<entity name="und_new_cases"/>
 								<item uid="55"/>
 								<item uid="13"/>
-								<entity name="incidence_rate_p_h_th"/>
-								<entity name='"S4-5_to_KRT"'/>
-								<entity name="KRT"/>
-								<entity name="diagnosis_rate_p_h_th"/>
-								<item uid="193"/>
 								<entity name="diag_3_mort"/>
-								<entity name='"S3_to_4-5"'/>
+								<item uid="19"/>
+								<entity name='"S4-5_to_KRT"'/>
 								<item uid="213"/>
+								<entity name="incidence_rate_p_h_th"/>
+								<entity name='"diag_4-5_mort"'/>
+								<entity name='"S3_to_4-5"'/>
 								<entity name="all_diag_mort"/>
-								<entity name='"S4-5_diag"'/>
-								<item uid="172"/>
-								<entity name='"und_T3_to_4-5"'/>
-								<entity name="diag_KRT_mort"/>
-								<item uid="192"/>
-								<item uid="28"/>
-								<item uid="52"/>
 								<entity name='"CKD_4-5_not_KRT"'/>
 								<entity name="und_S3"/>
+								<entity name="ons_pop"/>
+								<entity name='"und_4-5_mort"'/>
+								<entity name="diag_KRT_mort"/>
+								<item uid="52"/>
+								<item uid="28"/>
+								<item uid="192"/>
+								<entity name="KRT"/>
 								<entity name="und_3_mort"/>
+								<item uid="193"/>
 								<entity name='"und_S4-5"'/>
 								<entity name="diagnosed"/>
 								<entity name="new_diagnoses"/>
 								<item uid="136"/>
-								<item uid="56"/>
 								<entity name="exp_incidence"/>
-								<item uid="19"/>
-								<item uid="247"/>
-								<entity name='"diag_4-5_mort"'/>
-								<entity name="CKD_3"/>
-								<item uid="17"/>
-								<entity name="ons_pop"/>
-								<item uid="248"/>
-								<entity name="undiagnosed"/>
-								<entity name="all_undiag_mort"/>
-								<entity name='"und_4-5_mort"'/>
+								<item uid="172"/>
 								<entity name="S3_diag"/>
+								<entity name="CKD_3"/>
+								<entity name="diagnosis_rate_p_h_th"/>
+								<item uid="56"/>
+								<entity name='"und_T3_to_4-5"'/>
+								<entity name='"S4-5_diag"'/>
+								<item uid="17"/>
+								<item uid="248"/>
+								<item uid="247"/>
+								<entity name="undiagnosed"/>
 								<item uid="148"/>
+								<entity name="all_undiag_mort"/>
 							</isee:visible_list>
 							<isee:highlight_list>
-								<item uid="17"/>
-								<item uid="192"/>
-								<item uid="172"/>
-								<item uid="193"/>
 								<item uid="213"/>
-								<item uid="56"/>
-								<item uid="136"/>
 								<item uid="19"/>
-								<item uid="55"/>
 								<item uid="28"/>
+								<item uid="192"/>
+								<item uid="193"/>
+								<item uid="55"/>
 								<item uid="52"/>
+								<item uid="136"/>
+								<item uid="172"/>
+								<item uid="17"/>
+								<item uid="56"/>
 							</isee:highlight_list>
 						</isee:model_view>
 						<text_box x="33.913" y="272.174" width="234.783" height="153.043">A staged CKD model is shown here. 
@@ -5814,74 +6225,74 @@ All flows between stages and diagnosis states are rates, proportional to the sto
 							<isee:visible_list>
 								<entity name="und_new_cases"/>
 								<entity name='"CKD_4-5_not_KRT"'/>
+								<entity name="all_diag_mort"/>
 								<item uid="52"/>
 								<entity name="und_S3"/>
-								<entity name='"und_S4-5"'/>
-								<item uid="213"/>
-								<entity name='"S3_to_4-5"'/>
-								<entity name="diag_3_mort"/>
-								<entity name="diag_KRT_mort"/>
 								<entity name='"und_T3_to_4-5"'/>
-								<item uid="172"/>
-								<entity name="primary_prevention_reach_pc"/>
-								<item uid="148"/>
-								<item uid="17"/>
-								<entity name="ons_pop"/>
-								<entity name="und_3_mort"/>
+								<item uid="19"/>
+								<entity name='"S4-5_to_KRT"'/>
+								<item uid="213"/>
 								<item uid="192"/>
-								<entity name="primary_prevention_impact"/>
-								<item uid="215"/>
-								<entity name="CKD_3"/>
 								<item uid="28"/>
+								<entity name='"S3_to_4-5"'/>
+								<entity name='"S4-5_diag"'/>
+								<item uid="17"/>
+								<entity name="diag_3_mort"/>
+								<item uid="211"/>
+								<entity name="und_3_mort"/>
+								<entity name="KRT"/>
+								<entity name="primary_prevention_impact"/>
+								<entity name="CKD_3"/>
+								<item uid="193"/>
+								<entity name='"und_S4-5"'/>
 								<item uid="55"/>
 								<item uid="210"/>
+								<entity name="primary_prevention_reach_pc"/>
 								<entity name="new_cases_pa"/>
-								<entity name='"S4-5_diag"'/>
-								<entity name="all_diag_mort"/>
-								<item uid="211"/>
-								<entity name="KRT"/>
-								<entity name='"S4-5_to_KRT"'/>
-								<entity name="primary_prevention_effectiveness_pc"/>
-								<item uid="193"/>
-								<item uid="19"/>
-								<item uid="247"/>
 								<item uid="56"/>
-								<item uid="136"/>
-								<entity name="all_undiag_mort"/>
-								<entity name='"und_4-5_mort"'/>
+								<entity name="primary_prevention_effectiveness_pc"/>
+								<item uid="247"/>
 								<entity name="S3_diag"/>
+								<item uid="136"/>
+								<item uid="172"/>
+								<entity name="diag_KRT_mort"/>
+								<item uid="215"/>
+								<entity name="all_undiag_mort"/>
+								<item uid="148"/>
+								<entity name='"und_4-5_mort"'/>
+								<entity name="ons_pop"/>
 								<entity name='"diag_4-5_mort"'/>
 							</isee:visible_list>
 							<isee:highlight_list>
-								<item uid="193"/>
-								<item uid="17"/>
+								<item uid="136"/>
+								<item uid="213"/>
 								<item uid="282"/>
-								<entity name='"r4-5_diag"'/>
+								<item uid="215"/>
 								<item uid="169"/>
 								<item uid="191"/>
-								<entity name='"S4-5_diag"'/>
+								<entity name="S3_diag"/>
+								<item uid="192"/>
 								<item uid="279"/>
-								<item uid="215"/>
-								<item uid="213"/>
-								<item uid="210"/>
-								<item uid="281"/>
 								<entity name="und_S3"/>
 								<item uid="278"/>
-								<item uid="52"/>
-								<entity name="S3_diag"/>
-								<entity name='"und_4-5_mort"'/>
-								<entity name='"und_S4-5"'/>
-								<item uid="280"/>
-								<item uid="136"/>
-								<item uid="211"/>
-								<item uid="124"/>
+								<item uid="210"/>
 								<item uid="60"/>
-								<item uid="192"/>
-								<entity name="und_3_mort"/>
-								<item uid="190"/>
-								<entity name="r3_diag"/>
-								<entity name='"und_r_3_to_4-5"'/>
+								<item uid="281"/>
+								<entity name='"r4-5_diag"'/>
+								<item uid="193"/>
+								<entity name='"und_S4-5"'/>
+								<item uid="211"/>
+								<item uid="52"/>
+								<item uid="124"/>
+								<item uid="280"/>
+								<entity name='"und_4-5_mort"'/>
+								<entity name='"calib_und_r_3_to_4-5"'/>
+								<item uid="17"/>
 								<entity name='"und_T3_to_4-5"'/>
+								<item uid="190"/>
+								<entity name='"S4-5_diag"'/>
+								<entity name="und_3_mort"/>
+								<entity name="r3_diag"/>
 							</isee:highlight_list>
 						</isee:model_view>
 						<text_box x="18.2608" y="87.826" width="234.783" height="87.8253">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5932,95 +6343,93 @@ li.checked::marker { content: &quot;\2612&quot;; }
 							<isee:visible_list>
 								<entity name="CKD_3"/>
 								<item uid="52"/>
-								<entity name="und_S3"/>
-								<entity name='"S4-5_diag"'/>
-								<entity name="all_diag_mort"/>
-								<item uid="172"/>
-								<entity name='"und_T3_to_4-5"'/>
-								<item uid="28"/>
-								<entity name="diag_3_mort"/>
-								<entity name='"S3_to_4-5"'/>
-								<entity name='"CKD_4-5_not_KRT"'/>
 								<item uid="55"/>
-								<entity name="ons_pop"/>
-								<item uid="17"/>
-								<entity name='"diag_4-5_mort"'/>
-								<item uid="193"/>
-								<entity name="und_new_cases"/>
-								<entity name="und_3_mort"/>
-								<entity name="KRT"/>
-								<entity name='"S4-5_to_KRT"'/>
-								<item uid="192"/>
-								<entity name='"und_S4-5"'/>
-								<entity name="diag_KRT_mort"/>
-								<entity name='"und_4-5_mort"'/>
-								<entity name="S3_diag"/>
-								<entity name="all_undiag_mort"/>
-								<item uid="148"/>
-								<item uid="19"/>
-								<item uid="247"/>
-								<item uid="56"/>
+								<entity name="diag_3_mort"/>
+								<entity name="und_S3"/>
+								<entity name='"CKD_4-5_not_KRT"'/>
+								<entity name="all_diag_mort"/>
 								<item uid="136"/>
+								<item uid="172"/>
+								<entity name='"diag_4-5_mort"'/>
+								<item uid="19"/>
+								<entity name='"S3_to_4-5"'/>
+								<item uid="192"/>
+								<item uid="28"/>
+								<entity name="und_new_cases"/>
+								<entity name="KRT"/>
+								<entity name="und_3_mort"/>
+								<entity name='"S4-5_to_KRT"'/>
+								<item uid="193"/>
+								<entity name='"und_S4-5"'/>
+								<entity name="all_undiag_mort"/>
+								<entity name="diag_KRT_mort"/>
+								<entity name="S3_diag"/>
+								<item uid="247"/>
+								<entity name="ons_pop"/>
+								<entity name='"und_4-5_mort"'/>
+								<item uid="148"/>
+								<entity name='"und_T3_to_4-5"'/>
+								<entity name='"S4-5_diag"'/>
+								<item uid="17"/>
+								<item uid="56"/>
 							</isee:visible_list>
 							<isee:highlight_list>
-								<entity name="r3_diag"/>
-								<entity name='"CKD_4-5_not_KRT"'/>
-								<entity name="und_S3"/>
 								<item uid="56"/>
-								<entity name='"und_r_3_to_4-5"'/>
-								<item uid="193"/>
-								<entity name='"r4-5_diag"'/>
-								<entity name="sglt2_progress_reduct_p_h_th"/>
-								<entity name='"S4-5_to_KRT"'/>
+								<entity name='"CKD_4-5_not_KRT"'/>
+								<entity name='"und_T3_to_4-5"'/>
 								<entity name="sglt2_mort_reduct_p_h_th"/>
-								<entity name="KRT"/>
-								<item uid="136"/>
-								<entity name='"r4-5_to_KRT"'/>
-								<entity name="r_KRT_mort"/>
+								<item uid="177"/>
+								<entity name="diag_3_mort"/>
+								<entity name='"r4-5_diag"'/>
+								<entity name='"calib_r4-5_to_KRT"'/>
+								<item uid="55"/>
+								<entity name="sglt2_progress_reduct_p_h_th"/>
 								<item uid="279"/>
-								<entity name="CKD_3"/>
-								<item uid="124"/>
 								<item uid="60"/>
-								<entity name='"und_4-5_mort"'/>
-								<item uid="174"/>
-								<item uid="52"/>
-								<item uid="278"/>
-								<item uid="268"/>
+								<entity name='"calib_r3_to_4-5"'/>
 								<item uid="280"/>
-								<entity name='"und_S4-5"'/>
-								<item uid="282"/>
-								<item uid="169"/>
-								<item uid="173"/>
-								<entity name='"S3_to_4-5"'/>
-								<item uid="281"/>
-								<entity name="und_3_mort"/>
-								<item uid="284"/>
-								<item uid="190"/>
-								<entity name="und_new_cases"/>
-								<item uid="286"/>
-								<item uid="172"/>
-								<entity name='"diag_4-5_mort"'/>
-								<item uid="59"/>
-								<item uid="19"/>
-								<entity name="r_S3_mort"/>
+								<entity name='"und_4-5_mort"'/>
+								<entity name='"S4-5_to_KRT"'/>
 								<item uid="176"/>
+								<entity name='"S3_to_4-5"'/>
+								<item uid="124"/>
+								<item uid="52"/>
+								<item uid="58"/>
+								<entity name="diag_KRT_mort"/>
+								<item uid="193"/>
+								<entity name='"und_S4-5"'/>
+								<item uid="281"/>
+								<item uid="19"/>
+								<item uid="282"/>
+								<entity name='"calib_und_r_3_to_4-5"'/>
+								<item uid="173"/>
+								<item uid="286"/>
+								<entity name="calib_r_S3_mort"/>
+								<entity name='"diag_4-5_mort"'/>
+								<entity name="und_S3"/>
+								<item uid="59"/>
+								<item uid="278"/>
+								<item uid="190"/>
 								<item uid="17"/>
 								<item uid="264"/>
-								<item uid="192"/>
 								<item uid="283"/>
+								<item uid="268"/>
+								<item uid="136"/>
+								<item uid="172"/>
 								<item uid="285"/>
-								<entity name='"und_T3_to_4-5"'/>
-								<item uid="58"/>
-								<item uid="55"/>
-								<item uid="28"/>
+								<entity name="und_new_cases"/>
 								<item uid="191"/>
-								<item uid="177"/>
-								<entity name="diag_KRT_mort"/>
+								<item uid="169"/>
+								<item uid="192"/>
+								<item uid="28"/>
+								<entity name="CKD_3"/>
 								<item uid="267"/>
-								<entity name='"r_S4-5_mort"'/>
-								<entity name="diag_3_mort"/>
-								<entity name='"r3_to_4-5"'/>
-								<item uid="175"/>
+								<entity name="KRT"/>
+								<item uid="284"/>
+								<entity name="und_3_mort"/>
+								<entity name="r3_diag"/>
+								<entity name="r_KRT_mort"/>
+								<entity name='"calib_r_S4-5_mort"'/>
 							</isee:highlight_list>
 						</isee:model_view>
 						<text_box background="#FDF2CD" padding="3" border_width="thin" border_style="solid" x="14.4828" y="236.517" width="212.4" height="147.875">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -6055,88 +6464,87 @@ li.checked::marker { content: &quot;\2612&quot;; }
 							<isee:visible_list>
 								<entity name="diag_3_mort"/>
 								<entity name='"S3_to_4-5"'/>
-								<item uid="19"/>
-								<item uid="136"/>
-								<entity name="CKD_3"/>
-								<entity name='"CKD_4-5_not_KRT"'/>
-								<entity name="und_S3"/>
-								<entity name="all_diag_mort"/>
-								<item uid="279"/>
-								<entity name='"S4-5_diag"'/>
-								<item uid="267"/>
-								<item uid="172"/>
-								<item uid="286"/>
 								<entity name='"S4-5_to_KRT"'/>
-								<entity name="KRT"/>
-								<entity name="all_undiag_mort"/>
-								<entity name='"und_4-5_mort"'/>
+								<entity name='"diag_4-5_mort"'/>
+								<item uid="55"/>
+								<item uid="286"/>
+								<entity name="all_diag_mort"/>
+								<entity name="und_S3"/>
+								<item uid="278"/>
+								<entity name='"CKD_4-5_not_KRT"'/>
+								<item uid="247"/>
 								<entity name="S3_diag"/>
-								<item uid="56"/>
+								<item uid="267"/>
+								<entity name="CKD_3"/>
+								<entity name="all_undiag_mort"/>
+								<item uid="19"/>
 								<item uid="282"/>
-								<entity name="und_new_cases"/>
+								<entity name="KRT"/>
 								<item uid="284"/>
 								<entity name="und_3_mort"/>
-								<item uid="247"/>
-								<item uid="52"/>
-								<item uid="278"/>
-								<item uid="283"/>
-								<item uid="285"/>
-								<entity name='"und_T3_to_4-5"'/>
-								<entity name='"diag_4-5_mort"'/>
 								<entity name='"und_S4-5"'/>
-								<item uid="280"/>
-								<item uid="268"/>
-								<entity name="diag_KRT_mort"/>
-								<item uid="281"/>
-								<item uid="264"/>
-								<entity name="ons_pop"/>
-								<item uid="17"/>
 								<item uid="148"/>
-								<item uid="55"/>
+								<item uid="280"/>
+								<entity name='"und_4-5_mort"'/>
+								<entity name="ons_pop"/>
+								<entity name="diag_KRT_mort"/>
+								<item uid="136"/>
+								<item uid="172"/>
+								<item uid="283"/>
+								<item uid="268"/>
+								<item uid="281"/>
+								<item uid="52"/>
+								<item uid="264"/>
+								<item uid="56"/>
+								<entity name='"und_T3_to_4-5"'/>
+								<entity name='"S4-5_diag"'/>
+								<item uid="17"/>
+								<entity name="und_new_cases"/>
+								<item uid="285"/>
+								<item uid="279"/>
 								<item uid="28"/>
 							</isee:visible_list>
 							<isee:highlight_list>
-								<entity name='"S4-5_diag"'/>
-								<item uid="285"/>
-								<item uid="280"/>
-								<item uid="191"/>
-								<entity name="diag_KRT_mort"/>
 								<item uid="177"/>
-								<entity name='"und_r_3_to_4-5"'/>
-								<entity name="und_S3"/>
-								<item uid="278"/>
-								<item uid="52"/>
-								<entity name='"und_S4-5"'/>
-								<item uid="174"/>
-								<item uid="193"/>
-								<item uid="169"/>
-								<item uid="282"/>
-								<item uid="173"/>
-								<entity name='"r4-5_diag"'/>
+								<entity name="KRT"/>
+								<item uid="280"/>
 								<entity name="sglt2_progress_reduct_p_h_th"/>
 								<entity name="CKD_3"/>
-								<item uid="59"/>
-								<entity name='"r3_to_4-5"'/>
-								<item uid="28"/>
-								<entity name='"CKD_4-5_not_KRT"'/>
-								<item uid="58"/>
+								<entity name='"calib_r3_to_4-5"'/>
+								<item uid="60"/>
 								<item uid="55"/>
-								<entity name="r_S3_mort"/>
-								<item uid="19"/>
-								<item uid="56"/>
-								<item uid="136"/>
-								<entity name='"r4-5_to_KRT"'/>
+								<entity name='"calib_r4-5_to_KRT"'/>
+								<entity name='"und_S4-5"'/>
+								<item uid="193"/>
+								<entity name='"r4-5_diag"'/>
+								<entity name='"calib_und_r_3_to_4-5"'/>
+								<item uid="173"/>
+								<entity name="und_S3"/>
+								<item uid="59"/>
+								<item uid="278"/>
+								<entity name='"CKD_4-5_not_KRT"'/>
 								<entity name="S3_diag"/>
-								<item uid="17"/>
+								<item uid="58"/>
+								<entity name="diag_KRT_mort"/>
+								<item uid="19"/>
+								<item uid="282"/>
 								<entity name="r3_diag"/>
 								<item uid="172"/>
-								<item uid="190"/>
-								<entity name="und_new_cases"/>
+								<item uid="136"/>
 								<entity name="sglt2_mort_reduct_p_h_th"/>
-								<entity name="KRT"/>
+								<entity name='"S4-5_diag"'/>
+								<item uid="190"/>
+								<item uid="17"/>
+								<item uid="56"/>
 								<item uid="286"/>
-								<item uid="60"/>
+								<entity name="calib_r_S3_mort"/>
 								<item uid="124"/>
+								<item uid="52"/>
+								<item uid="191"/>
+								<item uid="169"/>
+								<item uid="285"/>
+								<entity name="und_new_cases"/>
+								<item uid="28"/>
 								<item uid="192"/>
 							</isee:highlight_list>
 						</isee:model_view>
@@ -6386,16 +6794,16 @@ Rates relative to overall population (18+)</text_box>
 							<reset_to after="never">0</reset_to>
 						</slider>
 						<slider z_index="5" color="#0075FF" x="194.43" y="169.696" width="310.391" height="78" isee:navigate_to="false" show_name="true">
-							<entity name='"und_r_3_to_4-5"[?]'/>
+							<entity name='"calib_und_r_3_to_4-5"[?]'/>
 							<reset_to after="never">0</reset_to>
 						</slider>
 						<slider z_index="5" color="#0075FF" x="227.908" y="417.087" width="310.391" height="78" max="5000" isee:navigate_to="false" show_name="true">
-							<entity name='"r3_to_4-5"[?]'/>
+							<entity name='"calib_r3_to_4-5"[?]'/>
 							<reset_to after="never">0</reset_to>
 						</slider>
 						<isee:selector x="500.969" y="8.78" width="135.2" height="30" select_placeholder="false" dimension="region"/>
 						<slider x="786.626" y="226.096" width="193" height="78" max="50000" isee:navigate_to="false" show_name="true">
-							<entity name='"r4-5_to_KRT"[?]'/>
+							<entity name='"calib_r4-5_to_KRT"[?]'/>
 							<reset_to after="never">0</reset_to>
 						</slider>
 						<slider x="772.548" y="515.783" width="193" height="78" isee:navigate_to="false" show_name="true">
