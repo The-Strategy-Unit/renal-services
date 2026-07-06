@@ -1,0 +1,2575 @@
+SIMUL8 Documentation for: C:\Users\Lucy.Morgan\Desktop\Renal Modelling\Renal Model v10 trials.S8 at time 26/08/2025 09:47:03 Version: 31.0.0.4810
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Created by: Lucy Morgan
+Last opened by: MLCSUAdmin
+
+********************************************************************************
+General Simulation Information
+------------------------------
+
+  Warm Up Time: 0   Results Collection Time: 4744.99965 (Days)
+  Start of day: 0 Length of day: 1440 ,   Days per week: 7
+  Current Random Stream Set: 20
+  Data display when simulation stopped: Work Item Count
+********************************************************************************
+
+Distributions
+  pp_age_dist
+    Probability Profile
+    Sample Value: 1  Percent: 7.04809
+    Sample Value: 2  Percent: 8.59177
+    Sample Value: 3  Percent: 14.31961
+    Sample Value: 4  Percent: 18.86939
+    Sample Value: 5  Percent: 24.30456
+    Sample Value: 6  Percent: 26.86658
+  pp_ethnicity
+    Probability Profile
+    Sample Value: 1  Percent: 66.55052
+    Sample Value: 2  Percent: 4.52962
+    Sample Value: 3  Percent: 26.48084
+    Sample Value: 4  Percent: 2.43902
+  pp_referral_dist
+    Probability Profile
+    Sample Value: 1  Percent: 82.34183
+    Sample Value: 2  Percent: 17.65817
+  dist_random
+    Named Distribution
+      Distribution Detail:
+        Uniform 0 1 0 0
+  dist_conservativeCareDuration
+    Named Distribution
+      Distribution Detail:
+        Weibull 0.66117 92.85948 0 0
+  dist_TTT_Live
+    Named Distribution
+      Distribution Detail:
+        Uniform 90 180 0 0
+  dist_TTT_Cadaver
+    Named Distribution
+      Distribution Detail:
+        Triangular 547 647 720 0.57803
+  dist_TW_preEmpt
+    Named Distribution
+      Distribution Detail:
+        Weibull 1.00614 462.34785 0 0
+  dist_Tx_TTD
+    Named Distribution
+      Distribution Detail:
+        Weibull 0.94551 14608.85126 0 0
+  dist_Tx_TTGF
+    Named Distribution
+      Distribution Detail:
+        Weibull 0.50366 586.52092 0 0
+  dist_timeInICHD
+    Named Distribution
+      Distribution Detail:
+        Weibull 0.4992 837.65794 0 0
+  dist_timeInHHD
+    Named Distribution
+      Distribution Detail:
+        Weibull 0.96455 1369.43404 0 0
+  dist_timeInPD
+    Named Distribution
+      Distribution Detail:
+        Weibull 0.62516 710.89056 0 0
+  dist_arrivals
+    Named Distribution
+      Distribution Detail:
+        Exponential 0.69597 0 0 0
+
+Labels
+  lbl_age
+    (Number)
+  lbl_ethnicity
+    (Number)
+  lbl_random_store
+    (Number)
+  lbl_lastModality
+    (Number)
+  lbl_waitingForTransplant
+    (Number)
+  lbl_transplantHistory
+    (Number)
+  lbl_suitableForTx
+    (Number)
+  lbl_modalityAllocationCount
+    (Number)
+  lbl_referral_type
+    (Number)
+  lbl_ind2
+    (Number)
+  lbl_ind
+    (Number)
+  lbl_inc
+    (Number)
+  lbl_ind3
+    (Number)
+  lbl_ichdDuration
+    (Number)
+  lbl_divertedCC
+    (Number)
+  lbl_route_divertedToConservativeCare
+    (Number)
+  lbl_route_modalityAllocation
+    (Number)
+  lbl_hasPEtx
+    (Number)
+  lbl_transplantType
+    (Number)
+  lbl_route_ichd
+    (Number)
+  lbl_pdDuration
+    (Number)
+  lbl_clock_start
+    (Number)
+  lbl_route_startsDialysisDuringTxWait
+    (Number)
+  lbl_route_pd
+    (Number)
+  lbl_conservativeCareDuration
+    (Number)
+  lbl_transplantDuration
+    (Number)
+  lbl_route_livingWithTx
+    (Number)
+  lbl_init_position
+    (Number)
+  lbl_preEmptivePeriodDuration
+    (Number)
+  lbl_route_preEmptivePeriod
+    (Number)
+  lbl_hhdDuration
+    (Number)
+  lbl_route_hhd
+    (Number)
+  lbl_transplantWaitDuration
+    (Number)
+  lbl_route_transplantTypeAllocation
+    (Number)
+  lbl_route_liveDonor
+    (Number)
+  lbl_route_cadaverDonor
+    (Number)
+  lbl_arrival_ind
+    (Number)
+
+Images
+  Default Image Entry
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Queue
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Default Image Activity
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Exit
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Resource
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Conveyor
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Tank
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Default Image Rotz
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Default Image Process
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Default Image Loader
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Vehicle
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Default Image Component
+    Width: 32  Height: 32
+    Transparent Color: 0
+  Redb
+    Width: 8  Height: 8
+    Transparent Color: 16777215
+  Main
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Working
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Blocked
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Stopped
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Changeover
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Lb_import
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Lb_import 2
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Bl_reset
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Bl_reset 2
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Bl_reset 3
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Bl_reset 4
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Lb_export
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Lb_export 2
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Lb_export 3
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Bl_export
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Bl_export 2
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Lb_export 4
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+  Default Image Subwindow
+    Width: 32  Height: 32
+    Transparent Color: 16777215
+
+SIMUL8 Windows and Sub Processs
+-------------------------------
+  
+  
+    Open
+    Icon Location  X:768 Y:408 W:32 H:32
+    Window Location  X:0 Y:169 W:1518 H:607
+    Color 16777215
+
+Work Item Types
+---------------
+  
+  Main Work Item Type
+    Image: Redb
+    Length 1
+    Attached Labels:
+      lbl_ethnicity
+      lbl_age
+      lbl_route_livingWithTx
+      lbl_transplantHistory
+      lbl_route_divertedToConservativeCare
+      lbl_suitableForTx
+      lbl_conservativeCareDuration
+      lbl_transplantType
+      lbl_route_startsDialysisDuringTxWait
+      lbl_transplantWaitDuration
+      lbl_route_preEmptivePeriod
+      lbl_modalityAllocationCount
+      lbl_preEmptivePeriodDuration
+      lbl_route_modalityAllocation
+      lbl_referral_type
+      lbl_ind
+      lbl_lastModality
+      lbl_random_store
+      lbl_pdDuration
+      lbl_route_pd
+      lbl_ind2
+      lbl_ichdDuration
+      lbl_route_ichd
+      lbl_hhdDuration
+      lbl_route_hhd
+      lbl_transplantDuration
+      lbl_waitingForTransplant
+      lbl_init_position
+      lbl_hasPEtx
+      lbl_divertedCC
+      lbl_inc
+      lbl_ind3
+      lbl_clock_start
+
+********************************************************************************
+
+
+Simulation Objects
+------------------
+  
+  Start
+    patientsWithKRT
+    ---------------
+      Display Parameters 4
+      X:204 Y:344 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Work Item Type: Main Work Item Type
+    Inter-arrival time
+      Distribution Detail:
+        Uses: dist_arrivals
+          Named Distribution
+            Distribution Detail:
+              Exponential 0.69597 0 0 0
+      Route Out Objects
+        divertedToConservativeCare
+    On Label Action Visual Logic:
+      VL SECTION: patientsWithKRT Action Logic
+        SET lbl_clock_start  =  Simulation Time
+    Label Actions
+      lbl_inc
+      Set
+        Distribution Detail:
+          Fixed 1 0 0 0
+      lbl_divertedCC
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      lbl_hasPEtx
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      lbl_waitingForTransplant
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      lbl_lastModality
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      lbl_suitableForTx
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      lbl_referral_type
+      Set
+        Distribution Detail:
+          Uses: pp_referral_dist
+            Probability Profile
+      lbl_ethnicity
+      Set
+        Distribution Detail:
+          Uses: pp_ethnicity
+            Probability Profile
+      lbl_age
+      Set
+        Distribution Detail:
+          Uses: pp_age_dist
+            Probability Profile
+      lbl_modalityAllocationCount
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      lbl_transplantHistory
+      Set
+        Distribution Detail:
+          Fixed 0 0 0 0
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  End
+    death
+    -----
+      Display Parameters 4
+      X:1224 Y:64 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+      Input Objects
+        endConservativeCare
+        ICHD
+        HHD
+        PD
+        livingWithTx
+      Carbon Emissions Information
+        Per Unit: 100
+  
+  Activity
+    divertedToConservativeCare
+    --------------------------
+      Display Parameters 4
+      X:364 Y:344 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          patientsWithKRT
+          livingWithTx
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_divertedToConservativeCare
+      Preference only
+        Route Out Objects
+          conservativeCareRoute
+          suitableForTransplant
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: divertedToConservativeCare Action Logic
+        'set the route out of divertedToConservativeCare
+        'note they only exit to con care at the point of entry not if they're returning here post transplant
+        IF lbl_transplantHistory  =  0
+          IF SAMPLE[dist_random]  <  SS_divertToCC[3+interventionIndicator*1,lbl_age]
+            SET lbl_divertedCC  =  1
+            SET lbl_route_divertedToConservativeCare  =  1
+            SET lbl_conservativeCareDuration  =  SAMPLE[dist_conservativeCareDuration]
+          ELSE
+            SET lbl_route_divertedToConservativeCare  =  2
+            SET krt_inc_count  =  krt_inc_count+1
+            SET tot_inc_krt  =  tot_inc_krt+1
+            IF SAMPLE[dist_random]  <  SS_suitableForTx[2,lbl_age]
+              SET lbl_suitableForTx  =  2
+            ELSE
+              SET lbl_suitableForTx  =  1
+        ELSE
+          SET lbl_route_divertedToConservativeCare  =  2
+          IF SAMPLE[dist_random]  <  SS_suitableForTx[2,lbl_age]
+            SET lbl_suitableForTx  =  2
+          ELSE
+            SET lbl_suitableForTx  =  1
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    endConservativeCare
+    -------------------
+      Display Parameters 4
+      X:364 Y:64 W:32 H:32
+       Xinc -10 Yinc 0
+      Image 0 Main
+      Image 1 Working
+      Image 2 Blocked
+      Image 3 Changeover
+      Image 4 Stopped
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          conservativeCareRoute
+    Routing Out
+      Percent
+        Route Out Objects
+          death
+          (100%)
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    suitableForTransplant
+    ---------------------
+      Display Parameters 4
+      X:524 Y:344 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          divertedToConservativeCare
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_suitableForTx
+      Preference only
+        Route Out Objects
+          modalityAllocation
+          startsDialysisDuringTxWait
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    modalityAllocation
+    ------------------
+      Display Parameters 4
+      X:524 Y:184 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Passive
+        Route In Objects
+          suitableForTransplant
+          ICHD
+          HHD
+          PD
+          waitBeforeDialysis
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_modalityAllocation
+      Preference only
+        Route Out Objects
+          ichdQueue
+          hhdQueue
+          pdQueue
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: modalityAllocation Action Logic ,  LOCALDATA: sample_time:[NUMBER]
+        SET lbl_random_store  =  SAMPLE[dist_random]
+        'first find the index in the modAllocation table - this depends on last modality, age and ethnicity
+        SET lbl_ind  =  [24*lbl_lastModality]+[4*[lbl_age-1]]+[lbl_ethnicity]
+        SET lbl_ind3  =  [6*[lbl_referral_type-1]]+lbl_age+12*[1-lbl_waitingForTransplant]
+        IF lbl_random_store  <  SS_modAllocation[4+interventionIndicator*3,lbl_ind]
+          'goes to ichd
+          SET lbl_route_modalityAllocation  =  1
+          'how long it stays there depends on the next step so calc next step and set time in ichd queue
+          SET lbl_ind2  =  [24*lbl_waitingForTransplant]+[4*[lbl_age-1]]+[lbl_ethnicity]
+          SET lbl_random_store  =  SAMPLE[dist_random]
+          IF lbl_random_store  <  SS_ichdRouting[4,lbl_ind2]
+            'patient dies
+            Set Distribution Parameters    dist_timeInICHD ,  Weibull ,  SS_ttd_ICHD[4,lbl_ind3] ,  SS_ttd_ICHD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInICHD]
+            SET lbl_ichdDuration  =  sample_time+tte_multiplier_ichd*sample_time
+            SET tot_died_krt  =  tot_died_krt+1
+            SET lbl_route_ichd  =  3
+            SET mortality_ICHD  =  mortality_ICHD+1
+            SET death_ichd_count  =  death_ichd_count+1
+            SET RC_ichd[death_ichd_count,1]  =  lbl_ichdDuration
+            SET ichd_transitions[3,1]  =  ichd_transitions[3,1]+1
+            IF lbl_inc  =  0
+              SET prev_deaths  =  prev_deaths+1
+          ELSE IF lbl_random_store  <  SS_ichdRouting[4,lbl_ind2]+SS_ichdRouting[5,lbl_ind2]
+            'patient goes back to mod Allocation
+            Set Distribution Parameters    dist_timeInICHD ,  Weibull ,  SS_ttmc_ICHD[4,lbl_ind3] ,  SS_ttmc_ICHD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInICHD]
+            SET lbl_ichdDuration  =  sample_time+tte_multiplier_ichd*sample_time
+            SET lbl_route_ichd  =  1
+            SET modAl_ichd_count  =  modAl_ichd_count+1
+            SET RC_ichd[modAl_ichd_count,2]  =  lbl_ichdDuration
+            SET ichd_transitions[1,1]  =  ichd_transitions[1,1]+1
+          ELSE
+            'patient goes to Tx
+            SET lbl_ind3  =  [6*[lbl_referral_type-1]]+lbl_age
+            Set Distribution Parameters    dist_timeInICHD ,  Weibull ,  SS_tttx_ICHD[4,lbl_ind3] ,  SS_tttx_ICHD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInICHD]
+            SET lbl_ichdDuration  =  sample_time+tte_multiplier_ichd*sample_time
+            SET lbl_route_ichd  =  2
+            SET tx_ichd_count  =  tx_ichd_count+1
+            SET RC_ichd[tx_ichd_count,3]  =  lbl_ichdDuration
+            SET ichd_transitions[2,1]  =  ichd_transitions[2,1]+1
+            IF lbl_inc  =  0
+              IF SAMPLE[dist_random]  <  SS_Tx_Type[3,[4*[lbl_age-1]+lbl_ethnicity]]
+                SET lbl_transplantType  =  1
+              ELSE
+                SET lbl_transplantType  =  2
+        ELSE IF lbl_random_store  <  SS_modAllocation[4+interventionIndicator*3,lbl_ind]+SS_modAllocation[5+interventionIndicator*3,lbl_ind]
+          
+          'goes to hhd
+          SET lbl_route_modalityAllocation  =  2
+          'how long it stays there depends on the next step so calc next step and set time in ichd queue
+          SET lbl_ind2  =  [24*[lbl_waitingForTransplant]]+[4*[lbl_age-1]]+[lbl_ethnicity]
+          SET lbl_random_store  =  SAMPLE[dist_random]
+          
+          IF lbl_random_store  <  SS_hhdRouting[4,lbl_ind2]
+            'patient dies
+            SET tot_died_krt  =  tot_died_krt+1
+            Set Distribution Parameters    dist_timeInHHD ,  Weibull ,  SS_ttd_HHD[4,lbl_ind3] ,  SS_ttd_HHD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInHHD]
+            SET lbl_hhdDuration  =  sample_time+tte_multiplier_hhd*sample_time
+            SET lbl_route_hhd  =  3
+            SET death_hhd_count  =  death_hhd_count+1
+            SET mortality_HHD  =  mortality_HHD+1
+            SET RC_hhd[death_hhd_count,1]  =  lbl_hhdDuration
+            SET hhd_transitions[3,1]  =  hhd_transitions[3,1]+1
+            IF lbl_inc  =  0
+              SET prev_deaths  =  prev_deaths+1
+          ELSE IF lbl_random_store  <  SS_hhdRouting[4,lbl_ind2]+SS_hhdRouting[5,lbl_ind2]
+            'patient goes back to mod Allocation
+            Set Distribution Parameters    dist_timeInHHD ,  Weibull ,  SS_ttmc_HHD[4,lbl_ind3] ,  SS_ttmc_HHD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInHHD]
+            SET lbl_hhdDuration  =  sample_time+tte_multiplier_hhd*sample_time
+            SET lbl_route_hhd  =  1
+            SET modAl_hhd_count  =  modAl_hhd_count+1
+            SET RC_hhd[modAl_hhd_count,2]  =  lbl_hhdDuration
+            SET hhd_transitions[1,1]  =  hhd_transitions[1,1]+1
+          ELSE
+            'patient goes to Tx
+            SET lbl_ind3  =  [6*[lbl_referral_type-1]]+lbl_age
+            Set Distribution Parameters    dist_timeInHHD ,  Weibull ,  SS_tttx_HHD[4,lbl_ind3] ,  SS_tttx_HHD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInHHD]
+            SET lbl_hhdDuration  =  sample_time+tte_multiplier_hhd*sample_time
+            SET lbl_route_hhd  =  2
+            SET tx_hhd_count  =  tx_hhd_count+1
+            SET RC_hhd[tx_hhd_count,3]  =  lbl_hhdDuration
+            SET hhd_transitions[2,1]  =  hhd_transitions[2,1]+1
+            'if prevalent then they need a transplant type assigning
+            IF lbl_inc  =  0
+              IF SAMPLE[dist_random]  <  SS_Tx_Type[3,[4*[lbl_age-1]+lbl_ethnicity]]
+                SET lbl_transplantType  =  1
+              ELSE
+                SET lbl_transplantType  =  2
+        ELSE
+          'goes to pd
+          SET lbl_ind2  =  [24*[lbl_waitingForTransplant]]+[4*[lbl_age-1]]+[lbl_ethnicity]
+          SET lbl_route_modalityAllocation  =  3
+          'how long it stays there depends on the next step so calc next step and set time in ichd queue
+          SET lbl_random_store  =  SAMPLE[dist_random]
+          IF lbl_random_store  <  SS_pdRouting[4,lbl_ind2]
+            'patient dies
+            SET tot_died_krt  =  tot_died_krt+1
+            
+            Set Distribution Parameters    dist_timeInPD ,  Weibull ,  SS_ttd_PD[4,lbl_ind3] ,  SS_ttd_PD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInPD]
+            SET lbl_pdDuration  =  sample_time+tte_multiplier_pd*sample_time
+            SET lbl_route_pd  =  3
+            SET death_pd_count  =  death_pd_count+1
+            SET mortality_PD  =  mortality_PD+1
+            SET RC_pd[death_pd_count,1]  =  lbl_pdDuration
+            SET pd_transitions[3,1]  =  pd_transitions[3,1]+1
+            
+            IF lbl_inc  =  0
+              SET prev_deaths  =  prev_deaths+1
+          ELSE IF lbl_random_store  <  SS_pdRouting[4,lbl_ind2]+SS_pdRouting[5,lbl_ind2]
+            'patient goes back to mod Allocation
+            Set Distribution Parameters    dist_timeInPD ,  Weibull ,  SS_ttmc_PD[4,lbl_ind3] ,  SS_ttmc_PD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInPD]
+            SET lbl_pdDuration  =  sample_time+tte_multiplier_pd*sample_time
+            SET lbl_route_pd  =  1
+            SET modAl_pd_count  =  modAl_pd_count+1
+            
+            SET RC_pd[modAl_pd_count,2]  =  lbl_pdDuration
+            SET pd_transitions[1,1]  =  pd_transitions[1,1]+1
+          ELSE
+            'patient goes to Tx
+            SET lbl_ind3  =  [6*[lbl_referral_type-1]]+lbl_age
+            Set Distribution Parameters    dist_timeInPD ,  Weibull ,  SS_tttx_PD[4,lbl_ind3] ,  SS_tttx_PD[5,lbl_ind3] ,  0 ,  0
+            SET sample_time  =  SAMPLE[dist_timeInPD]
+            SET lbl_pdDuration  =  sample_time+tte_multiplier_pd*sample_time
+            
+            SET lbl_route_pd  =  2
+            SET tx_pd_count  =  tx_pd_count+1
+            SET RC_pd[tx_pd_count,3]  =  lbl_pdDuration
+            SET pd_transitions[2,1]  =  pd_transitions[2,1]+1
+            IF lbl_inc  =  0
+              IF SAMPLE[dist_random]  <  SS_Tx_Type[3,[4*[lbl_age-1]+lbl_ethnicity]]
+                SET lbl_transplantType  =  1
+              ELSE
+                SET lbl_transplantType  =  2
+          
+    On Exit Visual Logic:
+      VL SECTION: modalityAllocation On Exit Logic
+        (Disabled) IF lbl_route_modalityAllocation  =  1
+          (Disabled) SET inc_ICHD  =  inc_ICHD+1
+        (Disabled) ELSE IF lbl_route_modalityAllocation  =  2
+          (Disabled) SET inc_HHD  =  inc_HHD+1
+        (Disabled) ELSE IF lbl_route_modalityAllocation  =  3
+          (Disabled) SET inc_PD  =  inc_PD+1
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    startsDialysisDuringTxWait
+    --------------------------
+      Display Parameters 4
+      X:524 Y:524 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Passive
+        Route In Objects
+          suitableForTransplant
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_startsDialysisDuringTxWait
+      Preference only
+        Route Out Objects
+          transplantQueue
+          preEmptiveQueue
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: startsDialysisDuringTxWait Action Logic
+        SET lbl_waitingForTransplant  =  1
+        SET lbl_ind  =  [24*[lbl_referral_type-1]]+[4*[lbl_age-1]]+[lbl_ethnicity]
+        SET lbl_ind2  =  [4*[lbl_age-1]]+[lbl_ethnicity]
+        'assign a transplant type to all people
+        IF SAMPLE[dist_random]  <  SS_Tx_Type[3+interventionIndicator*1,lbl_ind2]
+          SET lbl_transplantType  =  1
+          IF SAMPLE[dist_random]  >  SS_PErouting_Live[4+interventionIndicator*1,lbl_ind]
+            'they go to dialysis first
+            SET lbl_route_startsDialysisDuringTxWait  =  2
+            IF lbl_transplantHistory  =  0
+              'on initial entry to the model they go straight to dialysis
+              SET lbl_preEmptivePeriodDuration  =  0
+            ELSE
+              Set Distribution Parameters    dist_TW_preEmpt ,  Weibull ,  SS_tw_PE[2,lbl_age] ,  SS_tw_PE[3,lbl_age] ,  0 ,  0
+              SET lbl_preEmptivePeriodDuration  =  SAMPLE[dist_TW_preEmpt]
+          ELSE
+            SET lbl_route_startsDialysisDuringTxWait  =  1
+            IF lbl_transplantHistory  =  0
+              SET lbl_transplantWaitDuration  =  0
+            ELSE
+              SET lbl_transplantWaitDuration  =  SAMPLE[dist_TTT_Live]
+        ELSE
+          SET lbl_transplantType  =  2
+          IF SAMPLE[dist_random]  >  SS_PErouting_cadav[4+interventionIndicator*1,lbl_ind]
+            SET lbl_route_startsDialysisDuringTxWait  =  2
+            IF lbl_transplantHistory  =  0
+              SET lbl_preEmptivePeriodDuration  =  0
+            ELSE
+              Set Distribution Parameters    dist_TW_preEmpt ,  Weibull ,  SS_tw_PE[2,lbl_age] ,  SS_tw_PE[3,lbl_age] ,  0 ,  0
+              SET lbl_preEmptivePeriodDuration  =  SAMPLE[dist_TW_preEmpt]
+          ELSE
+            SET lbl_route_startsDialysisDuringTxWait  =  1
+            IF lbl_transplantHistory  =  0
+              SET lbl_transplantWaitDuration  =  0
+            ELSE
+              SET lbl_transplantWaitDuration  =  SAMPLE[dist_TTT_Cadaver]
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    ICHD
+    ----
+      Display Parameters 4
+      X:804 Y:124 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          ichdQueue
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_ichd
+      Preference only
+        Route Out Objects
+          modalityAllocation
+          Queue 8
+          death
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: ICHD Action Logic
+        SET lbl_modalityAllocationCount  =  lbl_modalityAllocationCount+1
+        SET lbl_lastModality  =  1
+    On Exit Visual Logic:
+      VL SECTION: ICHD On Exit Logic
+        SET lbl_lastModality  =  1
+        SET ex_ICHD  =  ex_ICHD+1
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    HHD
+    ---
+      Display Parameters 4
+      X:804 Y:184 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          hhdQueue
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_hhd
+      Preference only
+        Route Out Objects
+          modalityAllocation
+          Queue 8
+          death
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: HHD Action Logic
+        SET lbl_modalityAllocationCount  =  lbl_modalityAllocationCount+1
+        SET lbl_lastModality  =  2
+    On Exit Visual Logic:
+      VL SECTION: HHD On Exit Logic
+        SET lbl_lastModality  =  2
+        SET ex_HHD  =  ex_HHD+1
+        
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    PD
+    --
+      Display Parameters 4
+      X:804 Y:244 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          pdQueue
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_pd
+      Preference only
+        Route Out Objects
+          modalityAllocation
+          Queue 8
+          death
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: PD Action Logic
+        SET lbl_modalityAllocationCount  =  lbl_modalityAllocationCount+1
+        SET lbl_lastModality  =  3
+    On Exit Visual Logic:
+      VL SECTION: PD On Exit Logic
+        SET lbl_lastModality  =  3
+        SET ex_PD  =  ex_PD+1
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    waitBeforeDialysis
+    ------------------
+      Display Parameters 4
+      X:684 Y:404 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          preEmptiveQueue
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_preEmptivePeriod
+      Preference only
+        Route Out Objects
+          modalityAllocation
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: waitBeforeDialysis Action Logic
+        SET lbl_route_preEmptivePeriod  =  1
+        
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    transplantTypeAllocation
+    ------------------------
+      Display Parameters 4
+      X:884 Y:544 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          transplantQueue
+          Queue 8
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_transplantType
+      Preference only
+        Route Out Objects
+          liveDonorTx
+          cadaverDonorTx
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    liveDonorTx
+    -----------
+      Display Parameters 4
+      X:1044 Y:484 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Passive
+        Route In Objects
+          transplantTypeAllocation
+      Require resources before collecting any work items
+    Routing Out
+      Percent
+        Route Out Objects
+          livingWithTransplant
+          (100%)
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: liveDonorTx Action Logic ,  LOCALDATA: ttd:[NUMBER] ,  ttgf:[NUMBER]
+        SET lbl_transplantHistory  =  lbl_transplantHistory+1
+        SET lbl_waitingForTransplant  =  0
+        IF SAMPLE[dist_random]  <  SS_deathPostTx[3,6+lbl_age]
+          SET lbl_route_livingWithTx  =  2
+          SET tx_live_transitions[2,1]  =  tx_live_transitions[2,1]+1
+          
+          SET tot_died_krt  =  tot_died_krt+1
+          Set Distribution Parameters    dist_Tx_TTD ,  Weibull ,  SS_ttd_Tx_Live[2,lbl_age] ,  SS_ttd_Tx_Live[3,lbl_age] ,  0 ,  0
+          SET ttd  =  SAMPLE[dist_Tx_TTD]
+          SET lbl_transplantDuration  =  ttd+tte_multiplier_live*ttd
+          
+        ELSE
+          SET lbl_route_livingWithTx  =  1
+          SET tx_live_transitions[1,1]  =  tx_live_transitions[1,1]+1
+          Set Distribution Parameters    dist_Tx_TTGF ,  Weibull ,  SS_ttgf_Tx_Live[2,lbl_age] ,  SS_ttgf_Tx_Live[3,lbl_age] ,  0 ,  0
+          
+          SET ttgf  =  SAMPLE[dist_Tx_TTGF]
+          SET lbl_transplantDuration  =  ttgf+tte_multiplier_live*ttgf
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    cadaverDonorTx
+    --------------
+      Display Parameters 4
+      X:1044 Y:564 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Passive
+        Route In Objects
+          transplantTypeAllocation
+      Require resources before collecting any work items
+    Routing Out
+      Percent
+        Route Out Objects
+          livingWithTransplant
+          (100%)
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Label Action Visual Logic:
+      VL SECTION: New Code ,  LOCALDATA: ttgf:[NUMBER] ,  ttd:[NUMBER]
+        SET lbl_transplantHistory  =  lbl_transplantHistory+1
+        SET lbl_waitingForTransplant  =  0
+        IF SAMPLE[dist_random]  <  SS_deathPostTx[3,lbl_age]
+          SET lbl_route_livingWithTx  =  2
+          SET tx_cadav_transitions[2,1]  =  tx_cadav_transitions[2,1]+1
+          SET tot_died_krt  =  tot_died_krt+1
+          Set Distribution Parameters    dist_Tx_TTD ,  Weibull ,  SS_ttd_Tx_Cadav[2,lbl_age] ,  SS_ttd_Tx_Cadav[3,lbl_age] ,  0 ,  0
+          SET ttd  =  SAMPLE[dist_Tx_TTD]
+          SET lbl_transplantDuration  =  ttd+tte_multiplier_cadav*ttd
+        ELSE
+          SET lbl_route_livingWithTx  =  1
+          SET tx_cadav_transitions[1,1]  =  tx_cadav_transitions[1,1]+1
+          Set Distribution Parameters    dist_Tx_TTGF ,  Weibull ,  SS_ttgf_Tx_Cadav[2,lbl_age] ,  SS_ttgf_Tx_Cadav[3,lbl_age] ,  0 ,  0
+          
+          SET ttgf  =  SAMPLE[dist_Tx_TTGF]
+          SET lbl_transplantDuration  =  ttgf+tte_multiplier_cadav*ttgf
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    livingWithTx
+    ------------
+      Display Parameters 4
+      X:1244 Y:604 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+        Route In Objects
+          livingWithTransplant
+      Require resources before collecting any work items
+    Routing Out
+      Label
+      On label: lbl_route_livingWithTx
+      Preference only
+        Route Out Objects
+          divertedToConservativeCare
+          death
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Fixed 0 0 0 0
+    On Exit Visual Logic:
+      VL SECTION: livingWithTx On Exit Logic
+        IF lbl_route_livingWithTx  =  2
+          IF lbl_transplantType  =  1
+            SET mortality_Tx_Live  =  mortality_Tx_Live+1
+          ELSE
+            SET mortality_Tx_Cadav  =  mortality_Tx_Cadav+1
+          IF lbl_inc  =  0
+            SET prev_deaths  =  prev_deaths+1
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    conservativeCareRoute
+    ---------------------
+      Display Parameters 5
+      X:364 Y:124 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        divertedToConservativeCare
+        Start Point 2
+    Min Wait Time: lbl_conservativeCareDuration
+      Output Objects
+        endConservativeCare
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    ichdQueue
+    ---------
+      Display Parameters 5
+      X:744 Y:124 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        modalityAllocation
+        Start Point 2
+    Min Wait Time: lbl_ichdDuration
+      Output Objects
+        ICHD
+    On Exit Visual Logic:
+      VL SECTION: ichdQueue On Entry Logic
+        'Obeyed just after a work item enters the Queue
+        SET inc_ICHD  =  inc_ICHD+1
+    Label Actions
+      lbl_referral_type
+      Add
+        Distribution Detail:
+          Uses: pp_referral_dist
+            Probability Profile
+      lbl_ethnicity
+      Set
+        Distribution Detail:
+          Uses: pp_ethnicity
+            Probability Profile
+      lbl_age
+      Set
+        Distribution Detail:
+          Uses: pp_age_dist
+            Probability Profile
+      lbl_lastModality
+      Set
+        Distribution Detail:
+          Fixed 1 0 0 0
+      Financial Information
+        Per Unit: 172.17
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    hhdQueue
+    --------
+      Display Parameters 5
+      X:744 Y:184 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        modalityAllocation
+        Start Point 2
+    Min Wait Time: lbl_hhdDuration
+      Output Objects
+        HHD
+    On Exit Visual Logic:
+      VL SECTION: hhdQueue On Entry Logic
+        'Obeyed just after a work item enters the Queue
+        SET inc_HHD  =  inc_HHD+1
+      Financial Information
+        Per Unit: 140.06
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    pdQueue
+    -------
+      Display Parameters 5
+      X:744 Y:244 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        modalityAllocation
+        Start Point 2
+    Min Wait Time: lbl_pdDuration
+      Output Objects
+        PD
+    On Exit Visual Logic:
+      VL SECTION: pdQueue On Entry Logic
+        'Obeyed just after a work item enters the Queue
+        SET inc_PD  =  inc_PD+1
+        
+      Financial Information
+        Per Unit: 107.92
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    transplantQueue
+    ---------------
+      Display Parameters 5
+      X:804 Y:544 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        startsDialysisDuringTxWait
+    Min Wait Time: lbl_transplantWaitDuration
+      Output Objects
+        transplantTypeAllocation
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    preEmptiveQueue
+    ---------------
+      Display Parameters 5
+      X:624 Y:424 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        startsDialysisDuringTxWait
+    Min Wait Time: lbl_preEmptivePeriodDuration
+      Output Objects
+        waitBeforeDialysis
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    livingWithTransplant
+    --------------------
+      Display Parameters 5
+      X:1164 Y:544 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        liveDonorTx
+        cadaverDonorTx
+        Start Point 2
+    Min Wait Time: lbl_transplantDuration
+      Output Objects
+        livingWithTx
+    On Exit Visual Logic:
+      VL SECTION: livingWithTransplant On Entry Logic
+        'Obeyed just after a work item enters the Queue
+        
+        IF lbl_inc  =  1
+          IF lbl_age  <>  6
+            SET tx_u75_count  =  tx_u75_count+1
+            SET tx_count  =  tx_count+1
+        IF lbl_transplantType  =  1
+          (Disabled) SET liveTx_count  =  liveTx_count+1
+          SET inc_Tx_Live  =  inc_Tx_Live+1
+        IF lbl_transplantType  =  2
+          (Disabled) SET cadavTx_count  =  cadavTx_count+1
+          SET inc_Tx_Cadav  =  inc_Tx_Cadav+1
+        'collect times
+        (Disabled) SET TTTx_store[tx_count,1]  =  Simulation Time-lbl_clock_start
+        IF lbl_route_startsDialysisDuringTxWait  =  1
+          SET preEmpt_count  =  preEmpt_count+1
+          (Disabled) SET TTTx_store[preEmpt_count,2]  =  Simulation Time-lbl_clock_start
+    On Entry Visual Logic:
+      VL SECTION: livingWithTransplant On Exit Logic
+        'Obeyed just after a work item exits the Queue but before it begins travelling to the next object
+        IF lbl_transplantType  =  1
+          (Disabled) SET liveTx_count  =  liveTx_count-1
+          SET ex_Tx_Live  =  ex_Tx_Live+1
+        IF lbl_transplantType  =  2
+          (Disabled) SET cadavTx_count  =  cadavTx_count-1
+          SET ex_Tx_Cadav  =  ex_Tx_Cadav+1
+          
+        (Disabled) IF lbl_route_startsDialysisDuringTxWait  =  2
+          (Disabled) SET preEmpt_count  =  preEmpt_count-1
+          
+      Financial Information
+        Per Unit: 24.67
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Start
+    Start Point 2
+    -------------
+      Display Parameters 4
+      X:204 Y:484 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Work Item Type: Main Work Item Type
+    Inter-arrival time
+      Distribution Detail:
+        Exponential 10 0 0 0
+      Route Out Objects
+        ichdQueue
+        hhdQueue
+        pdQueue
+        livingWithTransplant
+        conservativeCareRoute
+    On Label Action Visual Logic:
+      VL SECTION: Start Point 2 Action Logic
+        SET lbl_inc  =  0
+        
+        
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Queue
+    Queue 8
+    -------
+      Display Parameters 5
+      X:904 Y:444 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Count
+      Show Image
+    Capacity: -1
+      Input Objects
+        ICHD
+        HHD
+        PD
+      Output Objects
+        transplantTypeAllocation
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+  
+  Activity
+    Activity 14
+    -----------
+      Display Parameters 4
+      X:144 Y:744 W:32 H:32
+       Xinc -10 Yinc 0
+      Show Title
+      Show Count
+      Show Image
+    Replicate 1
+    Priority 50
+    Routing In
+      Priority
+      Require resources before collecting any work items
+    Routing Out
+      Circulate
+      Preference only
+      Release resources as soon as task complete
+    Operation Time
+      Distribution Detail:
+        Average 10 2.5 0 0
+      Carbon Emissions Information
+        Carbon Footprint: 10
+        Per Unit: 1
+
+
+Information Store
+-----------------
+  
+  Simulation Time
+  ---------------
+    SIMUL8 Data
+    Current Value 0
+  
+  Warm Up Period
+  --------------
+    SIMUL8 Data
+    Current Value 0
+  
+  Results Collection Period
+  -------------------------
+    SIMUL8 Data
+    Current Value 4744.99965
+  
+  Current Work Item
+  -----------------
+    SIMUL8 Data
+    Current Value 0
+  
+  Overhead Cost
+  -------------
+    SIMUL8 Data
+    Current Value 0
+  
+  Overhead Revenue
+  ----------------
+    SIMUL8 Data
+    Current Value 0
+  
+  Graph Sync Interval
+  -------------------
+    SIMUL8 Data
+    Current Value 4380
+  
+  Day Duration
+  ------------
+    SIMUL8 Data
+    Current Value 1
+  
+  SS_InitialPop
+  -------------
+    Spreadsheet
+  
+  SS_yearly_incidence
+  -------------------
+    Spreadsheet
+  
+  SS_age_profile
+  --------------
+    Spreadsheet
+  
+  SS_ttd_ConCare
+  --------------
+    Spreadsheet
+  
+  SS_ttd_HHD
+  ----------
+    Spreadsheet
+  
+  SS_ttmc_HHD
+  -----------
+    Spreadsheet
+  
+  SS_tttx_HHD
+  -----------
+    Spreadsheet
+  
+  SS_ttd_ICHD
+  -----------
+    Spreadsheet
+  
+  SS_ttmc_ICHD
+  ------------
+    Spreadsheet
+  
+  SS_tttx_ICHD
+  ------------
+    Spreadsheet
+  
+  SS_ttd_PD
+  ---------
+    Spreadsheet
+  
+  SS_ttmc_PD
+  ----------
+    Spreadsheet
+  
+  SS_tttx_PD
+  ----------
+    Spreadsheet
+  
+  SS_tttx_PE_Cadav
+  ----------------
+    Spreadsheet
+  
+  SS_ttx_PE_Live
+  --------------
+    Spreadsheet
+  
+  SS_ttd_Tx_Live
+  --------------
+    Spreadsheet
+  
+  SS_ttd_Tx_Cadav
+  ---------------
+    Spreadsheet
+  
+  SS_ttgf_Tx_Live
+  ---------------
+    Spreadsheet
+  
+  SS_ttgf_Tx_Cadav
+  ----------------
+    Spreadsheet
+  
+  SS_tw_PE
+  --------
+    Spreadsheet
+  
+  SS_divertToCC
+  -------------
+    Spreadsheet
+  
+  SS_suitableForTx
+  ----------------
+    Spreadsheet
+  
+  SS_pe_Tx
+  --------
+    Spreadsheet
+  
+  SS_modAllocation
+  ----------------
+    Spreadsheet
+  
+  SS_Tx_Type
+  ----------
+    Spreadsheet
+  
+  SS_deathPostTx
+  --------------
+    Spreadsheet
+  
+  SS_ichdRouting
+  --------------
+    Spreadsheet
+  
+  SS_hhdRouting
+  -------------
+    Spreadsheet
+  
+  SS_pdRouting
+  ------------
+    Spreadsheet
+  
+  SS_referral_dist
+  ----------------
+    Spreadsheet
+  
+  SS_ethnicity_dist
+  -----------------
+    Spreadsheet
+  
+  Year
+  ----
+    Number
+    Current Value 1
+    Reset Value 1
+  
+  Start Point 2 Arrival Schedule
+  ------------------------------
+    Spreadsheet
+  
+  SS_pe_Tx_Live
+  -------------
+    Spreadsheet
+  
+  SS_pe_Tx_Cadav
+  --------------
+    Spreadsheet
+  
+  Total in System
+  ---------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Died from KRT
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Total entered the KRT system
+  ----------------------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Time Interval Results
+  ---------------------
+    Spreadsheet
+  
+  ichd_transitions
+  ----------------
+  
+  hhd_transitions
+  ---------------
+  
+  pd_transitions
+  --------------
+  
+  RC_hhd
+  ------
+    Spreadsheet
+  
+  RC_ichd
+  -------
+    Spreadsheet
+  
+  RC_pd
+  -----
+    Spreadsheet
+  
+  death_hhd_count
+  ---------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  death_ichd_count
+  ----------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  death_pd_count
+  --------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  modAl_hhd_count
+  ---------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  modAl_ichd_count
+  ----------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  modAl_pd_count
+  --------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  tx_hhd_count
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  tx_ichd_count
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  tx_pd_count
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_ttd_ichd
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_ttd_hhd
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_ttd_pd
+  ----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_ttma_ichd
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_ttma_hhd
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_ttma_pd
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_tttx_ichd
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_tttx_hhd
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  avg_tttx_pd
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  liveTx_count
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  cadavTx_count
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  tot_inc_krt
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  tot_died_krt
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  SS_PErouting_cadav
+  ------------------
+    Spreadsheet
+  
+  SS_PErouting_Live
+  -----------------
+    Spreadsheet
+  
+  RC_tot_in_system_yearly
+  -----------------------
+    Spreadsheet
+  
+  prev_deaths
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  RC_tot_incident
+  ---------------
+    Spreadsheet
+  
+  TC_prevalence
+  -------------
+    Spreadsheet
+  
+  runNum
+  ------
+    Number
+    Current Value 0
+    Reset Value -2147483648
+  
+  TC_NIS_ICHD
+  -----------
+    Spreadsheet
+  
+  TC_Incidence_ICHD
+  -----------------
+    Spreadsheet
+  
+  TC_Exiting_ICHD
+  ---------------
+    Spreadsheet
+  
+  TC_Transtitions_ICHD
+  --------------------
+    Spreadsheet
+  
+  TC_NIS_HHD
+  ----------
+    Spreadsheet
+  
+  TC_Incidence_HHD
+  ----------------
+    Spreadsheet
+  
+  TC_Exiting_HHD
+  --------------
+    Spreadsheet
+  
+  TC_Transitions_HHD
+  ------------------
+    Spreadsheet
+  
+  TC_NIS_PD
+  ---------
+    Spreadsheet
+  
+  TC_Incidence_PD
+  ---------------
+    Spreadsheet
+  
+  TC_Exiting_PD
+  -------------
+    Spreadsheet
+  
+  TC_Transitions_PD
+  -----------------
+    Spreadsheet
+  
+  TC_HomeDialysis
+  ---------------
+    Spreadsheet
+  
+  TC_PreEmptTx
+  ------------
+    Spreadsheet
+  
+  TC_medTTTx_incPE
+  ----------------
+    Spreadsheet
+  
+  TC_medTTTx_exclPE
+  -----------------
+    Spreadsheet
+  
+  TC_TransplantRate_u75
+  ---------------------
+    Spreadsheet
+  
+  glbl_looper
+  -----------
+    Number
+    Current Value 2589
+    Reset Value -2147483648
+  
+  TC_NIS_Live_Tx
+  --------------
+    Spreadsheet
+  
+  TC_Incidence_Tx_Live
+  --------------------
+    Spreadsheet
+  
+  TC_Exiting_Tx_Live
+  ------------------
+    Spreadsheet
+  
+  TC_Transitions_Live_Tx
+  ----------------------
+    Spreadsheet
+  
+  TC_NIS_Cadav_Tx
+  ---------------
+    Spreadsheet
+  
+  TC_Incidence_Cadav_Tx
+  ---------------------
+    Spreadsheet
+  
+  TC_Exiting_Cadav_Tx
+  -------------------
+    Spreadsheet
+  
+  TC_Transitions_Cadav_Tx
+  -----------------------
+    Spreadsheet
+  
+  inc_ICHD
+  --------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  ex_ICHD
+  -------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  inc_HHD
+  -------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  inc_PD
+  ------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  ex_HHD
+  ------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  ex_PD
+  -----
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  inc_Tx_Live
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  inc_Tx_Cadav
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  ex_Tx_Live
+  ----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  ex_Tx_Cadav
+  -----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Var116
+  ------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Checks
+  ------
+    Spreadsheet
+  
+  tx_live_transitions
+  -------------------
+  
+  tx_cadav_transitions
+  --------------------
+  
+  preEmpt_count
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  tx_u75_count
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  krt_inc_count
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  TTTx_store
+  ----------
+    Spreadsheet
+  
+  tx_count
+  --------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  SS_interventions
+  ----------------
+    Spreadsheet
+  
+  interventionYear
+  ----------------
+    Number
+    Current Value 4
+    Reset Value -2147483648
+  
+  interventionIndicator
+  ---------------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Button
+  ------
+    Text
+    Current Value 
+    Reset Value 
+  
+  ss_Financial_Summary
+  --------------------
+    Spreadsheet
+  
+  tte_multiplier_cadav
+  --------------------
+    Number
+    Current Value 1
+    Reset Value -2147483648
+  
+  tte_multiplier_pd
+  -----------------
+    Number
+    Current Value 0.1
+    Reset Value -2147483648
+  
+  tte_multiplier_live
+  -------------------
+    Number
+    Current Value 1
+    Reset Value -2147483648
+  
+  tte_multiplier_ichd
+  -------------------
+    Number
+    Current Value 0.1
+    Reset Value -2147483648
+  
+  tte_multiplier_hhd
+  ------------------
+    Number
+    Current Value 0.25
+    Reset Value -2147483648
+  
+  TC_Costs
+  --------
+    Spreadsheet
+  
+  dailyCostICHD
+  -------------
+    Number
+    Current Value 172.17
+    Reset Value -2147483648
+  
+  dailyCostHHD
+  ------------
+    Number
+    Current Value 140.06
+    Reset Value -2147483648
+  
+  dailyCostPD
+  -----------
+    Number
+    Current Value 107.92
+    Reset Value -2147483648
+  
+  dailyCostLivingWithTx
+  ---------------------
+    Number
+    Current Value 24.67
+    Reset Value -2147483648
+  
+  costICHD
+  --------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  costHHD
+  -------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  costPD
+  ------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  costTx
+  ------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  Var149
+  ------
+    Spreadsheet
+  
+  TC_ichdCosts
+  ------------
+    Spreadsheet
+  
+  TC_hhdCosts
+  -----------
+    Spreadsheet
+  
+  TC_pdCosts
+  ----------
+    Spreadsheet
+  
+  TC_txCosts
+  ----------
+    Spreadsheet
+  
+  total_prev
+  ----------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  TC_mortality
+  ------------
+    Spreadsheet
+  
+  TC_mortality_ICHD
+  -----------------
+    Spreadsheet
+  
+  TC_mortality_HHD
+  ----------------
+    Spreadsheet
+  
+  TC_mortality_PD
+  ---------------
+    Spreadsheet
+  
+  TC_mortality_Tx_Live
+  --------------------
+    Spreadsheet
+  
+  TC_mortality_Tx_Cadav
+  ---------------------
+    Spreadsheet
+  
+  mortality
+  ---------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  mortality_ICHD
+  --------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  mortality_HHD
+  -------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  mortality_PD
+  ------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  mortality_Tx_Live
+  -----------------
+    Number
+    Current Value 0
+    Reset Value 0
+  
+  mortality_Tx_Cadav
+  ------------------
+    Number
+    Current Value 0
+    Reset Value 0
+
+Reset Visual Logic:
+  VL SECTION: Before Reset Logic ,  LOCALDATA: res_collection_period_calc:[NUMBER]
+    'Obeyed immediately user clicks RESET button (before initialization of simulation objects and before On Reset logic)
+    
+    Get Trial Run Number    runNum
+    
+    IF runNum  =  1
+      Clear Sheet    Start Point 2 Arrival Schedule[1,1]
+      Get from EXCEL    SS_interventions[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Model Interface" ,  1 ,  1 ,  6 ,  47
+      Get from EXCEL    SS_InitialPop[1,1] ,  "[Renal_Modelling_Input_File.xlsx]prevalent_population" ,  1 ,  1 ,  3 ,  7
+      Get from EXCEL    Start Point 2 Arrival Schedule[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Prev_Pop_Initialisation" ,  1 ,  1 ,  20 ,  SS_InitialPop[2,6]
+      Get from EXCEL    SS_ethnicity_dist[1,1] ,  "[Renal_Modelling_Input_File.xlsx]ethnicity_dist" ,  1 ,  1 ,  6 ,  30
+      Get from EXCEL    SS_age_profile[1,1] ,  "[Renal_Modelling_Input_File.xlsx]age_dist" ,  1 ,  1 ,  3 ,  7
+      Get from EXCEL    SS_yearly_incidence[1,1] ,  "[Renal_Modelling_Input_File.xlsx]daily_rate" ,  1 ,  1 ,  14 ,  3
+      Get from EXCEL    SS_referral_dist[1,1] ,  "[Renal_Modelling_Input_File.xlsx]referral_dist" ,  1 ,  1 ,  4 ,  3
+      Get from EXCEL    SS_divertToCC[1,1] ,  "[Renal_Modelling_Input_File.xlsx]divertToCC" ,  1 ,  1 ,  6 ,  10
+      Get from EXCEL    SS_suitableForTx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]suitableForTx" ,  1 ,  1 ,  3 ,  10
+      Get from EXCEL    SS_PErouting_cadav[1,1] ,  "[Renal_Modelling_Input_File.xlsx]preE_Tx_Cadav" ,  1 ,  1 ,  6 ,  50
+      Get from EXCEL    SS_PErouting_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]preE_Tx_Live" ,  1 ,  1 ,  6 ,  50
+      Get from EXCEL    SS_modAllocation[1,1] ,  "[Renal_Modelling_Input_File.xlsx]modAllocation" ,  1 ,  1 ,  10 ,  100
+      Get from EXCEL    SS_Tx_Type[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TxType" ,  1 ,  1 ,  5 ,  25
+      Get from EXCEL    SS_deathPostTx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]DeathPostTx" ,  1 ,  1 ,  4 ,  15
+      Get from EXCEL    SS_ichdRouting[1,1] ,  "[Renal_Modelling_Input_File.xlsx]ichdRouting" ,  1 ,  1 ,  7 ,  50
+      Get from EXCEL    SS_hhdRouting[1,1] ,  "[Renal_Modelling_Input_File.xlsx]hhdRouting" ,  1 ,  1 ,  7 ,  50
+      Get from EXCEL    SS_pdRouting[1,1] ,  "[Renal_Modelling_Input_File.xlsx]pdRouting" ,  1 ,  1 ,  7 ,  50
+      
+    SET res_collection_period_calc  =  365*[SS_interventions[2,35]-SS_interventions[2,34]]
+    Set Results Collection Interval    res_collection_period_calc
+    Set Prob-Profile Distrib Column    pp_age_dist ,  1 ,  1 ,  SS_age_profile[2,1]*100
+    Set Prob-Profile Distrib Column    pp_age_dist ,  2 ,  2 ,  SS_age_profile[2,2]*100
+    Set Prob-Profile Distrib Column    pp_age_dist ,  3 ,  3 ,  SS_age_profile[2,3]*100
+    Set Prob-Profile Distrib Column    pp_age_dist ,  4 ,  4 ,  SS_age_profile[2,4]*100
+    Set Prob-Profile Distrib Column    pp_age_dist ,  5 ,  5 ,  SS_age_profile[2,5]*100
+    
+    Set Prob-Profile Distrib Column    pp_ethnicity ,  1 ,  1 ,  SS_ethnicity_dist[2,1]*100
+    Set Prob-Profile Distrib Column    pp_ethnicity ,  2 ,  2 ,  SS_ethnicity_dist[3,1]*100
+    Set Prob-Profile Distrib Column    pp_ethnicity ,  3 ,  3 ,  SS_ethnicity_dist[4,1]*100
+    
+    Set Prob-Profile Distrib Column    pp_referral_dist ,  1 ,  1 ,  SS_referral_dist[2,1]*100
+    
+    Set Distribution Parameters    dist_arrivals ,  Exponential ,  1/SS_yearly_incidence[1,2] ,  0 ,  0 ,  0
+    
+    Set Distribution Parameters    dist_conservativeCareDuration ,  Weibull ,  SS_ttd_ConCare[2,1] ,  SS_ttd_ConCare[2,2] ,  0 ,  0
+    
+    SET tte_multiplier_cadav  =  SS_interventions[2,43]
+    SET tte_multiplier_live  =  SS_interventions[3,43]
+    SET tte_multiplier_ichd  =  SS_interventions[4,43]
+    SET tte_multiplier_hhd  =  SS_interventions[5,43]
+    SET tte_multiplier_pd  =  SS_interventions[6,43]
+    
+    SET dailyCostICHD  =  SS_interventions[2,46]
+    SET dailyCostHHD  =  SS_interventions[3,46]
+    SET dailyCostPD  =  SS_interventions[4,46]
+    SET dailyCostLivingWithTx  =  SS_interventions[5,46]
+    
+    Clear Sheet Data Only    RC_tot_in_system_yearly[1,1]
+    Clear Sheet Data Only    RC_tot_incident[1,1]
+    
+    Clear Array    ichd_transitions[1,1]
+    Clear Array    hhd_transitions[1,1]
+    Clear Array    pd_transitions[1,1]
+    Clear Array    tx_live_transitions[1,1]
+    Clear Array    tx_cadav_transitions[1,1]
+    SET liveTx_count  =  0
+    SET cadavTx_count  =  0
+    SET preEmpt_count  =  0
+    
+    SET interventionIndicator  =  0
+    SET interventionYear  =  1+[SS_interventions[2,19]-SS_interventions[2,34]]
+    SET Year  =  1
+    (Disabled) SET runNum  =  1
+Time Check Visual Logic:
+  VL SECTION: Time Check Logic ,  LOCALDATA: countLiveTx:[NUMBER] ,  queueInd:[NUMBER] ,  results_collected_years:[NUMBER]
+    'Repeated at a set time interval
+    
+    SET Total in System  =  ichdQueue.Count Contents+hhdQueue.Count Contents+pdQueue.Count Contents+livingWithTransplant.Count Contents+preEmptiveQueue.Count Contents
+    SET RC_tot_incident[Year,1]  =  Year
+    SET RC_tot_incident[Year,2]  =  patientsWithKRT.Arrived Count
+    
+    'results output
+    'first we adjust if it's year 1 for the prevalent patients
+    IF Year  =  1
+      SET inc_Tx_Cadav  =  inc_Tx_Cadav-SS_InitialPop[2,4]
+      SET inc_Tx_Live  =  inc_Tx_Live-SS_InitialPop[2,5]
+      SET TC_NIS_Cadav_Tx[Year,runNum]  =  SS_InitialPop[2,4]+inc_Tx_Cadav-ex_Tx_Cadav
+      SET TC_NIS_Live_Tx[Year,runNum]  =  SS_InitialPop[2,5]+inc_Tx_Live-ex_Tx_Live
+      SET inc_ICHD  =  inc_ICHD-SS_InitialPop[2,2]
+      SET inc_HHD  =  inc_HHD-SS_InitialPop[2,1]
+      SET inc_PD  =  inc_PD-SS_InitialPop[2,3]
+      SET TC_NIS_ICHD[Year,runNum]  =  SS_InitialPop[2,2]+inc_ICHD-ex_ICHD
+      SET TC_NIS_HHD[Year,runNum]  =  SS_InitialPop[2,1]+inc_HHD-ex_HHD
+      SET TC_NIS_PD[Year,runNum]  =  SS_InitialPop[2,3]+inc_PD-ex_PD
+      SET TC_mortality[Year,runNum]  =  death.Count Contents
+    ELSE
+      SET TC_NIS_Cadav_Tx[Year,runNum]  =  TC_NIS_Cadav_Tx[Year-1,runNum]+inc_Tx_Cadav-ex_Tx_Cadav
+      SET TC_NIS_Live_Tx[Year,runNum]  =  TC_NIS_Live_Tx[Year-1,runNum]+inc_Tx_Live-ex_Tx_Live
+      SET TC_NIS_ICHD[Year,runNum]  =  TC_NIS_ICHD[Year-1,runNum]+inc_ICHD-ex_ICHD
+      SET TC_NIS_HHD[Year,runNum]  =  TC_NIS_HHD[Year-1,runNum]+inc_HHD-ex_HHD
+      SET TC_NIS_PD[Year,runNum]  =  TC_NIS_PD[Year-1,runNum]+inc_PD-ex_PD
+      SET TC_mortality[Year,runNum]  =  death.Count Contents-TC_mortality[Year-1,runNum]
+    
+    SET results_collected_years  =  ROUND[Results Collection Period/365]
+    SET TC_prevalence[Year,runNum]  =  Total in System
+    (Disabled) SET TC_NIS_ICHD[Year,runNum]  =  ichdQueue.Count Contents
+    (Disabled) SET TC_NIS_HHD[Year,runNum]  =  hhdQueue.Count Contents
+    (Disabled) SET TC_NIS_PD[Year,runNum]  =  pdQueue.Count Contents
+    SET TC_Incidence_ICHD[Year,runNum]  =  inc_ICHD
+    SET TC_Incidence_HHD[Year,runNum]  =  inc_HHD
+    SET TC_Incidence_PD[Year,runNum]  =  inc_PD
+    SET TC_Exiting_ICHD[Year,runNum]  =  ex_ICHD
+    SET TC_Exiting_HHD[Year,runNum]  =  ex_HHD
+    SET TC_Exiting_PD[Year,runNum]  =  ex_PD
+    SET TC_Incidence_Cadav_Tx[Year,runNum]  =  inc_Tx_Cadav
+    SET TC_Incidence_Tx_Live[Year,runNum]  =  inc_Tx_Live
+    SET TC_Exiting_Cadav_Tx[Year,runNum]  =  ex_Tx_Cadav
+    SET TC_Exiting_Tx_Live[Year,runNum]  =  ex_Tx_Live
+    SET TC_Transtitions_ICHD[Year,runNum]  =  ichd_transitions[1,1]
+    SET TC_Transtitions_ICHD[Year+results_collected_years,runNum]  =  ichd_transitions[2,1]
+    SET TC_Transtitions_ICHD[Year+results_collected_years+results_collected_years,runNum]  =  ichd_transitions[3,1]
+    SET TC_Transitions_HHD[Year,runNum]  =  hhd_transitions[1,1]
+    SET TC_Transitions_HHD[Year+results_collected_years,runNum]  =  hhd_transitions[2,1]
+    SET TC_Transitions_HHD[Year+results_collected_years+results_collected_years,runNum]  =  hhd_transitions[3,1]
+    SET TC_Transitions_PD[Year,runNum]  =  pd_transitions[1,1]
+    SET TC_Transitions_PD[Year+results_collected_years,runNum]  =  pd_transitions[2,1]
+    SET TC_Transitions_PD[Year+results_collected_years+results_collected_years,runNum]  =  pd_transitions[3,1]
+    SET TC_Transitions_Cadav_Tx[Year,runNum]  =  tx_cadav_transitions[1,1]
+    SET TC_Transitions_Cadav_Tx[Year+results_collected_years,runNum]  =  tx_cadav_transitions[2,1]
+    SET TC_Transitions_Live_Tx[Year,runNum]  =  tx_live_transitions[1,1]
+    SET TC_Transitions_Live_Tx[Year+results_collected_years,runNum]  =  tx_live_transitions[2,1]
+    (Disabled) Average Sheet Area    TTTx_store[1,2] ,  preEmpt_count ,  1 ,  TC_medTTTx_exclPE[Year,runNum]
+    (Disabled) Average Sheet Area    TTTx_store[1,1] ,  liveTx_count+cadavTx_count ,  1 ,  TC_medTTTx_incPE[Year,runNum]
+    SET TC_HomeDialysis[Year,runNum]  =  100*[[hhdQueue.Count Contents+pdQueue.Count Contents]/[ichdQueue.Count Contents+hhdQueue.Count Contents+pdQueue.Count Contents]]
+    SET TC_PreEmptTx[Year,runNum]  =  100*[preEmpt_count/[inc_Tx_Cadav+inc_Tx_Live]]
+    SET TC_Costs[Year,runNum]  =  costICHD+costHHD+costPD+costTx
+    SET TC_ichdCosts[Year,runNum]  =  costICHD
+    SET TC_hhdCosts[Year,runNum]  =  costHHD
+    SET TC_pdCosts[Year,runNum]  =  costPD
+    SET TC_txCosts[Year,runNum]  =  costTx
+    'this needs editing we need krt incidence
+    SET TC_TransplantRate_u75[Year,runNum]  =  tx_u75_count/krt_inc_count
+    SET TC_mortality_HHD[Year,runNum]  =  mortality_HHD
+    SET TC_mortality_ICHD[Year,runNum]  =  mortality_ICHD
+    SET TC_mortality_PD[Year,runNum]  =  mortality_PD
+    SET TC_mortality_Tx_Live[Year,runNum]  =  mortality_Tx_Live
+    SET TC_mortality_Tx_Cadav[Year,runNum]  =  mortality_Tx_Cadav
+    
+    'reset params
+    SET inc_ICHD  =  0
+    SET inc_HHD  =  0
+    SET inc_PD  =  0
+    SET ex_ICHD  =  0
+    SET ex_HHD  =  0
+    SET ex_PD  =  0
+    SET inc_Tx_Cadav  =  0
+    SET inc_Tx_Live  =  0
+    SET ex_Tx_Cadav  =  0
+    SET ex_Tx_Live  =  0
+    SET tx_u75_count  =  0
+    SET krt_inc_count  =  0
+    SET preEmpt_count  =  0
+    SET liveTx_count  =  0
+    SET cadavTx_count  =  0
+    SET tx_count  =  0
+    SET mortality_HHD  =  0
+    SET mortality_ICHD  =  0
+    SET mortality_PD  =  0
+    SET mortality_Tx_Cadav  =  0
+    SET mortality_Tx_Live  =  0
+    
+    Clear Array    ichd_transitions[1,1]
+    Clear Array    hhd_transitions[1,1]
+    Clear Array    pd_transitions[1,1]
+    Clear Array    tx_live_transitions[1,1]
+    Clear Array    tx_cadav_transitions[1,1]
+    Clear Sheet Data Only    TTTx_store[1,1]
+    SET Year  =  Year+1
+    IF Year  =  interventionYear
+      'turn on the intervention
+      SET interventionIndicator  =  1
+      Set Prob-Profile Distrib Column    pp_referral_dist ,  1 ,  1 ,  SS_referral_dist[3,1]*100
+    Set Distribution Parameters    dist_arrivals ,  Exponential ,  1/SS_yearly_incidence[Year,2] ,  0 ,  0 ,  0
+    
+    Set Prob-Profile Distrib Column    pp_ethnicity ,  1 ,  1 ,  SS_ethnicity_dist[2,Year]*100
+    Set Prob-Profile Distrib Column    pp_ethnicity ,  2 ,  2 ,  SS_ethnicity_dist[3,Year]*100
+    Set Prob-Profile Distrib Column    pp_ethnicity ,  3 ,  3 ,  SS_ethnicity_dist[4,Year]*100
+    
+    
+End Run Visual Logic:
+  VL SECTION: End Run Logic ,  LOCALDATA: Local1:[NUMBER] ,  ichdTot:[NUMBER] ,  hhdTot:[NUMBER] ,  pdTot:[NUMBER] ,  ind:[NUMBER] ,  runningTot_ichd:[NUMBER] ,  runningTot_hhd:[NUMBER] ,  runningTot_pd:[NUMBER] ,  results_collected_years:[NUMBER]
+    'Obeyed when the simulation reaches end of "Results Collection Period"
+    
+    SET Total in System  =  ichdQueue.Count Contents+hhdQueue.Count Contents+pdQueue.Count Contents+livingWithTransplant.Count Contents+preEmptiveQueue.Count Contents
+    SET Died from KRT  =  death.Count Contents-endConservativeCare.Completed
+    SET Total entered the KRT system  =  suitableForTransplant.Completed
+    Average Sheet Area    RC_ichd[1,1] ,  death_ichd_count ,  1 ,  avg_ttd_ichd
+    Average Sheet Area    RC_ichd[1,2] ,  modAl_ichd_count ,  1 ,  avg_ttma_ichd
+    Average Sheet Area    RC_ichd[1,3] ,  tx_ichd_count ,  1 ,  avg_tttx_ichd
+    
+    Average Sheet Area    RC_hhd[1,1] ,  death_hhd_count ,  1 ,  avg_ttd_hhd
+    Average Sheet Area    RC_hhd[1,2] ,  modAl_hhd_count ,  1 ,  avg_ttma_hhd
+    Average Sheet Area    RC_hhd[1,3] ,  tx_hhd_count ,  1 ,  avg_tttx_hhd
+    
+    Average Sheet Area    RC_pd[1,1] ,  death_pd_count ,  1 ,  avg_ttd_pd
+    Average Sheet Area    RC_pd[1,2] ,  modAl_pd_count ,  1 ,  avg_ttma_pd
+    Average Sheet Area    RC_pd[1,3] ,  tx_pd_count ,  1 ,  avg_tttx_pd
+    
+    SET results_collected_years  =  ROUND[Results Collection Period/365]
+    SET TC_prevalence[Year,runNum]  =  Total in System
+    SET TC_NIS_ICHD[Year,runNum]  =  ichdQueue.Count Contents
+    SET TC_NIS_HHD[Year,runNum]  =  hhdQueue.Count Contents
+    SET TC_NIS_PD[Year,runNum]  =  pdQueue.Count Contents
+    SET TC_NIS_Cadav_Tx[Year,runNum]  =  TC_NIS_Cadav_Tx[Year-1,runNum]+inc_Tx_Cadav-ex_Tx_Cadav
+    SET TC_NIS_Live_Tx[Year,runNum]  =  TC_NIS_Live_Tx[Year-1,runNum]+inc_Tx_Live-ex_Tx_Live
+    SET TC_Incidence_ICHD[Year,runNum]  =  inc_ICHD
+    SET TC_Incidence_HHD[Year,runNum]  =  inc_HHD
+    SET TC_Incidence_PD[Year,runNum]  =  inc_PD
+    SET TC_Exiting_ICHD[Year,runNum]  =  ex_ICHD
+    SET TC_Exiting_HHD[Year,runNum]  =  ex_HHD
+    SET TC_Exiting_PD[Year,runNum]  =  ex_PD
+    SET TC_Incidence_Cadav_Tx[Year,runNum]  =  inc_Tx_Cadav
+    SET TC_Incidence_Tx_Live[Year,runNum]  =  inc_Tx_Live
+    SET TC_Exiting_Cadav_Tx[Year,runNum]  =  ex_Tx_Cadav
+    SET TC_Exiting_Tx_Live[Year,runNum]  =  ex_Tx_Live
+    SET TC_Transtitions_ICHD[Year,runNum]  =  ichd_transitions[1,1]
+    SET TC_Transtitions_ICHD[Year+results_collected_years,runNum]  =  ichd_transitions[2,1]
+    SET TC_Transtitions_ICHD[Year+results_collected_years+results_collected_years,runNum]  =  ichd_transitions[3,1]
+    SET TC_Transitions_HHD[Year,runNum]  =  hhd_transitions[1,1]
+    SET TC_Transitions_HHD[Year+results_collected_years,runNum]  =  hhd_transitions[2,1]
+    SET TC_Transitions_HHD[Year+results_collected_years+results_collected_years,runNum]  =  hhd_transitions[3,1]
+    SET TC_Transitions_PD[Year,runNum]  =  pd_transitions[1,1]
+    SET TC_Transitions_PD[Year+results_collected_years,runNum]  =  pd_transitions[2,1]
+    SET TC_Transitions_PD[Year+results_collected_years+results_collected_years,runNum]  =  pd_transitions[3,1]
+    SET TC_Transitions_Cadav_Tx[Year,runNum]  =  tx_cadav_transitions[1,1]
+    SET TC_Transitions_Cadav_Tx[Year+results_collected_years,runNum]  =  tx_cadav_transitions[2,1]
+    SET TC_Transitions_Live_Tx[Year,runNum]  =  tx_live_transitions[1,1]
+    SET TC_Transitions_Live_Tx[Year+results_collected_years,runNum]  =  tx_live_transitions[2,1]
+    SET TC_Costs[Year,runNum]  =  costICHD+costHHD+costPD+costTx
+    SET TC_ichdCosts[Year,runNum]  =  costICHD
+    SET TC_hhdCosts[Year,runNum]  =  costHHD
+    SET TC_pdCosts[Year,runNum]  =  costPD
+    SET TC_txCosts[Year,runNum]  =  costTx
+    (Disabled) Average Sheet Area    TTTx_store[1,2] ,  preEmpt_count ,  1 ,  TC_medTTTx_exclPE[Year,runNum]
+    (Disabled) Average Sheet Area    TTTx_store[1,1] ,  liveTx_count+cadavTx_count ,  1 ,  TC_medTTTx_incPE[Year,runNum]
+    SET TC_HomeDialysis[Year,runNum]  =  100*[[hhdQueue.Count Contents+pdQueue.Count Contents]/[ichdQueue.Count Contents+hhdQueue.Count Contents+pdQueue.Count Contents]]
+    SET TC_PreEmptTx[Year,runNum]  =  100*[preEmpt_count/[inc_Tx_Cadav+inc_Tx_Live]]
+    'this needs editing we need krt incidence
+    SET TC_TransplantRate_u75[Year,runNum]  =  tx_u75_count/krt_inc_count
+    'death.Count Contents-TC_mortality[Year-1,runNum]
+    SET TC_mortality[Year,runNum]  =  mortality_ICHD+mortality_ICHD+mortality_PD+mortality_Tx_Cadav+mortality_Tx_Live
+    SET TC_mortality_HHD[Year,runNum]  =  mortality_HHD
+    
+    SET TC_mortality_ICHD[Year,runNum]  =  mortality_ICHD
+    SET TC_mortality_PD[Year,runNum]  =  mortality_PD
+    SET TC_mortality_Tx_Live[Year,runNum]  =  mortality_Tx_Live
+    SET TC_mortality_Tx_Cadav[Year,runNum]  =  mortality_Tx_Cadav
+    
+End Trial Visual Logic:
+  VL SECTION: End Trial Logic
+    
+    'now read everything we want to feedback out to Excel
+    Set in EXCEL    TC_Costs[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Costs" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_ichdCosts[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Costs_ICHD" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_hhdCosts[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Costs_HHD" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_pdCosts[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Costs_PD" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_txCosts[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Costs_Tx" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_prevalence[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Prevalence_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_NIS_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]NIS_ICHD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_NIS_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]NIS_HHD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_NIS_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]NIS_PD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_NIS_Live_Tx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]NIS_Tx_Live_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_NIS_Cadav_Tx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]NIS_Tx_Cadav_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_HomeDialysis[1,1] ,  "[Renal_Modelling_Input_File.xlsx]HomeDialysis_Yearly%" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_PreEmptTx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]PreEmptiveTx_Yearly%" ,  1 ,  2 ,  50 ,  20
+    (Disabled) Set in EXCEL    TC_mortality[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Mortality" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_mortality_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Mortality_ICHD" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_mortality_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Mortality_HHD" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_mortality_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Mortality_PD" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_mortality_Tx_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Mortality_Tx_Live" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_mortality_Tx_Cadav[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Mortality_Tx_Cadav" ,  1 ,  2 ,  50 ,  20
+    
+    Set in EXCEL    TC_Incidence_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Incidence_ICHD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Incidence_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Incidence_HHD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Incidence_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Incidence_PD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Incidence_Cadav_Tx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Incidence_Tx_Cadav_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Incidence_Tx_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Incidence_Tx_Live_Yearly" ,  1 ,  2 ,  50 ,  20
+    
+    Set in EXCEL    TC_Exiting_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Exiting_ICHD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Exiting_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Exiting_HHD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Exiting_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Exiting_PD_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Exiting_Cadav_Tx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Exiting_Tx_Cadav_Yearly" ,  1 ,  2 ,  50 ,  20
+    Set in EXCEL    TC_Exiting_Tx_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Exiting_Tx_Live_Yearly" ,  1 ,  2 ,  50 ,  20
+On Spreadsheet Button Click Logic:
+  VL SECTION: On Button Click Logic
+    'Import all necessary files into the simulation
+    Get from EXCEL    SS_interventions[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Model Interface" ,  1 ,  1 ,  6 ,  47
+    Get from EXCEL    SS_InitialPop[1,1] ,  "[Renal_Modelling_Input_File.xlsx]prevalent_population" ,  1 ,  1 ,  3 ,  7
+    Get from EXCEL    Start Point 2 Arrival Schedule[1,1] ,  "[Renal_Modelling_Input_File.xlsx]Prev_Pop_Initialisation" ,  1 ,  1 ,  20 ,  SS_InitialPop[2,6]
+    Get from EXCEL    SS_ethnicity_dist[1,1] ,  "[Renal_Modelling_Input_File.xlsx]ethnicity_dist" ,  1 ,  1 ,  6 ,  30
+    Get from EXCEL    SS_age_profile[1,1] ,  "[Renal_Modelling_Input_File.xlsx]age_dist" ,  1 ,  1 ,  3 ,  7
+    Get from EXCEL    SS_yearly_incidence[1,1] ,  "[Renal_Modelling_Input_File.xlsx]daily_rate" ,  1 ,  1 ,  14 ,  3
+    Get from EXCEL    SS_referral_dist[1,1] ,  "[Renal_Modelling_Input_File.xlsx]referral_dist" ,  1 ,  1 ,  4 ,  3
+    (Disabled) Get from EXCEL    SS_ttd_ConCare[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTD_CC" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_pe_Tx_Cadav[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTTx_preEmpt_Cadaver" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_pe_Tx_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTTx_preEmpt_Live" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttgf_Tx_Cadav[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTGf_Tx_Cadav" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttgf_Tx_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTGf_Tx_Live" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttd_Tx_Cadav[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTD_Tx_Cadav" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttd_Tx_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTD_Tx_Live" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttd_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTD_hhd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttmc_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTMC_hhd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_tttx_HHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTTx_hhd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttd_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTD_pd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttmc_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTMC_pd" ,  1 ,  1 ,  26 ,  100
+    Get from EXCEL    SS_divertToCC[1,1] ,  "[Renal_Modelling_Input_File.xlsx]divertToCC" ,  1 ,  1 ,  6 ,  10
+    (Disabled) Get from EXCEL    SS_tttx_PD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTTx_pd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttd_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTD_ichd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_ttmc_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTMC_ichd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_tttx_ICHD[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TTTx_ichd" ,  1 ,  1 ,  26 ,  100
+    (Disabled) Get from EXCEL    SS_tw_PE[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TW_preEmpt" ,  1 ,  1 ,  26 ,  100
+    Get from EXCEL    SS_suitableForTx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]suitableForTx" ,  1 ,  1 ,  3 ,  10
+    Get from EXCEL    SS_PErouting_cadav[1,1] ,  "[Renal_Modelling_Input_File.xlsx]preE_Tx_Cadav" ,  1 ,  1 ,  6 ,  50
+    Get from EXCEL    SS_PErouting_Live[1,1] ,  "[Renal_Modelling_Input_File.xlsx]preE_Tx_Live" ,  1 ,  1 ,  6 ,  50
+    Get from EXCEL    SS_modAllocation[1,1] ,  "[Renal_Modelling_Input_File.xlsx]modAllocation" ,  1 ,  1 ,  10 ,  100
+    Get from EXCEL    SS_Tx_Type[1,1] ,  "[Renal_Modelling_Input_File.xlsx]TxType" ,  1 ,  1 ,  5 ,  25
+    Get from EXCEL    SS_deathPostTx[1,1] ,  "[Renal_Modelling_Input_File.xlsx]DeathPostTx" ,  1 ,  1 ,  4 ,  15
+    Get from EXCEL    SS_ichdRouting[1,1] ,  "[Renal_Modelling_Input_File.xlsx]ichdRouting" ,  1 ,  1 ,  7 ,  50
+    Get from EXCEL    SS_hhdRouting[1,1] ,  "[Renal_Modelling_Input_File.xlsx]hhdRouting" ,  1 ,  1 ,  7 ,  50
+    Get from EXCEL    SS_pdRouting[1,1] ,  "[Renal_Modelling_Input_File.xlsx]pdRouting" ,  1 ,  1 ,  7 ,  50
+    
+Other Visual Logic:
+  VL SECTION: Visual Logic Reset Trial Export Sheets
+    Clear Sheet Area    TC_prevalence[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_NIS_ICHD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Incidence_ICHD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Exiting_ICHD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Transtitions_ICHD[1,1] ,  100 ,  1000
+    
+    Clear Sheet Area    TC_Incidence_HHD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Exiting_HHD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Transitions_HHD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_NIS_HHD[1,1] ,  100 ,  1000
+    
+    Clear Sheet Area    TC_NIS_PD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Incidence_PD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Exiting_PD[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Transitions_PD[1,1] ,  100 ,  1000
+    
+    Clear Sheet Area    TC_NIS_Live_Tx[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Incidence_Tx_Live[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Exiting_Tx_Live[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Transitions_Live_Tx[1,1] ,  100 ,  1000
+    
+    Clear Sheet Area    TC_NIS_Cadav_Tx[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Incidence_Cadav_Tx[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Exiting_Cadav_Tx[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_Transitions_Cadav_Tx[1,1] ,  100 ,  1000
+    
+    Clear Sheet Area    TC_HomeDialysis[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_PreEmptTx[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_TransplantRate_u75[1,1] ,  100 ,  1000
+    
+    Clear Sheet Area    TC_Costs[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_ichdCosts[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_hhdCosts[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_pdCosts[1,1] ,  100 ,  1000
+    Clear Sheet Area    TC_txCosts[1,1] ,  100 ,  1000
+    
+    
+    
+Other Visual Logic:
+  VL SECTION: Export to excel
+    'In this block we'll write out all the results files to excel
+    Set in EXCEL    TC_prevalence[1,1] ,  "[Renal Modelling Export File.xlsx]Prevalence Yearly" ,  1 ,  1 ,  100 ,  100
+    Set in EXCEL    TC_NIS_ICHD[1,1] ,  "[Renal Modelling Export File.xlsx]NIS_ICHD_Yearly" ,  1 ,  1 ,  100 ,  100
+    Set in EXCEL    TC_Incidence_ICHD[1,1] ,  "[Renal Modelling Export File.xlsx]Incidence_ICHD_Yearly" ,  1 ,  1 ,  100 ,  100
+    Set in EXCEL    TC_Exiting_ICHD[1,1] ,  "[Renal Modelling Export File.xlsx]Exiting_ICHD_Yearly" ,  1 ,  1 ,  100 ,  100
+    
+    
+    
+    
+    
+    
+    
+Other Visual Logic:
+  VL SECTION: Cost Accrual
+    SET costICHD  =  costICHD+dailyCostICHD*ichdQueue.Count Contents
+    SET costHHD  =  costHHD+dailyCostHHD*hhdQueue.Count Contents
+    SET costPD  =  costPD+dailyCostPD*pdQueue.Count Contents
+    SET costTx  =  costTx+dailyCostLivingWithTx*livingWithTransplant.Count Contents
+
+********************************************************************************
+
+SIMUL8 Profit Financial Information
+-----------------------------------
+  Currency:  
+  Fixed Cost: 0
+  Fixed Revenue: 0
+
+********************************************************************************
+
+Carbon Emissions Information
+----------------------------
+  Carbon Footprint Unit: CO2e
+  Fixed Carbon Footprint: 0
+  Fixed Carbon Offset: 0
+
+********************************************************************************
