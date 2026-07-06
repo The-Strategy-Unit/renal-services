@@ -29,11 +29,11 @@ Documenting the steps taken to wrangle multiple data sources used in the CKD dis
 
 ## Summary of Steps required
 
-1.  Download population estimates and future projections from ONS/Nomisweb, by age and gender. Get England, and ~~Midlands~~ NHS regions. (Aggregate to age bands - which? for aged model). ONS update estimates every summer (around July).
+1.  Download population estimates and future projections from ONS/Nomisweb, by age and gender. Get England, and NHS regions. ONS update estimates every summer (around July).
 
-2.  Download CVD Prevent data - for each region - of prevalance (coed), uncoded and high-risk.
+2.  Download CVD Prevent data - for each region - of prevalance (coded), uncoded and high-risk.
 
-3.  Apply Inside CKD to proportion split between S3 and S4-5 for each of diagnosed and undiagnosed (uncoded). These are ASSUMPTIONS TO BE MADE CLEAR IN VALIDATION.
+3.  Apply Inside CKD to proportion split between S3 and S4-5 for each of diagnosed and undiagnosed (uncoded).
 
 ## The Process
 
@@ -62,8 +62,6 @@ pop_est <- read.csv(query) |>
     
     )|> 
 
-  # filter(age_lower >=20) |> 
-
   group_by(year, region, sex, age_lower) |> 
   summarise(pop = sum(population))
 
@@ -78,7 +76,7 @@ pop_est <- bind_rows(pop_est, pop_est_eng)
 
 # projections
 # update query years as new projections are released
-query <- "https://www.nomisweb.co.uk/api/v01/dataset/NM_2006_1.data.csv?geography=2013265926,2013265924,2013265927,2013265921,2013265922,2013265928,2013265929,2013265925,2013265923&projected_year=2024...2043&gender=0&c_age=119,120,6...18,210&measures=20100&select=geography_name,geography_code,projected_year_name,gender_name,c_age_name,obs_value"
+query <- "https://www.nomisweb.co.uk/api/v01/dataset/NM_2006_1.data.csv?geography=2013265926,2013265924,2013265927,2013265921,2013265922,2013265928,2013265929,2013265925,2013265923&projected_year=2025...2043&gender=0&c_age=119,120,6...18,210&measures=20100&select=geography_name,geography_code,projected_year_name,gender_name,c_age_name,obs_value"
 
 pop_proj <- read.csv(query) |>
   clean_names() |> 
@@ -107,28 +105,21 @@ pop_proj_eng <- pop_proj |>
 pop_proj <- bind_rows(pop_proj, pop_proj_eng)
 
 pop_data <- bind_rows(pop_est, pop_proj) |> 
-  mutate( #stella_time = year - 2020.5,
-         stella_time = case_when(year == 2021 ~ 0.75,
-                                 TRUE ~ year - 2020.5)) # model starts at time 0, Q4 of 2021
+  mutate( 
+         stella_time = year + 0.5) # mid-year estimates
 
 pop_all <- pop_data |> 
   # filter(sex != "Total") |> 
   group_by(region, year, stella_time) |> 
   reframe(pop = sum(pop))
 
-pop_stella_xvars <- pop_all |> 
-    select(-c(year, pop)) |> 
-  mutate(region = paste0("ons pop[", region, "]:x"),
-         time = stella_time) |> 
-  pivot_wider(names_from = time, values_from = stella_time)
 
 pop_stella <- pop_all |> 
-    select(-year) |> 
-  mutate(region = paste0("ons pop[", region, "]:y")) |> 
+  select(-year) |>
+  mutate(region = paste0("ons pop[", region, "]")) |> 
   pivot_wider(names_from = stella_time, values_from = pop) |> 
-  bind_rows(pop_stella_xvars) |> 
   arrange(region)
-
+  
 ```
 
 ### CVD Prevent Data
@@ -152,7 +143,7 @@ ckd_sys_time <- map_df(avail_periods$time_period_id, ckd_ind_sys_fn) |>
          time_period_name = str_remove_all(time_period_name, "[:digit:]"),
          time_period_name = str_remove(time_period_name, "To "),
          date = as.yearmon(paste(year, time_period_name), "%Y %B"),
-        stella_time = as.numeric(yearqtr(date) - 2020.75) #time starts at 0, Q4 of 2021
+        stella_time = as.numeric(yearqtr(date) + 0.25) #time starts at 0, Q4 of 2021
   ) |> 
   mutate(diag_status = "diag_s35")
 
@@ -162,7 +153,7 @@ ckd_uncod_time <- map_df(avail_periods$time_period_id, ckd_und_sys_fn) |>
          time_period_name = str_remove_all(time_period_name, "[:digit:]"),
          time_period_name = str_remove(time_period_name, "To "),
          date = as.yearmon(paste(year, time_period_name), "%Y %B"),
-         stella_time = as.numeric(yearqtr(date) - 2020.75) #time starts at 0, Q4 of 2021
+         stella_time = as.numeric(yearqtr(date) + 0.25) #time starts at 0, Q4 of 2021
   ) |> 
   mutate(diag_status = "undiag_s35")
 
@@ -172,17 +163,15 @@ ckd_risk_time <- map_df(avail_periods$time_period_id, ckd_risk_sys_fn) |>
          time_period_name = str_remove_all(time_period_name, "[:digit:]"),
          time_period_name = str_remove(time_period_name, "To "),
          date = as.yearmon(paste(year, time_period_name), "%Y %B"),
-         stella_time = as.numeric(yearqtr(date) - 2020.75) #time starts at 0, Q4 of 2021
+         stella_time = as.numeric(yearqtr(date) + 0.25) #time starts at 0, Q4 of 2021
   ) |> 
   mutate(diag_status = "undiag_s35")
 
 ckd_counts <- bind_rows(ckd_sys_time, ckd_uncod_time, ckd_risk_time) |> 
   rename(region = area_name,
-         # sex = category_attribute,
-         # age_band = metric_category_name,
          count = numerator) |> 
   select(region, diag_status, count, year, date, stella_time) |> 
-  group_by(region, diag_status, , year, date, stella_time) |> 
+  group_by(region, diag_status, year, date, stella_time) |> 
   summarise(count = sum(count)) |> 
   ungroup()
 
@@ -213,15 +202,30 @@ metric_list <- cvd_indicator_metric_list(time_period_id = 19, system_level_id = 
 # iterate through all metric_ids and join with descriptors
 cvd_mort <- map_df(area_list$area_id, ckd_mort_fn) |>
   left_join(area_list) |> 
-  group_by(area_name) |> 
-  summarise(rate = mean(value)) |> 
-  ungroup() 
+  distinct() |>
+  separate(time_period_name, into = c("start_month", "end_month"), sep = " - ") |> 
+  mutate(
+    start_date = dmy(paste("1", start_month)),
+    end_date = ceiling_date(dmy(paste("1", end_month)), "month") - days(1),
+    mid_date_m = month(ymd(start_date + (end_date - start_date) / 2)),
+    month_dec = case_when(
+      mid_date_m == 12 ~ 0.0,
+      mid_date_m %in% c(3, 4) ~ 0.25,
+      mid_date_m %in% c(6, 7) ~ 0.5,
+      mid_date_m %in% c(9, 10) ~ 0.75
+    ),
+    rep_date = year(start_date) + month_dec
+  ) |> 
+  arrange(rep_date) |> 
+  select(rep_date, area_name, rate = value)
 
 stella_mort <- cvd_mort |> 
   mutate(stella_var = paste0("CVD all cause mortality p h th[", 
                              area_name, "]")) |> 
   select(-area_name) |> 
-  relocate(stella_var)
+  pivot_wider(names_from = rep_date, values_from = rate) |> 
+  arrange(stella_var)
+
 ```
 
 ### Derive Total Prevalence & Undiagnosed
@@ -288,20 +292,13 @@ prev_st <- prev_counts |>
     stella_var = paste0(stella_var, region)) |> 
   select(c(stella_time, stella_var, count)) 
 
-prev_stella_xvars <- prev_st |> 
-  select(-count) |> 
-   mutate(stella_var = paste0(stella_var, ":x"),
-         count = stella_time)
-
 prev_stella <- prev_st |> 
-  mutate(stella_var = paste0(stella_var, ":y")) |> 
-  bind_rows(prev_stella_xvars) |> 
   pivot_wider(names_from = stella_time, values_from = count) |> 
   arrange(stella_var)
 
 ```
 
-Calculate pop variance for weightings used in calibration.
+Calculate variance for weightings used in calibration.
 
 ```{r}
 
@@ -319,8 +316,14 @@ counts_var_wt <- prev_counts |>
   )) |> 
   ungroup() |> 
   select(region, var_name, pop_var) |> 
-  pivot_wider(names_from = region, values_from = pop_var) |> 
-  relocate(England, .after = var_name)
+  pivot_wider(names_from = var_name, values_from = pop_var) 
+
+mort_var_wt <- cvd_mort |> 
+  group_by(region = area_name) |> 
+  summarise("wt CVDP diag mort" = 1/(var(rate) *((n()-1)/n()))) |> 
+  ungroup() 
+
+var_wt <- left_join(counts_var_wt, mort_var_wt)
 ```
 
 #### Prep for Model Input
@@ -341,42 +344,7 @@ addWorksheet(wb, "cvd mortality")
 writeData(wb, "cvd mortality", stella_mort)
 
 addWorksheet(wb, "calib weights")
-writeData(wb, "calib weights", counts_var_wt)
+writeData(wb, "calib weights", var_wt)
 
-saveWorkbook(wb, "ckd counts for stella array may 28 uncoded risk.xlsx", overwrite = TRUE)
-```
-
-Extra validation
-
-Extra figures for comparison of cross-validation models - what constitutes 'undiagnosed'?
-
-```{r}
-
-
-ckd_eng_all <- ckd_counts |> 
-  select(-stella_time) |> 
-  filter(region == "England") |> 
-  pivot_wider(names_from = diag_status, values_from = count)
-
-ckd_uncoded <- ckd_uncod_time |>  
-  rename(region = area_name,
-         # sex = category_attribute,
-         # age_band = metric_category_name,
-         count = numerator) |> 
-  select(region, count, year, date) |> 
-  group_by(year, date) |> 
-  summarise(uncoded_s35 = sum(count)) |> 
-  mutate(region = "England")
-
-cvdp_eng <- left_join(ckd_eng_all, ckd_uncoded)
-
-
-wb <- createWorkbook()  
-
-addWorksheet(wb, "cvdp indicators eng")
-writeData(wb, "cvdp indicators eng", cvdp_eng)
-
-
-saveWorkbook(wb, "cvdp_indicators.xlsx", overwrite = TRUE)
-
+saveWorkbook(wb, "ckd counts for stella v2.xlsx", overwrite = TRUE)
 ```
